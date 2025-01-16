@@ -1,72 +1,83 @@
 const User = require("../models/user");
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+/*** Login Controller*/
 
-const Login = async (req, res) => {
+const login = async (req, res) => {
     const { email, password } = req.body;
 
+    if (!email || !password) {
+        return res.status(400).json({ message: "Email and Password are required." });
+    }
 
     try {
         const user = await User.findOne({ email });
 
-
-
         if (!user) {
-            console.log("incorrect credentials!")
-            return res.status(400).json({ message: 'Email and Password is not Correct' })
+            console.error("User not found.");
+            return res.status(400).json({ message: "Invalid email or password." });
         }
 
-        bcrypt.compare(password, user.password, (err, result) => {
+        const isPasswordValid = await bcrypt.compare(password, user.password);
 
-            if (err) {
-                console.log("incorrect credentials!")
-                return res.status(500).json({ message: 'incorrect credentials!' })
-            }
+        if (!isPasswordValid) {
+            console.error("Password mismatch.");
+            return res.status(401).json({ message: "Invalid email or password." });
+        }
 
-            if (!result) {
-                console.log("error in result || comparing password")
-                return res.status(401).json({ message: 'incorrect credentials!' })
-            }
+        const token = jwt.sign(
+            { email: user.email, id: user.id },
+            process.env.JWT_SECRET,
+            { expiresIn: "2h" }
+        );
 
-            return res.status(200).json({ message: 'You are Login successfully' })
-
+        res.cookie("token", token, {
+            httpOnly: true,
+            // secure: process.env.NODE_ENV === "production", // Use secure cookies in production
+            maxAge: 2 * 60 * 60 * 1000,
         });
 
+        return res.status(200).json({ message: "Login successful" });
     } catch (error) {
-        console.log("error in login process", error)
-        return res.status(500).json({ message: 'Internal Server Error' })
+
+        return res.status(500).json({ message: "Internal Server Error" });
     }
 };
 
+/** * Signup Controller */
 
-
-const Signup = async (req, res) => {
-
+const signup = async (req, res) => {
     const { username, email, mobileNo, password, referralCode } = req.body;
 
-    try {
-        const salt = await bcrypt.genSalt(10);
-        const hash = await bcrypt.hash(password, salt);
+    if (!username || !email || !mobileNo || !password) {
+        return res.status(400).json({ message: "All fields are required." });
+    }
 
-        await User.create({
+    try {
+        const existingUser = await User.findOne({ email });
+
+        if (existingUser) {
+            return res.status(409).json({ message: "Email already in use." });
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        const newUser = new User({
             username,
             email,
             mobileNo,
-            password: hash,
+            password: hashedPassword,
             referralCode,
-        })
+        });
 
-        return res.status(200).json({ msg: "Successfully register" })
+        await newUser.save();
 
+        return res.status(201).json({ message: "User registered successfully." });
     } catch (error) {
-        console.log(error, "error")
-        return res.status(500).json({ message: 'Internal Server Error' })
+        return res.status(500).json({ message: "Internal Server Error" });
     }
+};
 
-}
-
-
-
-
-module.exports = { Login, Signup }
+module.exports = { login, signup };
