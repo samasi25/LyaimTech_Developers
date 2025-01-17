@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
  * @param {function} next - Express next middleware function.
  */
 
-const verifyToken = (req, res, next) => {
+const authenticate = (req, res, next) => {
     try {
         // Extract token from Authorization header or cookies
         const authHeader = req.header('Authorization');
@@ -46,4 +46,4 @@ const verifyToken = (req, res, next) => {
     }
 };
 
-module.exports = verifyToken;
+module.exports = authenticate;
