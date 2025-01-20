@@ -1,10 +1,10 @@
-const dotenv = require('dotenv');
-const User = require("../models/user"); 
+// const dotenv = require('dotenv');
+const User = require("../models/user");
 // dotenv.config(); 
 
 
 const userProfile = async (req, res) => {
-    const userId = req.id; 
+    const userId = req.id;
 
     try {
         const user = await User.findById(userId).select('email username mobileNo referralCode');
@@ -21,4 +21,4 @@ const userProfile = async (req, res) => {
 
 
 
-module.exports = {userProfile};
+module.exports = { userProfile };
