@@ -1,4 +1,37 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+
+
+// wallet schema
+
+const WalletSchema = new mongoose.Schema({
+
+    depositAmount: {
+        type: Number,
+        default: 0
+    },
+    cashBonus: {
+        type: Number,
+        default: 0
+    },
+    winningAmount: {
+        type: Number,
+        default: 0
+    },
+    withdrawableAmount: {
+        type: Number,
+        default: 0
+    },
+    totalMoney: {
+        type: Number,
+        default: 0
+    },
+})
+
+// const Wallet = mongoose.model("wallet", WalletSchema);
+
+
+
+// User schema 
 
 const userSchema = new mongoose.Schema({
     username: {
@@ -22,9 +55,10 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    wallet: WalletSchema,
 })
 
 const User = mongoose.model("user", userSchema)
 
-module.exports = User;
+module.exports = { User };
