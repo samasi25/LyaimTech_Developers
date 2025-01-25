@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { User } = require("./user")
 
 const WithdrawalRequestSchema = new mongoose.Schema({
     userId: {
@@ -22,7 +23,6 @@ const WithdrawalRequestSchema = new mongoose.Schema({
         default: Date.now
     },
     status: {
-
         type: String,
         enum: ['Pending', 'Completed', 'Rejected'],
         default: 'Pending'

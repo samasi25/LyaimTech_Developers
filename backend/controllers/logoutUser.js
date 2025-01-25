@@ -3,4 +3,4 @@ const logoutUser = (req, res) => {
     res.json({ message: 'Logged out successfully.' });
 };
 
-module.exports= {logoutUser}
+module.exports = { logoutUser }

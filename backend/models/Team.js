@@ -1,13 +1,16 @@
-const mongoose = require("mongoose");
-
+const mongoose = require('mongoose');
+const { User } = require('./user');
+const { Match } = require('./matches');
 
 const teamSchema = new mongoose.Schema({
     userId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',  // Reference to User schema
         required: true
     },
     matchId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Match',  // Reference to Match schema
         required: true
     },
     selectedPlayers: {
@@ -18,8 +21,12 @@ const teamSchema = new mongoose.Schema({
         type: Array,
         required: true
     },
-});
+    totalPoints: {
+        type: Number,
+        default: 0
+    }
+}, { timestamps: true });
 
-const Team = mongoose.model('team', teamSchema);
+const Team = mongoose.model('Team', teamSchema);
 
 module.exports = Team;

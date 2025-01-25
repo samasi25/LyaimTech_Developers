@@ -28,6 +28,7 @@ const WalletPage = async (req, res) => {
     }
 };
 
+
 // POST: Create PayPal Order for Adding Funds
 const AddFunds = async (req, res) => {
     const { amount } = req.body;
@@ -66,6 +67,7 @@ const AddFunds = async (req, res) => {
     }
 };
 
+
 // Handle PayPal Payment Success
 const AddFundssSuccess = async (req, res) => {
     const userId = req.user._id;
@@ -98,6 +100,7 @@ const AddFundssSuccess = async (req, res) => {
         res.status(500).json({ success: false, message: 'Error processing payment. Please try again.' });
     }
 };
+
 
 // POST: Withdraw Funds
 const Withdrawal = async (req, res) => {

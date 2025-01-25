@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 
 
 // wallet schema
-
 const WalletSchema = new mongoose.Schema({
 
     depositAmount: {
@@ -32,7 +31,6 @@ const WalletSchema = new mongoose.Schema({
 
 
 // User schema 
-
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
