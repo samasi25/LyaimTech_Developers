@@ -7,7 +7,7 @@ export default function Home() {
       <div
         className="min-h-screen w-full bg-cover bg-center"
         style={{
-          backgroundImage: "url(/images/home1.png)",
+          backgroundImage: "url(/Images/home1.png)",
         }}
       >
         <div className="flex justify-between items-center p-3 max-w-3xl mx-auto text-white">
@@ -48,7 +48,7 @@ export default function Home() {
       <div
         className="min-h-screen w-full bg-cover bg-center"
         style={{
-          backgroundImage: "url(/images/home2.png)",
+          backgroundImage: "url(/Images/home2.png)",
         }}
       >
         <div className="text-center space-y-5 p-10">
@@ -63,7 +63,7 @@ export default function Home() {
             <Image
               width={150}
               height={150}
-              src={'/images/contest.png'}
+              src={'/Images/contest.png'}
               alt='Contest'
             />
             <button className="py-2 w-full text-[#5672B8] sm:text-white sm:bg-[#3C645F80] rounded-md sm:hover:bg-[#3C645FBF]">
@@ -75,7 +75,7 @@ export default function Home() {
             <Image
               width={150}
               height={150}
-              src={'/images/club1.png'}
+              src={'/Images/club1.png'}
               alt='Choose Team'
             />
             <button className="py-2 w-full text-[#9C1919] sm:text-white sm:bg-[#3C645F80] rounded-md sm:hover:bg-[#3C645FBF]">
@@ -87,7 +87,7 @@ export default function Home() {
             <Image
               width={150}
               height={150}
-              src={'/images/trophy1.png'}
+              src={'/Images/trophy1.png'}
               alt='Leaderboard'
               className="rounded-full"
             />
@@ -101,7 +101,7 @@ export default function Home() {
       <div
         className="min-h-screen w-full bg-cover bg-center"
         style={{
-          backgroundImage: "url(/images/home3.png)",
+          backgroundImage: "url(/Images/home3.png)",
         }}
       >
         <div className="text-center p-10">
