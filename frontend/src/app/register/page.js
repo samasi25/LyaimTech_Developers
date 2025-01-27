@@ -49,7 +49,11 @@ export default function Register() {
         <div
             className="min-h-screen w-full bg-cover bg-center"
             style={{
+<<<<<<< HEAD
                 backgroundImage: "url(images/registration_background.png)",
+=======
+                backgroundImage: "url(/images/stadium1.png)",
+>>>>>>> c195b81fff1ec78a1f1b73b9029f72c7ca786ca1
             }}
         >
             <div className="flex justify-between items-center p-3 max-w-3xl mx-auto text-white">

@@ -20,10 +20,10 @@ ConnectToDB(process.env.MONGO_URL).then(() => {
 app.use(router)
 
 app.get("/", (req, res) => {
-    res.status(200).send("Hey, Hello From Layim Tech Server")
+    res.status(200).send("Hey, Hello From Lyaim Tech Server")
 })
 
 
 app.listen(PORT, () => {
-    console.log(`Layim Tech Server is Started at ${PORT} Port`)
+    console.log(`Lyaim Tech Server is Started at ${PORT} Port`)
 })
