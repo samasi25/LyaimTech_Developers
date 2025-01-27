@@ -64,7 +64,7 @@ export default function Login() {
             </h1>
 
             {/* Login Container */}
-            <div className="flex bg-white/5 backdrop-blur-md shadow-lg rounded-xl overflow-hidden max-w-4xl w-full mx-auto">
+            <div className="flex bg-white/5 backdrop-blur-md shadow-lg rounded-xl overflow-hidden max-w-3xl max-h-96 w-full mx-auto">
                 {/* Left Section: Image */}
                 <div className="w-1/3 hidden md:block">
                     <Image
@@ -79,7 +79,7 @@ export default function Login() {
 
                 {/* Right Section: Form */}
                 <div className="flex-1 p-8 md:p-12">
-                    <div className="my-5 text-black text-center font-semibold font-aleo text-2xl">
+                    <div className="mb-5 text-black text-center font-semibold font-aleo text-2xl">
                         Login
                     </div>
                     <form onSubmit={handleSubmit}>

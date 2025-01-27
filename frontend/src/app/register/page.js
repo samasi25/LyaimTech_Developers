@@ -49,7 +49,7 @@ export default function Register() {
         <div
             className="min-h-screen w-full bg-cover bg-center"
             style={{
-                backgroundImage: "url(/Images/stadium1.png)",
+                backgroundImage: "url(Images/registration_background.png)"
             }}
         >
             <div className="flex justify-between items-center p-3 max-w-3xl mx-auto text-white">
@@ -95,7 +95,7 @@ export default function Register() {
                 <div className="flex-1 p-8 md:p-12">
                     <form onSubmit={handleSubmit}>
                         {/* Username Field */}
-                        <div className="mb-6">
+                        <div className="mb-5">
                             <input
                                 type="text"
                                 name="username"
@@ -107,7 +107,7 @@ export default function Register() {
                             {errors.username && <p className="text-red-500 text-sm mt-1">{errors.username}</p>}
                         </div>
                         {/* Email Field */}
-                        <div className="mb-6">
+                        <div className="mb-5">
                             <input
                                 type="email"
                                 name="email"
@@ -119,7 +119,7 @@ export default function Register() {
                             {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
                         </div>
                         {/* Mobile Field */}
-                        <div className="mb-6">
+                        <div className="mb-5">
                             <input
                                 type='number'
                                 name="mobile"
@@ -131,7 +131,7 @@ export default function Register() {
                             {errors.mobile && <p className="text-red-500 text-sm mt-1">{errors.mobile}</p>}
                         </div>
                         {/* Password Field */}
-                        <div className="mb-6">
+                        <div className="mb-5">
                             <input
                                 type="password"
                                 name="password"
@@ -156,7 +156,7 @@ export default function Register() {
                         </div>
 
                         {/* Terms and conditions */}
-                        <div className="mb-6">
+                        <div className="mb-5">
                             <label className="flex items-center text-white text-lg">
                                 <input
                                     type="checkbox"
