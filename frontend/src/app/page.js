@@ -7,7 +7,7 @@ export default function Home() {
       <div
         className="min-h-screen w-full bg-cover bg-center"
         style={{
-          backgroundImage: "url(/images/home1.png)",
+          backgroundImage: "url(/Images/home1.png)",
         }}
       >
         <div className="flex justify-between items-center p-3 max-w-3xl mx-auto text-white">
