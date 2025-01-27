@@ -46,7 +46,7 @@ export default function Login() {
         <div
             className="min-h-screen w-full bg-cover bg-center"
             style={{
-                backgroundImage: "url(images/registration_ground.png)",
+                backgroundImage: "url(/images/registration_ground.png)",
             }}
         >
             {/* Overlay */}
