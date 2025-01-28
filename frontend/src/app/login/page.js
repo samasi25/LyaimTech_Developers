@@ -46,7 +46,7 @@ export default function Login() {
         <div
             className="min-h-screen w-full bg-cover bg-center"
             style={{
-                backgroundImage: "url(/images/registration_ground.png)",
+                backgroundImage: "url(/Images/registration_ground.png)",
             }}
         >
             {/* Overlay */}
@@ -68,7 +68,7 @@ export default function Login() {
                 {/* Left Section: Image */}
                 <div className="w-1/3 hidden md:block">
                     <Image
-                        src="/images/registration.png"
+                        src="/Images/registration.png"
                         alt="Player"
                         width={270} // Adjust width as needed
                         height={300} // Adjust height as needed

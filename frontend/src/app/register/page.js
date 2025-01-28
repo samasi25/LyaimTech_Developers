@@ -49,7 +49,7 @@ export default function Register() {
         <div
             className="min-h-screen w-full bg-cover bg-center"
             style={{
-                backgroundImage: "url(images/registration_background.png)",
+                backgroundImage: "url(Images/registration_background.png)"
             }}
         >
             <div className="flex justify-between items-center p-3 max-w-3xl mx-auto text-white">
@@ -68,7 +68,7 @@ export default function Register() {
                 {/* Left Section: Image */}
                 <div className="w-1/3 bg-black hidden md:block">
                     <Image
-                        src="/images/reg1.png"
+                        src="/Images/reg1.png"
                         alt="Player"
                         width={300} // Adjust width as needed
                         height={500} // Adjust height as needed
@@ -78,7 +78,7 @@ export default function Register() {
                     <div className='text-white text-center font-aleo'>
                         <h2 className='text-2xl font-semibold font-Aboreto'>FOOTBALL</h2>
                         <Image
-                            src="/images/reg2.png"
+                            src="/Images/reg2.png"
                             alt="Registration"
                             width={250} // Adjust width as needed
                             height={20} // Adjust height as needed
