@@ -6,7 +6,7 @@ export default function Contest() {
         <div
             className="min-h-screen w-full bg-cover bg-center"
             style={{
-                backgroundImage: "url(images/team_choose_background.jpeg)",
+                backgroundImage: "url(Images/team_choose_background.jpeg)",
             }}
         >
             <div className="flex justify-between items-center p-3 max-w-3xl mx-auto text-white">

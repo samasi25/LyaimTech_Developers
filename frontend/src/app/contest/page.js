@@ -7,7 +7,7 @@ export default function Contest() {
         <div
             className="min-h-screen w-full bg-cover bg-center"
             style={{
-                backgroundImage: "url(images/contest_background.jpeg)",
+                backgroundImage: "url(Images/contest_background.jpeg)",
             }}
         >
             {/* Overlay */}
