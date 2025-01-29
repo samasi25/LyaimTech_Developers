@@ -1,4 +1,5 @@
 'use client';
+import Navbar from '@/components/Navbar';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -52,13 +53,7 @@ export default function Register() {
                 backgroundImage: "url(Images/registration_background.png)"
             }}
         >
-            <div className="flex justify-between items-center p-3 max-w-3xl mx-auto text-white">
-                <div className="font-alex font-medium text-3xl text-[#977108]">Lyaim</div>
-                <div className="flex gap-5 text-lg">
-                    <Link href={'home'}>Home</Link>
-                    <Link href={'help'}>Help</Link>
-                </div>
-            </div>
+            <Navbar />
 
             <h1 className="text-2xl font-bold font-alegreya text-white mb-2 text-center">
                 Sign Up Today And kickstart your football journey!
@@ -70,8 +65,8 @@ export default function Register() {
                     <Image
                         src="/Images/reg1.png"
                         alt="Player"
-                        width={300} // Adjust width as needed
-                        height={500} // Adjust height as needed
+                        width={300}
+                        height={500}
                         className="object-cover"
                         layout="intrinsic"
                     />
@@ -182,7 +177,7 @@ export default function Register() {
                     {/* Login Section */}
                     <p className="text-center text-white mt-6">
                         Already have an account?{" "}
-                        <Link href="#" className="text-[#1E1E1E] text-xl font-medium hover:underline">
+                        <Link href="/login" className="text-[#1E1E1E] text-xl font-medium hover:underline">
                             Login
                         </Link>
                     </p>

@@ -1,6 +1,5 @@
 'use client';
-import Image from 'next/image';
-import Link from 'next/link';
+import Navbar from '@/components/Navbar';
 export default function Contest() {
 
     return (
@@ -10,15 +9,7 @@ export default function Contest() {
                 backgroundImage: "url(Images/contest_background.jpeg)",
             }}
         >
-            {/* Overlay */}
-            {/* <div className="absolute inset-0 bg-gradient-to-b"></div> */}
-            <div className="flex justify-between items-center p-3 max-w-3xl mx-auto text-white">
-                <div className="font-alex font-medium text-3xl text-[#977108]">Lyaim</div>
-                <div className="flex gap-5 text-lg">
-                    <Link href={'home'}>Home</Link>
-                    <Link href={'help'}>Help</Link>
-                </div>
-            </div>
+            <Navbar />
 
             {/* Contest Container */}
             <div className="bg-white/5 text-black text-center font-aleo backdrop-blur-md shadow-lg rounded-xl overflow-hidden max-w-4xl w-full mx-auto py-5 px-2">

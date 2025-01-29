@@ -1,4 +1,5 @@
 'use client';
+import Navbar from '@/components/Navbar';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -49,15 +50,7 @@ export default function Login() {
                 backgroundImage: "url(/Images/registration_ground.png)",
             }}
         >
-            {/* Overlay */}
-            {/* <div className="absolute inset-0 bg-gradient-to-b"></div> */}
-            <div className="flex justify-between items-center p-3 max-w-3xl mx-auto text-white">
-                <div className="font-alex font-medium text-3xl text-[#977108]">Lyaim</div>
-                <div className="flex gap-5 text-lg">
-                    <Link href={'home'}>Home</Link>
-                    <Link href={'help'}>Help</Link>
-                </div>
-            </div>
+            <Navbar />
 
             <h1 className="text-2xl font-bold font-alegreya text-white mb-2 text-center">
                 LOG IN AND PLAY TO WIN!
@@ -68,10 +61,10 @@ export default function Login() {
                 {/* Left Section: Image */}
                 <div className="w-1/3 hidden md:block">
                     <Image
-                        src="/Images/registration.png"
+                        src="/Images/registration.jpeg"
                         alt="Player"
-                        width={270} // Adjust width as needed
-                        height={300} // Adjust height as needed
+                        width={270}
+                        height={300}
                         className="object-cover"
                         layout="intrinsic"
                     />
@@ -142,7 +135,7 @@ export default function Login() {
                     {/* Register Section */}
                     <p className="text-center text-white mt-6">
                         Don't have an account?{" "}
-                        <Link href="#" className="text-[#1E1E1E] text-xl font-medium hover:underline">
+                        <Link href="register" className="text-[#1E1E1E] text-xl font-medium hover:underline">
                             Register now
                         </Link>
                     </p>

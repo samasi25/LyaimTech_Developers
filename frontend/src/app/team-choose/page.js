@@ -1,5 +1,5 @@
 'use client';
-import Link from 'next/link';
+import Navbar from '@/components/Navbar';
 export default function Contest() {
 
     return (
@@ -9,14 +9,7 @@ export default function Contest() {
                 backgroundImage: "url(Images/team_choose_background.jpeg)",
             }}
         >
-            <div className="flex justify-between items-center p-3 max-w-3xl mx-auto text-white">
-                <div className="font-alex font-medium text-3xl text-[#977108]">Lyaim</div>
-                <div className="flex gap-5 text-lg">
-                    <Link href={'/'}>Home</Link>
-                    <Link href={'help'}>Help</Link>
-                    <Link href={'profile'}>U</Link>
-                </div>
-            </div>
+            <Navbar />
 
             {/* Team Choose Container */}
             <div className="bg-white/5 text-white text-center font-aleo backdrop-blur-sm shadow-lg rounded-xl overflow-hidden max-w-4xl w-full mx-auto py-5 px-2">
