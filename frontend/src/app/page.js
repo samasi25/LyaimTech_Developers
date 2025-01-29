@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import MatchOverview from "./match-overview/page";
 
 export default function Home() {
   return (
@@ -162,6 +163,8 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      <MatchOverview />
     </>
   );
 }

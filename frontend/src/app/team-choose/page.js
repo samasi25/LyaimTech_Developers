@@ -6,7 +6,7 @@ export default function Contest() {
         <div
             className="min-h-screen w-full bg-cover bg-center"
             style={{
-                backgroundImage: "url(Images/team_choose_background.jpeg)",
+                backgroundImage: "url(/Images/team_choose_background.jpeg)",
             }}
         >
             <Navbar />
@@ -38,7 +38,7 @@ export default function Contest() {
                     </div>
 
                     <span className='text-[#0A0440] text-6xl font-medium font-arizonia mx-auto px-5'>vs</span>
-                    
+
                     <div className='w-full p-3'>
                         <button className='w-full py-1 rounded-full bg-gradient-to-b from-black to-gray-800 hover:scale-105 transition-transform duration-300'>
                             Away Team
