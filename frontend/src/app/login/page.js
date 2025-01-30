@@ -37,8 +37,12 @@ export default function Login() {
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
         } else {
-            setErrors({}); alert('Submitted');
-            console.log('Login successful with:', formData);
+            setErrors({});
+            setFormData({
+                email: '',
+                password: '',
+            });
+            alert('Submitted');
             // Handle successful login (e.g., API call)
         }
     };
@@ -57,7 +61,7 @@ export default function Login() {
             </h1>
 
             {/* Login Container */}
-            <div className="flex bg-white/5 backdrop-blur-md shadow-lg rounded-xl overflow-hidden max-w-3xl max-h-96 w-full mx-auto">
+            <div className="flex bg-white/10 backdrop-blur-md shadow-lg rounded-xl overflow-hidden max-w-sm sm:max-w-xl md:max-w-3xl w-full md:max-h-96 mx-auto">
                 {/* Left Section: Image */}
                 <div className="w-1/3 hidden md:block">
                     <Image
@@ -71,7 +75,7 @@ export default function Login() {
                 </div>
 
                 {/* Right Section: Form */}
-                <div className="flex-1 p-8 md:p-12">
+                <div className="flex-1 p-4 sm:p-6 md:p-12">
                     <div className="mb-5 text-black text-center font-semibold font-aleo text-2xl">
                         Login
                     </div>
@@ -84,7 +88,7 @@ export default function Login() {
                                 placeholder="Email"
                                 value={formData.email}
                                 onChange={(e) => handleChange(e)}
-                                className="w-full border-b bg-transparent font-aleo text-xl placeholder-black outline-none pl-2"
+                                className="w-full border-b bg-transparent font-aleo text-xl placeholder-gray-800 outline-none pl-2"
                             />
                             {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
                         </div>
@@ -97,14 +101,14 @@ export default function Login() {
                                 placeholder="Password"
                                 value={formData.password}
                                 onChange={handleChange}
-                                className="w-full border-b bg-transparent font-aleo text-xl outline-none placeholder-black pl-2"
+                                className="w-full border-b bg-transparent font-aleo text-xl outline-none placeholder-gray-800 pl-2"
                             />
                             {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
                         </div>
 
                         {/* Remember Me and Forgot Password */}
-                        <div className="flex items-center justify-between mb-6">
-                            <label className="flex items-center text-white text-lg">
+                        <div className="flex items-center justify-between text-white sm:text-lg md:text-xl mb-6">
+                            <label className="flex items-center">
                                 <input
                                     type="checkbox"
                                     className="mr-2 border-gray-400 rounded"
@@ -113,7 +117,7 @@ export default function Login() {
                             </label>
                             <Link
                                 href="#"
-                                className="text-xl text-white hover:underline"
+                                className="hover:underline"
                             >
                                 Forget Password?
                             </Link>
@@ -135,7 +139,7 @@ export default function Login() {
                     {/* Register Section */}
                     <p className="text-center text-white mt-6">
                         Don't have an account?{" "}
-                        <Link href="register" className="text-[#1E1E1E] text-xl font-medium hover:underline">
+                        <Link href="register" className="text-[#1E1E1E] text-lg md:text-xl font-medium hover:underline">
                             Register now
                         </Link>
                     </p>
