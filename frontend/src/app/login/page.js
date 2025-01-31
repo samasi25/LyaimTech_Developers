@@ -49,7 +49,7 @@ export default function Login() {
 
     return (
         <div
-            className="min-h-screen w-full bg-cover bg-center"
+            className="min-h-screen pt-24 w-full bg-cover bg-center"
             style={{
                 backgroundImage: "url(/Images/registration_ground.png)",
             }}

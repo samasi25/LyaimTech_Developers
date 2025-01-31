@@ -15,7 +15,7 @@ export default function Register() {
 
   return (
     <div
-      className="min-h-screen w-full bg-cover bg-center"
+      className="min-h-screen pt-24 w-full bg-cover bg-center"
       style={{
         background: 'linear-gradient(90deg, #0A0440, #78CAC0)',
         boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.2)',

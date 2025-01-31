@@ -48,7 +48,7 @@ export default function Register() {
 
     return (
         <div
-            className="min-h-screen w-full bg-cover bg-center"
+            className="min-h-screen pt-24 pb-5 w-full bg-cover bg-center"
             style={{
                 backgroundImage: "url(Images/registration_background.png)"
             }}
