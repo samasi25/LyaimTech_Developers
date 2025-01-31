@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-// import { FaChevronDown } from 'react-icons/fa';
+import { FaChevronDown } from 'react-icons/fa';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -23,7 +23,7 @@ const Navbar = () => {
                     <button
                         className="flex items-center space-x-2  text-lg  text-gray-700 drop-shadow-[1px_1px_1px_red] hover:text-black"
                         onClick={() => setIsOpen(!isOpen)}>
-                        {/* <FaChevronDown /> */}
+                        <FaChevronDown />
                     </button>
                     {isOpen && (
                         <ul className="absolute right-0 mt-2 w-40 shadow-lg rounded-md overflow-hidden cursor-pointer">

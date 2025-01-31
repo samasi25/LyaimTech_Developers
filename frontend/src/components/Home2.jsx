@@ -1,7 +1,13 @@
+"use client"
 import React from 'react';
 import Image from 'next/image';
+import { useRouter } from "next/navigation";
+
 
 const Home2 = () => {
+
+    const router = useRouter();
+
     return (
         <div className="w-full bg-gray-100 py-10">
             <div className="text-center space-y-5 p-10">
@@ -19,7 +25,7 @@ const Home2 = () => {
 
                 <div className="flex flex-col items-center space-y-3 w-56">
                     <Image width={150} height={150} src={'/Images/contest.png'} alt='Contest' />
-                    <button className="py-2 w-full text-white bg-[#3C645F80] rounded-md hover:bg-[#3C645FBF]">
+                    <button className="py-2 w-full text-white bg-[#3C645F80] rounded-md hover:bg-[#3C645FBF]" onClick={() => router.push('/contest')}>
                         Contest
                     </button>
                 </div>
