@@ -10,7 +10,7 @@ const Navbar = () => {
     return (
         <nav className="shadow-md p-2 flex justify-between bg-black bg-opacity-45 items-center fixed top-0 left-0 w-full z-50">
             <div className="flex items-center md:ml-12">
-                <Image src="/Images/lyaim-logo.png" alt="Logo" width={50} height={30} className="w-14 max-sm:w-10 md:w-full cursor-pointer rounded-full" />
+                <Link href={'/'}>   <Image src="/Images/lyaim-logo.png" alt="Logo" width={50} height={30} className="w-14 max-sm:w-10 md:w-full cursor-pointer rounded-full" /> </Link>
             </div>
 
             <div className="flex items-center space-x-4 md:space-x-8 text-white md:mr-12">
