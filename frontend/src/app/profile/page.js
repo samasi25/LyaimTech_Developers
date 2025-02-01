@@ -1,5 +1,4 @@
 'use client';
-import Button from '@/components/Button';
 import Navbar from '@/components/Navbar';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -22,82 +21,82 @@ export default function Register() {
       }}
     >
       <Navbar />
+      <div className="flex justify-center items-center min-h-screen p-4 ">
+        <div className="bg-gray-300 bg-opacity-5 max-w-4xl w-full rounded-xl overflow-hidden">
+          <div className="flex flex-col md:flex-row justify-center items-center w-full mx-auto">
 
-      <div className="flex justify-center items-center rounded-xl overflow-hidden w-full max-w-4xl mx-auto">
-        {/* Left Section: Image */}
-        <div className="hidden md:block">
-          <Image
-            src="/Images/userProfile.png"
-            alt="Player"
-            width={300}
-            height={500}
-            className="object-cover"
-            layout="intrinsic"
-          />
-        </div>
 
-        {/* Right Section: Form */}
-        <div className="flex-1 p-8 md:p-12">
-          <div className='flex justify-between text-2xl font-bold'>
-            <span>Hii, {formData.username}</span>
-            <button className='px-3 py-1 rounded-md bg-[#0A044033]'>
-              Wallet $ 0.00
-            </button>
-          </div>
-
-          <div>
-            {/* Email Field */}
-            <div className="mb-5">
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                readOnly
-                className="w-full border-b bg-transparent font-aleo text-xl placeholder-black outline-none pl-2"
+            <div className="hidden md:block w-1/3">
+              <Image
+                src="/Images/userProfile.png"
+                alt="Player"
+                width={300}
+                height={500}
+                className="object-cover"
+                layout="intrinsic"
               />
             </div>
-            {/* Username Field */}
-            <div className="mb-5">
-              <input
-                type="text"
-                name="username"
-                value={formData.username}
-                readOnly
-                className="w-full border-b bg-transparent font-aleo text-xl outline-none placeholder-black pl-2"
-              />
-            </div>
-            {/* Mobile Field */}
-            <div className="mb-5">
-              <input
-                type='number'
-                name="mobile"
-                value={formData.mobile}
-                readOnly
-                className="w-full border-b bg-transparent font-aleo text-xl placeholder-black outline-none pl-2"
-              />
-            </div>
-            {/* Referral Field */}
-            <div className="mb-6">
-              <input
-                type="text"
-                name="referral"
-                placeholder="Referral Code"
-                value={formData.referral}
-                readOnly
-                className="w-full border-b bg-transparent font-aleo text-xl outline-none placeholder-black pl-2"
-              />
-            </div>
-          </div>
 
-          {/* update Section */}
-          <div className="flex flex-col md:flex-row justify-center items-center gap-3 font-medium text-white mt-6">
-            <p>Want to update your profile ?{" "}</p>
-            <Link href="/profile-update" className="w-1/2">
-              <Button text='Update' color='white' />
-            </Link>
+
+            <div className="flex-1 p-6 md:p-12 w-full">
+              <div className="flex justify-between text-2xl font-bold">
+                <span>Hii, {formData.username}</span>
+                <p className="px-3 py-1 rounded-md bg-[#0A044033]">
+                  Wallet <span className='text-white'> $ 0.00</span>
+                </p>
+              </div>
+
+              <div className="mt-6 space-y-4">
+
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  readOnly
+                  className="w-full border-b bg-transparent font-aleo text-xl placeholder-black outline-none pl-2 py-2"
+                />
+
+
+                <input
+                  type="text"
+                  name="username"
+                  value={formData.username}
+                  readOnly
+                  className="w-full border-b bg-transparent font-aleo text-xl outline-none placeholder-black pl-2 py-2"
+                />
+
+                <input
+                  type="number"
+                  name="mobile"
+                  value={formData.mobile}
+                  readOnly
+                  className="w-full border-b bg-transparent font-aleo text-xl placeholder-black outline-none pl-2 py-2"
+                />
+
+
+                <input
+                  type="text"
+                  name="referral"
+                  placeholder="Referral Code"
+                  value={formData.referral}
+                  readOnly
+                  className="w-full border-b bg-transparent font-aleo text-xl outline-none placeholder-black pl-2 py-2"
+                />
+              </div>
+
+
+              <div className="flex flex-col md:flex-row justify-center items-center gap-3 font-medium text-white mt-6">
+                <p className='text-2xl'>Want to update your profile ?{" "}</p>
+                <Link href="/profile-update">
+                  <button className="bg-gradient-to-r from-[#5672B8] via-[#040B29DB] to-[#040B29DB] text-white text-2xl px-16 py-2 rounded-full font-aleo hover:text-gray-500">Update</button>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
+
     </div>
   );
 }
