@@ -26,10 +26,11 @@ const Navbar = () => {
                         <FaChevronDown />
                     </button>
                     {isOpen && (
-                        <ul className="absolute right-0 mt-2 w-40 shadow-lg rounded-md overflow-hidden cursor-pointer">
-                            <li className="px-4 py-2 font-bold hover:bg-gray-600 hover:bg-opacity-20 hover:text-orange-500">Help</li>
-                            <li className="px-4 py-2 font-bold hover:bg-gray-600 hover:bg-opacity-20 hover:text-orange-500">Contact</li>
-                            <li className="px-4 py-2 font-bold hover:bg-gray-600 hover:bg-opacity-20 hover:text-orange-500">Support</li>
+                        <ul className="absolute right-0 mt-2 w-40 shadow-lg bg-gray-900  rounded-md overflow-hidden cursor-pointer">
+                            <li className="px-4 py-2 font-bold hover:bg-gray-600 hover:bg-opacity-20 hover:text-orange-500">  <Link href={'/help'}>  Help </Link></li>
+                            <li className="px-4 py-2 font-bold hover:bg-gray-600 hover:bg-opacity-20 hover:text-orange-500">   <Link href={'/about'}> About </Link></li>
+                            <li className="px-4 py-2 font-bold hover:bg-gray-600 hover:bg-opacity-20 hover:text-orange-500"> <Link href={'/contact'}>  Contact </Link></li>
+                            <li className="px-4 py-2 font-bold hover:bg-gray-600 hover:bg-opacity-20 hover:text-orange-500">   <Link href={'/terms-conditions'}>  Terms&Conditions </Link></li>
                         </ul>
                     )}
                 </div>
