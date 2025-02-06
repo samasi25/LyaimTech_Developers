@@ -19,7 +19,7 @@ export default function Register() {
 
     return (
         <div
-            className="max-h-screen py-24 sm:pr-5 w-full bg-cover bg-center"
+            className="min-h-screen py-24 sm:pr-5 w-full bg-cover bg-center"
             style={{
                 backgroundImage: "url(/Images/profileUpdateBackground.jpeg)",
                 backgroundPosition: "center",
@@ -28,7 +28,6 @@ export default function Register() {
         >
             <Navbar />
 
-            {/* <div className="flex justify-center items-center rounded-xl overflow-hidden w-full max-w-4xl mx-auto"> */}
             <div className="bg-white/10 backdrop-blur-md shadow-lg rounded-xl sm:p-4 md:p-8 max-w-sm sm:max-w-xl xl:max-w-2xl mx-auto sm:m-0 sm:ml-auto">
                 <div className='text-center text-2xl font-aleo font-bold my-5'>
                     <div>Hii, {formData.username}</div>
@@ -83,7 +82,6 @@ export default function Register() {
                     </Link>
                 </div>
             </div>
-            {/* </div> */}
         </div>
     );
 }
