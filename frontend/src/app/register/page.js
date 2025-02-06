@@ -12,6 +12,7 @@ export default function Register() {
         password: '',
         referral: '',
     });
+    const [checked, setChecked] = useState(false);
     const [errors, setErrors] = useState({});
 
     // Handle input changes
@@ -21,18 +22,26 @@ export default function Register() {
     };
 
     // Validation logic
-    // const validate = () => {
-    //     const errors = {};
-    //     if (!formData.email.trim()) {
-    //         errors.email = 'Email is required.';
-    //     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-    //         errors.email = 'Invalid email format.';
-    //     }
-    //     if (!formData.password.trim()) {
-    //         errors.password = 'Password is required.';
-    //     }
-    //     return errors;
-    // };
+    const validate = () => {
+        const errors = {};
+
+        // if (!formData.username.trim()) {
+        //     errors.username = "Username is required.";
+        // }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+            errors.email = "Invalid email format.";
+        }
+         if (!/^\d{10}$/.test(formData.mobile)) {
+            errors.mobile = "Invalid mobile number (10 digits required).";
+        }
+         if (formData.password.length < 8) {
+            errors.password = "Password must be at least 8 characters.";
+        }
+        // if (!checked) {
+        //     errors.terms = "You must agree to the terms and conditions.";
+        // }
+        return errors;
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -45,6 +54,13 @@ export default function Register() {
             // Handle successful login (e.g., API call)
         }
     };
+
+    const isFormValid = 
+    formData.username.trim() && 
+    formData.email.trim() && 
+    formData.mobile.trim() && 
+    formData.password.trim() &&
+    checked
 
     return (
         <div
@@ -162,6 +178,8 @@ export default function Register() {
                             <label className="flex items-center text-white text-lg">
                                 <input
                                     type="checkbox"
+                                    checked={checked}
+                                    onChange={() => setChecked(!checked)}
                                     className="mr-2 border-gray-400 rounded"
                                 />
                                 I agree to the terms and conditions
@@ -171,7 +189,10 @@ export default function Register() {
                         {/* Register Button */}
                         <button
                             type="submit"
-                            className="w-full py-1 rounded-full text-green-800 text-lg font-bold hover:bg-green-600 transition"
+                            disabled={!isFormValid}
+                            className={`w-full py-1 rounded-full text-lg font-bold transition
+                                ${isFormValid ? "text-green-800" : "text-gray-500 cursor-not-allowed"}
+                            `}
                             style={{
                                 background: 'linear-gradient(150deg, #5fff4d, #008000)',
                                 boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.2)',
