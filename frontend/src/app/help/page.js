@@ -1,5 +1,6 @@
 'use client';
 
+import Navbar from '@/components/Navbar';
 import { useState } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
 
@@ -13,16 +14,59 @@ const faqs = [
 ];
 
 export default function Help() {
+    const [email, setEmail] = useState('');
+    const [message, setMessage] = useState('');
     const [openIndex, setOpenIndex] = useState(null);
 
     const toggleFAQ = (index) => {
         setOpenIndex(openIndex === index ? null : index);
     };
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('Email:', email);
+        console.log('Message:', message);
+    };
+
     return (
-        <div className="min-h-screen flex items-center justify-center bg-[url('/Images/helpBackground.jpeg')] bg-cover bg-center px-4 py-10">
-            <div className="w-full max-w-2xl bg-white/10 backdrop-blur-md p-6 rounded-lg shadow-lg">
-                <h2 className="text-2xl font-bold font-alegreya text-center text-black mb-4">Frequently Asked Questions</h2>
+        <div className="min-h-screen bg-[url('/Images/helpBackground.jpeg')] bg-cover bg-center text-center px-4 py-20">
+            <Navbar />
+
+            <div className="w-full max-w-4xl mx-auto p-6">
+                <h2 className="text-2xl font-bold text-black">Hii, How can we help you?</h2>
+                <p className="mt-2 text-lg md:text-xl lg:text-2xl font-semibold font-alegreya text-[#152669DB] italic">
+                    No question is too small—Let us guide you on your journey to victory!
+                </p>
+                <form onSubmit={handleSubmit} className="mt-6 w-full font-medium text-white text-lg">
+                    <textarea
+                        id="message"
+                        name="message"
+                        placeholder="Type your question here..."
+                        className="w-full mt-2 p-3 md:p-6 lg:p-10 rounded-lg bg-[#181d2f] outline-none resize-none"
+                        rows="4"
+                    />
+
+                    <div className="flex flex-col sm:flex-row items-center w-full">
+                        <input
+                            type="email"
+                            placeholder="Email:"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="flex-1 p-2 rounded-md border-gray-300 outline-none bg-[#0A044033] placeholder-white"
+                            required
+                        />
+                        <button
+                            type="submit"
+                            className="ml-2 px-6 py-2 text-lg font-bold text-white bg-gradient-to-r from-blue-600 to-gray-800 rounded-md shadow-lg hover:opacity-90"
+                        >
+                            Send
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div className="w-full max-w-4xl mx-auto p-6">
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold font-alegreya text-center text-black mb-4">Frequently Asked Questions</h2>
 
                 {faqs.map((faq, index) => (
                     <div key={index} className="mb-2">
