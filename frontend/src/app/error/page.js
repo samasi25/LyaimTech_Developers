@@ -1,12 +1,13 @@
 'use client';
 import Navbar from '@/components/Navbar';
 
-export default function Contest() {
+export default function Error() {
     return (
         <div
             className="min-h-screen w-full bg-cover bg-center"
             style={{
-                backgroundImage: "url(Images/Error.gif)"
+                backgroundImage: "url(Images/Error.gif)",
+                backgroundColor:'#DFE3F2', opacity: 0.8
             }}
         >
             <Navbar />
