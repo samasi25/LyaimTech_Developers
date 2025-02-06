@@ -49,7 +49,7 @@ export default function Login() {
 
     return (
         <div
-            className="min-h-screen pt-24 w-full bg-cover bg-center"
+            className="min-h-screen pt-24 pb-5 w-full bg-cover bg-center"
             style={{
                 backgroundImage: "url(/Images/registration_ground.png)",
             }}
@@ -75,7 +75,7 @@ export default function Login() {
                 </div>
 
                 {/* Right Section: Form */}
-                <div className="flex-1 p-4 sm:p-6 md:p-12">
+                <div className="flex-1 p-2 sm:p-4 md:p-6">
                     <div className="mb-5 text-black text-center font-semibold font-aleo text-2xl">
                         Login
                     </div>
@@ -138,7 +138,7 @@ export default function Login() {
 
                     {/* Register Section */}
                     <p className="text-center text-white mt-6">
-                        Don't have an account?{" "}
+                        Don&apos;t have an account?{" "}
                         <Link href="register" className="text-[#1E1E1E] text-lg md:text-xl font-medium hover:underline">
                             Register now
                         </Link>
