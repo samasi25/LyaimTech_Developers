@@ -4,7 +4,7 @@ import Navbar from '@/components/Navbar';
 export default function Error() {
     return (
         <div
-            className="min-h-screen w-full bg-cover bg-center"
+            className="min-h-screen w-full bg-cover bg-center flex flex-col justify-start"
             style={{
                 backgroundImage: "url(Images/Error.gif)",
                 backgroundColor:'#DFE3F2', opacity: 0.8
@@ -12,21 +12,20 @@ export default function Error() {
         >
             <Navbar />
 
-            <div className="flex justify-center items-center min-h-screen px-4">
-                <div>
-                    <h1 className="text-xl text-[#0A0440] flex justify-center md:text-8xl font-bold font-alkalami mb-4 drop-shadow-[1px_1px_2px_white]">
+            <div className="flex flex-col justify-center items-center min-h-screen px-4 py-8">
+                <div className="text-center">
+                    <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-8xl text-[#0A0440] font-bold font-alkalami mb-4 drop-shadow-[1px_1px_2px_white]">
                         404 Error
                     </h1>
-                    <h3 className="sm:text-lg flex justify-center md:text-4xl text-[#152669] font-aleo font-bold italic md:mb-10 drop-shadow-[1px_1px_1px_white]">
-                    The Page you've been looking for might have been removed or temporarily unavailable
+                    <h3 className="text-lg sm:text-xl md:text-3xl text-[#152669] font-aleo font-bold italic mb-10 drop-shadow-[1px_1px_1px_white]">
+                        The Page you've been looking for might have been removed or temporarily unavailable
                     </h3>
 
-                    <div className='text-[#0A0440] text-sm sm:text-lg md:text-2xl drop-shadow-[1px_1px_1px_white] font-semibold flex items-center justify-evenly mx-auto'>
-                        <button className='px-4 sm:px-6 md:px-10 py-1 rounded-lg bg-[linear-gradient(125.26deg,#5672B8_22.66%,rgba(4,11,41,0.86)_59.18%)] text-[#ffffff] text-sm sm:text-lg md:text-2xl font-aleo font-semi bold transform hover:scale-105 transition-transform duration-300'>
+                    <div className="flex justify-center">
+                        <button className="px-6 py-3 sm:px-8 sm:py-4 md:px-12 md:py-5 rounded-lg bg-[linear-gradient(125.26deg,#5672B8_22.66%,rgba(4,11,41,0.86)_59.18%)] text-[#ffffff] text-lg sm:text-xl md:text-2xl font-aleo font-semibold transform hover:scale-105 transition-transform duration-300">
                             GO TO HOME PAGE
                         </button>
                     </div>
-
                 </div>
             </div>
         </div>
