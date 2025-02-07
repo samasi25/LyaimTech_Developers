@@ -13,6 +13,8 @@ const { LeaderBoard, Finalize, CalculateScores } = require("../controllers/leade
 
 const router = express.Router();
 
+
+
 // Auth Routes
 router.post("/login", login)
 router.post("/signup", signup)

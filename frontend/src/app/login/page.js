@@ -1,8 +1,11 @@
 'use client';
+import apiService from '@/components/apiService';
 import Navbar from '@/components/Navbar';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+
 
 export default function Login() {
     const [formData, setFormData] = useState({
@@ -10,7 +13,7 @@ export default function Login() {
         password: '',
     });
     const [errors, setErrors] = useState({});
-
+    const router = useRouter();
     // Handle input changes
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -31,19 +34,30 @@ export default function Login() {
         return errors;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const validationErrors = validate();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
-        } else {
-            setErrors({});
+        }
+        try {
+            const response = await apiService.login(formData);
+            // console.log("Login Successful:", response.data);
+            alert("You are Login Successful!");
+
             setFormData({
                 email: '',
                 password: '',
             });
-            alert('Submitted');
-            // Handle successful login (e.g., API call)
+
+            router.push("/");
+
+        } catch (error) {
+            // console.error(" Login Failed:", error.response?.data?.message || error.message);
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                server: error.response?.data?.message || "Something went wrong!",
+            }));
         }
     };
 

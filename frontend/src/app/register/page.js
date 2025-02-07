@@ -1,19 +1,23 @@
 'use client';
+import apiService from '@/components/apiService';
 import Navbar from '@/components/Navbar';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import { useRouter } from "next/navigation";
 
 export default function Register() {
     const [formData, setFormData] = useState({
         username: '',
         email: '',
-        mobile: '',
+        mobileNo: '',
         password: '',
-        referral: '',
+        referralCode: '',
     });
     const [checked, setChecked] = useState(false);
     const [errors, setErrors] = useState({});
+    const [serverError, setServerError] = useState(null); // new
+    const router = useRouter();
 
     // Handle input changes
     const handleChange = (e) => {
@@ -31,10 +35,10 @@ export default function Register() {
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
             errors.email = "Invalid email format.";
         }
-         if (!/^\d{10}$/.test(formData.mobile)) {
-            errors.mobile = "Invalid mobile number (10 digits required).";
+        if (!/^\d{10}$/.test(formData.mobileNo)) {
+            errors.mobileNoNo = "Invalid mobileNoNo number (10 digits required).";
         }
-         if (formData.password.length < 8) {
+        if (formData.password.length < 8) {
             errors.password = "Password must be at least 8 characters.";
         }
         // if (!checked) {
@@ -43,24 +47,35 @@ export default function Register() {
         return errors;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const validationErrors = validate();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
-        } else {
-            setErrors({}); alert('Submitted');
-            console.log('Signup successful with:', formData);
-            // Handle successful login (e.g., API call)
+            return;
+        }
+        // else {
+        //     setErrors({}); 
+        //     console.log('Signup successful with:', formData);
+        //     // Handle successful login (e.g., API call)
+        // }
+
+
+        try {
+            const response = await apiService.signup(formData);
+            alert('Submitted');
+            router.push("/login");
+        } catch (error) {
+            setServerError(error.response?.data?.message || "Something went wrong")
         }
     };
 
-    const isFormValid = 
-    formData.username.trim() && 
-    formData.email.trim() && 
-    formData.mobile.trim() && 
-    formData.password.trim() &&
-    checked
+    const isFormValid =
+        formData.username.trim() &&
+        formData.email.trim() &&
+        formData.mobileNo.trim() &&
+        formData.password.trim() &&
+        checked
 
     return (
         <div
@@ -136,17 +151,17 @@ export default function Register() {
                             />
                             {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
                         </div>
-                        {/* Mobile Field */}
+                        {/* mobileNo Field */}
                         <div className="mb-5">
                             <input
                                 type='number'
-                                name="mobile"
-                                placeholder="Mobile Number"
-                                value={formData.mobile}
+                                name="mobileNo"
+                                placeholder="mobile Number"
+                                value={formData.mobileNo}
                                 onChange={(e) => handleChange(e)}
                                 className="w-full border-b bg-transparent font-aleo text-xl placeholder-gray-800 outline-none pl-2"
                             />
-                            {errors.mobile && <p className="text-red-500 text-sm mt-1">{errors.mobile}</p>}
+                            {errors.mobileNo && <p className="text-red-500 text-sm mt-1">{errors.mobileNo}</p>}
                         </div>
                         {/* Password Field */}
                         <div className="mb-5">
@@ -160,17 +175,17 @@ export default function Register() {
                             />
                             {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
                         </div>
-                        {/* Referral Field */}
+                        {/* referralCode Field */}
                         <div className="mb-6">
                             <input
                                 type="text"
-                                name="referral"
-                                placeholder="Referral Code"
-                                value={formData.referral}
+                                name="referralCode"
+                                placeholder="referral Code"
+                                value={formData.referralCode}
                                 onChange={handleChange}
                                 className="w-full border-b bg-transparent font-aleo text-xl outline-none placeholder-gray-800 pl-2"
                             />
-                            {errors.referral && <p className="text-red-500 text-sm mt-1">{errors.referral}</p>}
+                            {errors.referralCode && <p className="text-red-500 text-sm mt-1">{errors.referralCode}</p>}
                         </div>
 
                         {/* Terms and conditions */}
