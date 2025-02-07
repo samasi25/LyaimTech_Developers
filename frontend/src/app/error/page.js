@@ -1,5 +1,6 @@
 'use client';
 import Navbar from '@/components/Navbar';
+import Link from 'next/link';  // Import Link from next/link for navigation
 
 export default function Error() {
     return (
@@ -7,7 +8,8 @@ export default function Error() {
             className="min-h-screen w-full bg-cover bg-center flex flex-col justify-start"
             style={{
                 backgroundImage: "url(Images/Error.gif)",
-                backgroundColor:'#DFE3F2', opacity: 0.8
+                backgroundColor: '#DFE3F2',
+                opacity: 0.8
             }}
         >
             <Navbar />
@@ -22,9 +24,11 @@ export default function Error() {
                     </h3>
 
                     <div className="flex justify-center">
-                        <button className="px-6 py-3 sm:px-8 sm:py-4 md:px-12 md:py-5 rounded-lg bg-[linear-gradient(125.26deg,#5672B8_22.66%,rgba(4,11,41,0.86)_59.18%)] text-[#ffffff] text-lg sm:text-xl md:text-2xl font-aleo font-semibold transform hover:scale-105 transition-transform duration-300">
-                            GO TO HOME PAGE
-                        </button>
+                        <Link href="/" passHref>
+                            <button className="px-6 py-3 sm:px-8 sm:py-4 md:px-12 md:py-5 rounded-lg bg-[linear-gradient(125.26deg,#5672B8_22.66%,rgba(4,11,41,0.86)_59.18%)] text-[#ffffff] text-lg sm:text-xl md:text-2xl font-aleo font-semibold transform hover:scale-105 transition-transform duration-300">
+                                GO TO HOME PAGE
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </div>
