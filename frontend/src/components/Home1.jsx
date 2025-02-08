@@ -1,6 +1,8 @@
-import React from "react";
+
 
 const Home1 = () => {
+
+
     return (
         <div
             className="min-h-screen w-full bg-cover bg-center flex items-center justify-center px-4"
@@ -10,6 +12,7 @@ const Home1 = () => {
                 backgroundSize: "cover",
             }}
         >
+
 
             <div className="w-2/3 md:left-1/3 absolute text-white space-y-10 max-md:w-full max-md:px-6 max-md:relative max-md:flex max-md:flex-col max-md:items-center max-md:justify-center">
 
@@ -27,6 +30,7 @@ const Home1 = () => {
                         And win big! 🤑
                     </p>
                 </div>
+
 
 
                 <div className="text-center space-y-5">

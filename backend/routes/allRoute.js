@@ -14,6 +14,8 @@ const { default: meHandler } = require("../controllers/meHandler");
 
 const router = express.Router();
 
+
+
 // Auth Routes
 router.post("/login", login)
 router.post("/signup", signup)
