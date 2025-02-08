@@ -42,7 +42,7 @@ export default function Help() {
                         id="message"
                         name="message"
                         placeholder="Type your question here..."
-                        className="w-full mt-2 p-3 md:p-6 lg:p-10 rounded-lg bg-[#181d2f] outline-none resize-none"
+                        className="w-full mt-2 p-3 md:p-6 lg:p-10 rounded-lg bg-[#A5A5A51A] outline-none resize-none"
                         rows="4"
                     />
 
