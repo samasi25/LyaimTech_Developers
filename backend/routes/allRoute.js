@@ -10,12 +10,18 @@ const { MatchOverview } = require("../controllers/matchOverview");
 const { WalletPage, AddFunds, AddFundssSuccess, Withdrawal } = require("../controllers/wallet");
 const { ContestHandle, JoinContest } = require("../controllers/contest");
 const { LeaderBoard, Finalize, CalculateScores } = require("../controllers/leaderboard");
+const { default: meHandler } = require("../controllers/meHandler");
 
 const router = express.Router();
+
+
 
 // Auth Routes
 router.post("/login", login)
 router.post("/signup", signup)
+
+// new
+router.get('/me', authenticate, meHandler);
 
 // Profile Routes
 router.get("/profile", authenticate, userProfile)

@@ -3,9 +3,17 @@ import { useState } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
 import Image from 'next/image';
 import Link from 'next/link';
+import useAuth from "../utils/useAuth";//new
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const { user, loading } = useAuth();//new
+
+    const handleLogout = async () => {
+        await axios.post("logout"); // Endpoint to clear cookies
+        window.location.reload(); // Refresh page to update navbar
+    };
+    
 
     return (
         <nav className="shadow-md p-2 flex justify-between bg-black bg-opacity-45 items-center fixed top-0 left-0 w-full z-50">
@@ -14,10 +22,16 @@ const Navbar = () => {
             </div>
 
             <div className="flex items-center space-x-4 md:space-x-8 text-white md:mr-12">
-                <div className="flex gap-4 md:gap-10 text-lg drop-shadow-[2px_2px_2px_red]">
+                {user ? (
+                    <div className="flex gap-4 md:gap-10 text-lg drop-shadow-[2px_2px_2px_red]">
+                    <Link href="/dashboard">Dashboard</Link>
+                    <Link href="/profile">Profile</Link>
+                    <button onClick={handleLogout} className="text-red-400">Logout</button>
+                </div>
+                ) : (<div className="flex gap-4 md:gap-10 text-lg drop-shadow-[2px_2px_2px_red]">
                     <Link href={'/register'}>REGISTRATION</Link>
                     <Link href={'/login'}>LOGIN</Link>
-                </div>
+                </div>)}
 
                 <div className="relative rounded-full  bg-slate-200 hover:bg-gray-700">
                     <button
