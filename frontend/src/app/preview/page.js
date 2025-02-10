@@ -10,6 +10,7 @@ const Preview = () => {
     const [playerName, setPlayerName] = useState(''); 
     const [popupMessage, setPopupMessage] = useState(''); 
     const [isPopupVisible, setIsPopupVisible] = useState(false); 
+
     const handleSubmit = async () => {
         const data = { team, playerName };
 
@@ -44,7 +45,7 @@ const Preview = () => {
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-300 p-4 font-aleo">
             <Navbar />
-            <div className="bg-gray-500 bg-opacity-40 shadow-lg rounded-xl overflow-hidden max-w-4xl w-full mt-20 py-8 px-6 md:px-12 flex flex-col items-center text-center">
+            <div className="bg-gray-500 bg-opacity-40 shadow-lg rounded-xl overflow-hidden max-w-3xl w-full mt-20 py-8 px-6 md:px-12 flex flex-col items-center text-center">
                 <h1 className="md:text-5xl text-4xl font-bold font-alkalami text-[#0A0440]">Preview</h1>
 
                 <div className="w-full max-w-2xl h-96 bg-gray-600 p-6 font-aleo text-lg rounded-lg mt-10 shadow-lg">
@@ -75,7 +76,7 @@ const Preview = () => {
 
             {isPopupVisible && (
                 <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50 z-50">
-                    <div className="bg-white p-6 rounded-lg shadow-lg w-1/3 text-center">
+                    <div className="bg-white p-6 rounded-lg shadow-lg w-4/5 sm:w-1/3 md:w-1/4 lg:w-1/4 xl:w-1/3 text-center">
                         <h2 className="text-xl font-bold">{popupMessage}</h2>
                         <button
                             className="mt-4 p-2 px-6 bg-blue-500 text-white rounded-md"
