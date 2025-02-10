@@ -44,7 +44,7 @@ const Preview = () => {
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-300 p-4 font-aleo">
             <Navbar />
-            <div className="bg-gray-500 bg-opacity-40 shadow-lg rounded-xl overflow-hidden max-w-4xl w-full mx-auto mt-10 py-8 px-6 md:px-12 flex flex-col items-center text-center">
+            <div className="bg-gray-500 bg-opacity-40 shadow-lg rounded-xl overflow-hidden max-w-4xl w-full mt-20 py-8 px-6 md:px-12 flex flex-col items-center text-center">
                 <h1 className="md:text-5xl text-4xl font-bold font-alkalami text-[#0A0440]">Preview</h1>
 
                 <div className="w-full max-w-2xl h-96 bg-gray-600 p-6 font-aleo text-lg rounded-lg mt-10 shadow-lg">
