@@ -2,15 +2,18 @@
 import Navbar from '@/components/Navbar';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useAuth } from "@/context/AuthContext";
 
-export default function Register() {
-  const [formData, setFormData] = useState({
-    username: 'Ayush',
-    email: 'ayush@gmail.com',
-    mobile: '1234567890',
-    referral: '',
-  });
+export default function Profile() {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return <p className="text-center text-white text-2xl">Loading...</p>;
+  }
+
+  if (!user) {
+    return <p className="text-center text-white text-2xl">User not found</p>;
+  }
 
   return (
     <div
@@ -40,7 +43,7 @@ export default function Register() {
 
             <div className="flex-1 p-6 md:p-12 w-full">
               <div className="flex justify-between text-2xl font-bold">
-                <span>Hii, {formData.username}</span>
+                <span>Hii, {user.username}</span>
                 <p className="px-3 py-1 rounded-md bg-[#0A044033]">
                   Wallet <span className='text-white'> $ 0.00</span>
                 </p>
@@ -51,7 +54,7 @@ export default function Register() {
                 <input
                   type="email"
                   name="email"
-                  value={formData.email}
+                  value={user.email}
                   readOnly
                   className="w-full border-b bg-transparent font-aleo text-xl placeholder-black outline-none pl-2 py-2"
                 />
@@ -60,15 +63,15 @@ export default function Register() {
                 <input
                   type="text"
                   name="username"
-                  value={formData.username}
+                  value={user.username}
                   readOnly
                   className="w-full border-b bg-transparent font-aleo text-xl outline-none placeholder-black pl-2 py-2"
                 />
 
                 <input
                   type="number"
-                  name="mobile"
-                  value={formData.mobile}
+                  name="mobileNo"
+                  value={user.mobileNo}
                   readOnly
                   className="w-full border-b bg-transparent font-aleo text-xl placeholder-black outline-none pl-2 py-2"
                 />
@@ -76,9 +79,9 @@ export default function Register() {
 
                 <input
                   type="text"
-                  name="referral"
+                  name="referralCode"
                   placeholder="Referral Code"
-                  value={formData.referral}
+                  value={user.referralCode}
                   readOnly
                   className="w-full border-b bg-transparent font-aleo text-xl outline-none placeholder-black pl-2 py-2"
                 />

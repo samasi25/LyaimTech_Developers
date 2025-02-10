@@ -4,7 +4,7 @@ const User = require("../models/user");
 
 
 const userProfile = async (req, res) => {
-    const userId = req.id;
+    const userId = req.user.id;
 
     try {
         const user = await User.findById(userId).select('email username mobileNo referralCode');

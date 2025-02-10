@@ -16,14 +16,14 @@ const login = async (req, res) => {
 
         if (!user) {
             console.error("User not found.");
-            return res.status(400).json({ success: false, message: "Invalid email or password." });
+            return res.status(400).json({ success: false, message: "Invalid email." });
         }
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
 
         if (!isPasswordValid) {
             console.error("Password mismatch.");
-            return res.status(401).json({ success: false, message: "Invalid email or password." });
+            return res.status(401).json({ success: false, message: "Invalid password." });
         }
 
         const token = jwt.sign(
@@ -41,7 +41,11 @@ const login = async (req, res) => {
             maxAge: 7 * 24 * 60 * 60 * 1000,
         });
 
-        return res.status(200).json({ success: true, message: "Login successful" });
+        return res.status(200).json({
+            success: true,
+            message: "Login successful",
+            data: token
+        });
     } catch (error) {
         return res.status(500).json({ success: false, message: "Internal Server Error" });
     }

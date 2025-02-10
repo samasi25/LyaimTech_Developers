@@ -18,7 +18,7 @@ const authenticate = (req, res, next) => {
         if (!token) {
             return res.status(403).json({
                 success: false,
-                message: 'No token provided, authorization denied.',
+                message: 'No token provided, please login first.',
             });
         }
 
