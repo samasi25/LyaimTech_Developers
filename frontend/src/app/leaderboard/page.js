@@ -3,7 +3,7 @@ import Button from '@/components/Button';
 import Navbar from '@/components/Navbar';
 import { useState } from 'react';
 
-export default function Register() {
+export default function Leaderboard() {
     const [formData, setFormData] = useState({
         username: 'Username',
     });
