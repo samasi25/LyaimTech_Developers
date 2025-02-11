@@ -10,7 +10,7 @@ const TermsAndConditions = () => {
             <div className="max-w-4xl w-full bg-white p-8 shadow-lg rounded-lg">
                 <h1 className="md:text-3xl text-2xl max-[400px]:text-xl font-bold text-center md:mb-10 mb-6 drop-shadow-[1px_1px_1px_red]">Terms and Conditions</h1>
 
-                <p className="italic text-lg mb-4">Welcome to <span className="font-semibold drop-shadow-[1px_1px_1px_yellow]">Lyain</span>. By using our services, you agree to comply with and be bound by the following Terms and Conditions. Please read these terms carefully before participating in any fantasy contests or using the website.</p>
+                <p className="italic text-lg mb-4">Welcome to <span className="font-semibold drop-shadow-[1px_1px_1px_yellow]">Lyaim</span>. By using our services, you agree to comply with and be bound by the following Terms and Conditions. Please read these terms carefully before participating in any fantasy contests or using the website.</p>
 
                 <section className="mb-6">
                     <h2 className="text-xl max-[400px]:text-lg font-bold mb-2">1. Eligibility</h2>
@@ -107,7 +107,7 @@ const TermsAndConditions = () => {
                     <p>If you have any questions or concerns, feel free to contact us via email at <span className="text-blue-600">support</span>.</p>
                 </section>
 
-                <p className="text-center text-gray-500">&copy; 2024 Lyain</p>
+                <p className="text-center text-gray-500">&copy; 2024 Lyaim</p>
             </div>
         </div>
     );
