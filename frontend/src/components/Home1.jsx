@@ -1,7 +1,15 @@
-
+// Import useRouter from next/router
+'use client';
+import { useRouter } from 'next/navigation'; // This is for Next.js 13+ with App Directory
 
 const Home1 = () => {
+    // Create an instance of the router
+    const router = useRouter();
 
+    // Function to navigate to the registration page
+    const handleJoinClick = () => {
+        router.push('/register'); // Navigate to /register page
+    };
 
     return (
         <div
@@ -12,10 +20,7 @@ const Home1 = () => {
                 backgroundSize: "cover",
             }}
         >
-
-
             <div className="w-2/3 md:left-1/3 absolute text-white space-y-10 max-md:w-full max-md:px-6 max-md:relative max-md:flex max-md:flex-col max-md:items-center max-md:justify-center">
-
                 <div className="text-center font-acme space-y-5">
                     <h1 className="text-3xl font-semibold font-abril drop-shadow-[4px_4px_4px_black]">
                         KICK OFF YOUR FANTASY JOURNEY!!!
@@ -31,8 +36,6 @@ const Home1 = () => {
                     </p>
                 </div>
 
-
-
                 <div className="text-center space-y-5">
                     <p className="text-3xl font-bold font-agbalumo text-[#970808] drop-shadow-[1px_1px_2px_white]">
                         SO, WHAT ARE YOU WAITING FOR???
@@ -43,6 +46,7 @@ const Home1 = () => {
                             boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
                         }}
                         className="w-fit px-16 py-2 rounded-2xl text-[#93EEE3] text-lg font-semibold hover:text-[#588b91] transition"
+                        onClick={handleJoinClick}  // Handle the button click to navigate
                     >
                         JOIN NOW
                     </button>
