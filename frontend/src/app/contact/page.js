@@ -28,7 +28,7 @@ const ContactUs = () => {
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-300 p-4 font-aleo">
             <Navbar />
-            <div className='bg-gray-500 bg-opacity-40 shadow-lg rounded-xl overflow-hidden max-w-4xl w-full mx-auto py-8 px-6 md:px-12 flex flex-col items-center text-center'>
+            <div className='bg-gray-500 bg-opacity-40 shadow-lg rounded-xl overflow-hidden max-w-4xl w-full mx-auto py-8 px-6 mt-20 md:px-12 flex flex-col items-center text-center'>
                 <h1 className="md:text-3xl text-2xl font-bold font-aleo text-[#0A0440] drop-shadow-[1px_1px_1px_black]">Contact Us</h1>
                 <p className="md:text-3xl text-2xl italic text-[#0A0440] font-semibold sm:mt-10 mt-5 font-alegreya drop-shadow-[1px_1px_2px_white]">
                     Get in touch – we&apos;re here to provide the answers you need.

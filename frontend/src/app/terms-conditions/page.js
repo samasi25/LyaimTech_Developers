@@ -5,7 +5,7 @@ import Navbar from '@/components/Navbar';
 
 const TermsAndConditions = () => {
     return (
-        <div className="flex justify-center py-10 mt-40 px-5 md:px-20 font-aleo">
+        <div className="flex justify-center py-10 mt-20 px-5 md:px-20 font-aleo">
             <Navbar />
             <div className="max-w-4xl w-full bg-white p-8 shadow-lg rounded-lg">
                 <h1 className="md:text-3xl text-2xl max-[400px]:text-xl font-bold text-center md:mb-10 mb-6 drop-shadow-[1px_1px_1px_red]">Terms and Conditions</h1>
