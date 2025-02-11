@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Image from 'next/image';
+import Navbar from '@/components/Navbar';
 
 export default function Wallet() {
     const [totalMoney, setTotalMoney] = useState(0);
@@ -35,7 +36,9 @@ export default function Wallet() {
 
     return (
         <div className="min-h-screen bg-gradient-to-r from-[#6b2c2c] to-[#4c60a6] flex items-center justify-center p-2 text-white">
-            <div className="w-full max-w-4xl p-6 rounded-lg shadow-xl font-aleo text-black flex flex-col items-center">
+            
+        <Navbar />
+            <div className="w-full max-w-4xl mt-20 p-6 rounded-lg shadow-xl font-aleo text-black flex flex-col items-center">
                 <div className="flex w-full md:gap-12 gap-7 items-center">
                     <Image src="/Images/w 1.png" alt="Wallet" width={200} height={200} className='max-md:w-40 max-sm:hidden' />
                     <div className="flex flex-col space-y-4 w-full">

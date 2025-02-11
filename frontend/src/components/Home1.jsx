@@ -1,14 +1,14 @@
-// Import useRouter from next/router
+
 'use client';
-import { useRouter } from 'next/navigation'; // This is for Next.js 13+ with App Directory
+import { useRouter } from 'next/navigation'; 
 
 const Home1 = () => {
-    // Create an instance of the router
+    
     const router = useRouter();
 
-    // Function to navigate to the registration page
+    
     const handleJoinClick = () => {
-        router.push('/register'); // Navigate to /register page
+        router.push('/register'); 
     };
 
     return (
@@ -46,7 +46,7 @@ const Home1 = () => {
                             boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
                         }}
                         className="w-fit px-16 py-2 rounded-2xl text-[#93EEE3] text-lg font-semibold hover:text-[#588b91] transition"
-                        onClick={handleJoinClick}  // Handle the button click to navigate
+                        onClick={handleJoinClick}  
                     >
                         JOIN NOW
                     </button>
