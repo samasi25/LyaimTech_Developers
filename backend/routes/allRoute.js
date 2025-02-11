@@ -26,8 +26,8 @@ router.get("/profile", authenticate, userProfile)
 router.put("/profile/update", authenticate, updateUserProfile)
 
 // Team Routes
-router.get('/team/choose/:matchId', TeamChooseGet)
-router.post("/team/choose/save/:matchId", TeamChoosePost)
+router.get('/team/choose/:matchId', authenticate, TeamChooseGet)
+router.post("/team/choose/save/:matchId", authenticate, TeamChoosePost)
 
 // Match Overview Route
 router.get("/match/overview", authenticate, MatchOverview)

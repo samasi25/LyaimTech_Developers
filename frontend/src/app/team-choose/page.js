@@ -75,15 +75,33 @@ const TeamChoose = () => {
 
     const handleSubmit = async () => {
         try {
+
+            const selectedPlayers = [...selectedHomePlayers, ...selectedAwayPlayers];
+            const selectedSubstitutes = [...selectedHomeSubstitutes, ...selectedAwaySubstitutes];
+
+            if (selectedPlayers.length !== 12) {
+                alert("You must select exactly 12 players.");
+                return;
+            }
+
+            if (selectedSubstitutes.length !== 2) {
+                alert("You must select exactly 2 substitutes.");
+                return;
+            }
+
+
             await apiService.postData(`/team/choose/save/${matchId}`, {
-                selectedPlayers: [...selectedHomePlayers, ...selectedAwayPlayers],
-                selectedSubstitutes: [...selectedHomeSubstitutes, ...selectedAwaySubstitutes]
+                selectedPlayers,
+                selectedSubstitutes
             });
-            alert('Team Selected Successfully!');
+
+            alert("Team Selected Successfully!");
         } catch (error) {
-            console.error('Error submitting team:', error);
+            console.error("Error submitting team:", error);
         }
     };
+
+
 
     const renderPlayers = (team, teamType) => {
         return team.players.map(player => (
@@ -118,7 +136,7 @@ const TeamChoose = () => {
                         </div>
                         <span className="text-3xl font-medium">VS</span>
                         {/* <span className="text-[#0A0440] text-3xl md:text-6xl font-medium font-arizonia mx-auto drop-shadow-[0px_0px_1px_red]">
-                            VS
+                            VS 
                         </span> */}
                         <div className="w-full max-w-xs text-center">
                             <button className="w-full py-2 rounded-full bg-gradient-to-b  from-black to-gray-800 hover:scale-105 transition-transform duration-300 md:text-2xl drop-shadow-[0px_0px_2px_white]  hover:drop-shadow-[0px_0px_0px_white]">
