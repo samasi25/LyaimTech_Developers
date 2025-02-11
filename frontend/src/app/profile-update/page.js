@@ -1,21 +1,56 @@
 'use client';
-import Button from '@/components/Button';
+import apiService from '@/components/apiService';
 import Navbar from '@/components/Navbar';
-import Link from 'next/link';
-import { useState } from 'react';
+import { useAuth } from '@/context/AuthContext';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function Register() {
+    const router = useRouter();
     const [formData, setFormData] = useState({
-        username: 'Ayush',
-        email: 'ayush@gmail.com',
-        mobile: '1234567890',
-        referral: '',
+        username: '',
+        email: '',
+        mobileNo: ''
     });
+    const [updating, setUpdating] = useState(false);
+    const { user, loading } = useAuth();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
+
+    const handleUpdateProfile = async () => {
+        try {
+            setUpdating(true);
+
+            const response = await apiService.profileUpdate(formData);console.log(response);
+            // toast message
+            router.push('/profile');
+        } catch (error) {
+            console.error("Error updating profile:", error);
+        } finally {
+            setUpdating(false);
+        }
+    };
+
+    const handleLogout = async () => {
+        await apiService.logout(); // Endpoint to clear cookies
+        window.location.reload(); // Refresh page to update navbar
+        router.push('/');
+    };
+
+    useEffect(() => {
+        setFormData(user);
+    }, [])
+
+    if (loading) {
+        return <p className="text-center text-white text-2xl">Loading...</p>;
+    }
+
+    if (!user) {
+        return <p className="text-center text-white text-2xl">User not found</p>;
+    }
 
     return (
         <div
@@ -63,9 +98,9 @@ export default function Register() {
                     <div className="mb-5">
                         <input
                             type='number'
-                            name="mobile"
+                            name="mobileNo"
                             placeholder="Mobile Number"
-                            value={formData.mobile}
+                            value={formData.mobileNo}
                             onChange={(e) => handleChange(e)}
                             className="w-full border-b bg-transparent font-aleo text-xl placeholder-black outline-none pl-2"
                         />
@@ -74,12 +109,28 @@ export default function Register() {
 
                 {/* update Section */}
                 <div className="flex flex-col md:flex-row justify-center items-center gap-3 font-medium text-white mt-6">
-                    <Link href="/profile-update" className="w-1/2">
-                        <Button text='Update' color='white' />
-                    </Link>
-                    <Link href="/logout" className="w-1/2">
-                        <Button text='Logout' color='white' />
-                    </Link>
+                    <button
+                        type="button"
+                        onClick={handleUpdateProfile}
+                        className="w-full py-1 rounded-full text-white text-lg font-bold hover:bg-green-600 transition"
+                        style={{
+                            background: 'linear-gradient(150deg, #5672B8, #040B29DB)',
+                            boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.2)',
+                        }}
+                    >
+                        {updating ? 'Updating...' : 'Update'}
+                    </button>
+                    <button
+                        type="button"
+                        onClick={handleLogout}
+                        className="w-full py-1 rounded-full text-white text-lg font-bold hover:bg-green-600 transition"
+                        style={{
+                            background: 'linear-gradient(150deg, #5672B8, #040B29DB)',
+                            boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.2)',
+                        }}
+                    >
+                        Logout
+                    </button>
                 </div>
             </div>
         </div>

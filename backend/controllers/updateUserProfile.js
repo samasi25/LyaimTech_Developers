@@ -3,14 +3,14 @@ const User = require("../models/user");
 // dotenv.config(); 
 
 const updateUserProfile = async (req, res) => {
-    const userId = req.id; 
-    const { email, username, mobile_no } = req.body;
+    const userId = req.user.id;
+    const { email, username, mobileNo } = req.body;
 
     try {
      
         const updatedUser = await User.findByIdAndUpdate(
             userId,
-            { email, username, mobile_no },
+            { email, username, mobileNo },
             { new: true, runValidators: true }
         ).select('email username mobileNo');
 

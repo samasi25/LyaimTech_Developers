@@ -1,6 +1,8 @@
 import { Geist, Geist_Mono, Alex_Brush, Alegreya_SC, Aleo,  Abril_Fatface, Agbalumo, Arizonia  } from "next/font/google";
 import "./globals.css";
 
+import { AuthProvider } from "@/context/AuthContext";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -54,6 +56,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
+    <AuthProvider>
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${alexBrush.variable} ${alegreyaSC.variable} ${aleo.variable}  ${abrilFatface.variable} ${agbalumo.variable} ${arizonia.variable} antialiased`}
@@ -61,5 +64,6 @@ export default function RootLayout({ children }) {
         {children}
       </body>
     </html>
+    </AuthProvider>
   );
 }

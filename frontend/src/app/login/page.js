@@ -8,6 +8,7 @@ import { useState } from 'react';
 
 
 export default function Login() {
+    const [loading, setLoading] = useState(false)
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -36,14 +37,16 @@ export default function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         const validationErrors = validate();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
         }
         try {
             const response = await apiService.login(formData);
-            // console.log("Login Successful:", response.data);
             alert("You are Login Successful!");
+            // toast message
+            localStorage.setItem('token', response.data.data)
 
             setFormData({
                 email: '',
@@ -58,6 +61,8 @@ export default function Login() {
                 ...prevErrors,
                 server: error.response?.data?.message || "Something went wrong!",
             }));
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -146,7 +151,7 @@ export default function Login() {
                                 boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.2)',
                             }}
                         >
-                            Login
+                            {loading ? 'Loading...' : 'Login'}
                         </button>
                     </form>
 

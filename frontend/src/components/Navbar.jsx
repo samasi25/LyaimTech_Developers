@@ -3,11 +3,13 @@ import { useState } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
 import Image from 'next/image';
 import Link from 'next/link';
-import useAuth from "../utils/useAuth";//new
+// import useAuth from "../utils/useAuth";//new
+import { useAuth } from "@/context/AuthContext";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const { user, loading } = useAuth();//new
+    // const { user, loading } = useAuth();//new
+    const { user, loading } = useAuth();
 
     const handleLogout = async () => {
         await axios.post("logout"); // Endpoint to clear cookies
@@ -24,7 +26,7 @@ const Navbar = () => {
             <div className="flex items-center space-x-4 md:space-x-8 text-white md:mr-12">
                 {user ? (
                     <div className="flex gap-4 md:gap-10 text-lg drop-shadow-[2px_2px_2px_red]">
-                    <Link href="/dashboard">Dashboard</Link>
+                    <Link href="/">Home</Link>
                     <Link href="/profile">Profile</Link>
                     <button onClick={handleLogout} className="text-red-400">Logout</button>
                 </div>

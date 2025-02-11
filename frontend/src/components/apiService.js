@@ -9,6 +9,7 @@ const API = axios.create({
 API.interceptors.response.use(
     (response) => response,
     (error) => {
+        // toast message
         console.error("Server API Error:", error.response?.data?.message || error.message);
         return Promise.reject(error);
     }
@@ -20,6 +21,9 @@ const apiService = {
     signup: (data) => API.post("/signup", data),
     login: (data) => API.post("login", data),
     logout: () => API.post("/logout"),
+    profile: () => API.get("profile"),
+    profileUpdate: (data) => API.put("profile/update", data),
+    contact: (data) => API.post("api/contact", data),
 
 
 
