@@ -30,8 +30,8 @@ const apiService = {
 
 
     //  Generic API Calls 
-    // fetchData: (endpoint) => API.get(endpoint),
-    // postData: (endpoint, data) => API.post(endpoint, data),
+    fetchData: (endpoint) => API.get(endpoint),
+    postData: (endpoint, data) => API.post(endpoint, data),
 };
 
 export default apiService;
