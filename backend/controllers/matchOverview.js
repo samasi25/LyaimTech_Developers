@@ -1,5 +1,5 @@
 const moment = require('moment-timezone');
-const Match = require('../models/matches');
+const {Match} = require('../models/matches');
 
 
 // Utility function to convert UTC to New York time

@@ -1,4 +1,5 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const API = axios.create({
     baseURL: "http://localhost:9000",
@@ -9,8 +10,7 @@ const API = axios.create({
 API.interceptors.response.use(
     (response) => response,
     (error) => {
-        // toast message
-        console.error("Server API Error:", error.response?.data?.message || error.message);
+        toast.error("Server API Error:", error.response?.data?.message || error.message);
         return Promise.reject(error);
     }
 );

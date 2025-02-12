@@ -2,12 +2,13 @@
 import { useEffect, useState } from 'react';
 import apiService from '@/components/apiService';
 import Navbar from '@/components/Navbar';
-// import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
+import toast from "react-hot-toast";
 
 
 const TeamChoose = () => {
 
-    // const router = useRouter();
+    const router = useRouter();
     // const { matchId } = router.query;
 
     // Temporarily Hardcoded Match ID (Testing Purpose)
@@ -27,7 +28,7 @@ const TeamChoose = () => {
                 setHomeTeam(response.data.homeTeam);
                 setAwayTeam(response.data.awayTeam);
             } catch (error) {
-                console.error('Error fetching teams:', error);
+                toast.error('Error fetching teams:', error);
             }
         };
         fetchTeams();
@@ -75,36 +76,36 @@ const TeamChoose = () => {
 
     const handleSubmit = async () => {
         try {
-
             const selectedPlayers = [...selectedHomePlayers, ...selectedAwayPlayers];
             const selectedSubstitutes = [...selectedHomeSubstitutes, ...selectedAwaySubstitutes];
 
             if (selectedPlayers.length !== 12) {
-                alert("You must select exactly 12 players.");
+                toast.error("You must select exactly 12 players!");
                 return;
             }
 
             if (selectedSubstitutes.length !== 2) {
-                alert("You must select exactly 2 substitutes.");
+                toast.error("You must select exactly 2 substitutes.");
                 return;
             }
+            router.push('/preview');
 
+            // await apiService.postData(`/team/choose/save/${matchId}`, {
+            //     selectedPlayers,
+            //     selectedSubstitutes
+            // });
 
-            await apiService.postData(`/team/choose/save/${matchId}`, {
-                selectedPlayers,
-                selectedSubstitutes
-            });
-
-            alert("Team Selected Successfully!");
+            toast.success("Team Selected Successfully!");
         } catch (error) {
-            console.error("Error submitting team:", error);
+            toast.error("Error submitting team:", error);
         }
     };
 
-
-
     const renderPlayers = (team, teamType) => {
-        return team.players.map(player => (
+        {(team?.players?.length == 0) && (
+            <div>Loading...</div>
+        )}
+        return team?.players?.map(player => (
             <div key={player.playerId} className="flex justify-between items-center p-2 border-b">
                 {/* <span>{player.playerName} ({player.position})</span> */}
                 <span>{player.playerName}</span>
@@ -158,4 +159,3 @@ const TeamChoose = () => {
 };
 
 export default TeamChoose;
-
