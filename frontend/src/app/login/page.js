@@ -44,8 +44,7 @@ export default function Login() {
         }
         try {
             const response = await apiService.login(formData);
-            alert("You are Login Successful!");
-            // toast message
+            toast.success("Logged in Successfully");
             localStorage.setItem('token', response.data.data)
 
             setFormData({
@@ -56,7 +55,7 @@ export default function Login() {
             router.push("/");
 
         } catch (error) {
-            // console.error(" Login Failed:", error.response?.data?.message || error.message);
+            toast.error(" Login Failed:", error.response?.data?.message || error.message);
             setErrors((prevErrors) => ({
                 ...prevErrors,
                 server: error.response?.data?.message || "Something went wrong!",

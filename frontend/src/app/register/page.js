@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from "next/navigation";
+import toast from 'react-hot-toast';
 
 export default function Register() {
     const [formData, setFormData] = useState({
@@ -16,7 +17,7 @@ export default function Register() {
     });
     const [checked, setChecked] = useState(false);
     const [errors, setErrors] = useState({});
-    const [serverError, setServerError] = useState(null); // new
+    // const [serverError, setServerError] = useState(null); // new
     const router = useRouter();
 
     // Handle input changes
@@ -63,10 +64,11 @@ export default function Register() {
 
         try {
             const response = await apiService.signup(formData);
-            alert('Submitted');
+            toast.success('registered successfully');
             router.push("/login");
         } catch (error) {
-            setServerError(error.response?.data?.message || "Something went wrong")
+            toast.error(error.response?.data?.message || "Something went wrong");
+            // setServerError(error.response?.data?.message || "Something went wrong")
         }
     };
 

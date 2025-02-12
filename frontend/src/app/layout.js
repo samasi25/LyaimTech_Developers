@@ -2,6 +2,7 @@ import { Geist, Geist_Mono, Alex_Brush, Alegreya_SC, Aleo,  Abril_Fatface, Agbal
 import "./globals.css";
 
 import { AuthProvider } from "@/context/AuthContext";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -61,6 +62,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${alexBrush.variable} ${alegreyaSC.variable} ${aleo.variable}  ${abrilFatface.variable} ${agbalumo.variable} ${arizonia.variable} antialiased`}
       >
+        <Toaster reverseOrder={false} />
         {children}
       </body>
     </html>
