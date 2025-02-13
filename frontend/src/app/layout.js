@@ -1,7 +1,7 @@
 import { Geist, Geist_Mono, Alex_Brush, Alegreya_SC, Aleo,  Abril_Fatface, Agbalumo, Arizonia  } from "next/font/google";
 import "./globals.css";
 
-import { AuthProvider } from "@/context/AuthContext";
+import { UserProvider } from "@/context/UserContext";
 import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
@@ -57,7 +57,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <AuthProvider>
+    <UserProvider>
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${alexBrush.variable} ${alegreyaSC.variable} ${aleo.variable}  ${abrilFatface.variable} ${agbalumo.variable} ${arizonia.variable} antialiased`}
@@ -66,6 +66,6 @@ export default function RootLayout({ children }) {
         {children}
       </body>
     </html>
-    </AuthProvider>
+    </UserProvider>
   );
 }

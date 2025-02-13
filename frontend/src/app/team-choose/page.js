@@ -74,7 +74,7 @@ const TeamChoose = () => {
         }
     };
 
-    const handleSubmit = async () => {
+    const handlePreview = async () => {
         try {
             const selectedPlayers = [...selectedHomePlayers, ...selectedAwayPlayers];
             const selectedSubstitutes = [...selectedHomeSubstitutes, ...selectedAwaySubstitutes];
@@ -88,23 +88,22 @@ const TeamChoose = () => {
                 toast.error("You must select exactly 2 substitutes.");
                 return;
             }
-            router.push('/preview');
+            // Store in local storage
+            localStorage.setItem("selectedPlayers", JSON.stringify(selectedPlayers));
+            localStorage.setItem("selectedSubstitutes", JSON.stringify(selectedSubstitutes));
 
-            // await apiService.postData(`/team/choose/save/${matchId}`, {
-            //     selectedPlayers,
-            //     selectedSubstitutes
-            // });
-
-            toast.success("Team Selected Successfully!");
+            router.push('preview');
         } catch (error) {
             toast.error("Error submitting team:", error);
         }
     };
 
     const renderPlayers = (team, teamType) => {
-        {(team?.players?.length == 0) && (
-            <div>Loading...</div>
-        )}
+        {
+            (team?.players?.length == 0) && (
+                <div>Loading...</div>
+            )
+        }
         return team?.players?.map(player => (
             <div key={player.playerId} className="flex justify-between items-center p-2 border-b">
                 {/* <span>{player.playerName} ({player.position})</span> */}
@@ -126,6 +125,7 @@ const TeamChoose = () => {
                 <div className="bg-gray-400 bg-opacity-20 text-white text-center font-aleo backdrop-blur-sm shadow-lg rounded-xl overflow-hidden max-w-4xl w-full mx-auto py-8 px-4 mt-10 md:px-6 max-md:mt-32">
                     <h1 className="text-2xl md:text-3xl font-bold drop-shadow-[1px_1px_1px_blue]">Choose Your Team</h1>
                     <div className="flex justify-center items-start gap-8 mt-6">
+                        {/* home team */}
                         <div className="w-full max-w-xs text-center">
                             <button className="w-full py-2 rounded-full md:text-2xl bg-gradient-to-b from-black to-gray-800 hover:scale-105 transition-transform duration-300 drop-shadow-[0px_0px_2px_white] hover:drop-shadow-[0px_0px_0px_white]">
                                 Home Team
@@ -139,6 +139,7 @@ const TeamChoose = () => {
                         {/* <span className="text-[#0A0440] text-3xl md:text-6xl font-medium font-arizonia mx-auto drop-shadow-[0px_0px_1px_red]">
                             VS 
                         </span> */}
+                        {/* away team */}
                         <div className="w-full max-w-xs text-center">
                             <button className="w-full py-2 rounded-full bg-gradient-to-b  from-black to-gray-800 hover:scale-105 transition-transform duration-300 md:text-2xl drop-shadow-[0px_0px_2px_white]  hover:drop-shadow-[0px_0px_0px_white]">
                                 Away Team
@@ -150,7 +151,12 @@ const TeamChoose = () => {
                         </div>
                     </div>
                     <div className="mt-6">
-                        <button onClick={handleSubmit} className="px-16 py-2 bg-gradient-to-br from-[#B8A956] via-[#290406DB] to-[#290406DB] rounded-full text-2xl font-semibold">Preview</button>
+                        <button
+                            onClick={handlePreview}
+                            className="px-16 py-2 bg-gradient-to-br from-[#B8A956] via-[#290406DB] to-[#290406DB] rounded-full text-2xl font-semibold"
+                        >
+                            Preview
+                        </button>
                     </div>
                 </div>
             </div>

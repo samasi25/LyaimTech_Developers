@@ -2,10 +2,10 @@
 import Navbar from '@/components/Navbar';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useAuth } from "@/context/AuthContext";
+import { useUser } from "@/context/AuthContext";
 
 export default function Profile() {
-  const { user, loading } = useAuth();
+  const { user, loading } = useUser();
 
   if (loading) {
     return <p className="text-center text-white text-2xl">Loading...</p>;

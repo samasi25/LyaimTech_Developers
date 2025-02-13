@@ -3,6 +3,7 @@
 import apiService from '@/components/apiService';
 import Navbar from '@/components/Navbar';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { FaFacebook, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa';
 
 const ContactUs = () => {
@@ -18,10 +19,9 @@ const ContactUs = () => {
         try {
             const res = await apiService.contact(formData);
             setFormData({ email: "", message: "" })
-            // toast message
+            toast.success(res.data);
         } catch (error) {
-            // toast message
-            console.error("Submission Error:", error);
+            toast.error("Error:", error);
         }
     };
 

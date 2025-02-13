@@ -1,10 +1,11 @@
 "use client";
 import apiService from "@/components/apiService";
 import { createContext, useContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
-const AuthContext = createContext();
+const UserContext = createContext();
 
-export const AuthProvider = ({ children }) => {
+export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -25,16 +26,26 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Logout function to remove user details
+  const logout = async () => {
+    try {
+      await apiService.logout();
+      setUser(null);
+    } catch (error) {
+      toast.error("Logout failed:", error);
+    }
+  };
+
   useEffect(() => {
-    fetchUser(); // Fetch user when app loads
+    fetchUser();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, setUser, loading, fetchUser }}>
+    <UserContext.Provider value={{ user, loading, logout }}>
       {children}
-    </AuthContext.Provider>
+    </UserContext.Provider>
   );
 };
 
-// Custom hook to use auth context
-export const useAuth = () => useContext(AuthContext);
+// Custom hook to use User context
+export const useUser = () => useContext(UserContext);

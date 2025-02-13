@@ -4,6 +4,7 @@ import Navbar from '@/components/Navbar';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 
 export default function Register() {
     const router = useRouter();
@@ -13,7 +14,7 @@ export default function Register() {
         mobileNo: ''
     });
     const [updating, setUpdating] = useState(false);
-    const { user, loading } = useAuth();
+    const { user, loading, logout } = useAuth();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -25,19 +26,18 @@ export default function Register() {
             setUpdating(true);
 
             const response = await apiService.profileUpdate(formData);console.log(response);
-            // toast message
+            toast.success(response?.data);
             router.push('/profile');
         } catch (error) {
-            console.error("Error updating profile:", error);
+            toast.error("Error updating profile:", error);
         } finally {
             setUpdating(false);
         }
     };
 
     const handleLogout = async () => {
-        await apiService.logout(); // Endpoint to clear cookies
-        window.location.reload(); // Refresh page to update navbar
-        router.push('/');
+        await logout;
+        router.push("/login");
     };
 
     useEffect(() => {

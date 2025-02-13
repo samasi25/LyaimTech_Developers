@@ -3,19 +3,16 @@ import { useState } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
 import Image from 'next/image';
 import Link from 'next/link';
-// import useAuth from "../utils/useAuth";//new
-import { useAuth } from "@/context/AuthContext";
+import { useUser } from "@/context/AuthContext";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    // const { user, loading } = useAuth();//new
-    const { user, loading } = useAuth();
+    const { user, loading, logout } = useUser();
 
     const handleLogout = async () => {
-        await axios.post("logout"); // Endpoint to clear cookies
-        window.location.reload(); // Refresh page to update navbar
+        await logout;
+        router.push("/login");
     };
-    
 
     return (
         <nav className="shadow-md p-2 flex justify-between bg-black bg-opacity-45 items-center fixed top-0 left-0 w-full z-50">
@@ -47,6 +44,14 @@ const Navbar = () => {
                             <li className="px-4 py-2 font-bold hover:bg-gray-600 hover:bg-opacity-20 hover:text-orange-500">   <Link href={'/about'}> About </Link></li>
                             <li className="px-4 py-2 font-bold hover:bg-gray-600 hover:bg-opacity-20 hover:text-orange-500"> <Link href={'/contact'}>  Contact </Link></li>
                             <li className="px-4 py-2 font-bold hover:bg-gray-600 hover:bg-opacity-20 hover:text-orange-500">   <Link href={'/terms-conditions'}>  Terms&Conditions </Link></li>
+                        </ul>
+                    )}
+                    {isOpen && user && (
+                        <ul className="absolute right-0 mt-2 w-40 shadow-lg bg-gray-900  rounded-md overflow-hidden cursor-pointer">
+                            <li className="px-4 py-2 font-bold hover:bg-gray-600 hover:bg-opacity-20 hover:text-orange-500"><Link href={'/profile'}>Profile</Link></li>
+                            <li className="px-4 py-2 font-bold hover:bg-gray-600 hover:bg-opacity-20 hover:text-orange-500"><Link href={'/team-choose'}>Team choose</Link></li>
+                            <li className="px-4 py-2 font-bold hover:bg-gray-600 hover:bg-opacity-20 hover:text-orange-500"><Link href={'/wallet'}>Wallet</Link></li>
+                            <li className="px-4 py-2 font-bold hover:bg-gray-600 hover:bg-opacity-20 hover:text-orange-500"><Link href={'/match-overview'}>Match Overview</Link></li>
                         </ul>
                     )}
                 </div>
