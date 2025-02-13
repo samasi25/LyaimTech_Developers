@@ -17,7 +17,6 @@ export default function Register() {
     });
     const [checked, setChecked] = useState(false);
     const [errors, setErrors] = useState({});
-    // const [serverError, setServerError] = useState(null); // new
     const router = useRouter();
 
     // Handle input changes
@@ -30,21 +29,21 @@ export default function Register() {
     const validate = () => {
         const errors = {};
 
-        // if (!formData.username.trim()) {
-        //     errors.username = "Username is required.";
-        // }
+        if (!formData.username.trim()) {
+            errors.username = "Username is required.";
+        }
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
             errors.email = "Invalid email format.";
         }
         if (!/^\d{10}$/.test(formData.mobileNo)) {
-            errors.mobileNoNo = "Invalid mobileNoNo number (10 digits required).";
+            errors.mobileNo = "Invalid mobile number (10 digits required).";
         }
         if (formData.password.length < 8) {
             errors.password = "Password must be at least 8 characters.";
         }
-        // if (!checked) {
-        //     errors.terms = "You must agree to the terms and conditions.";
-        // }
+        if (!checked) {
+            errors.terms = "You must agree to the terms and conditions.";
+        }
         return errors;
     };
 
@@ -55,20 +54,13 @@ export default function Register() {
             setErrors(validationErrors);
             return;
         }
-        // else {
-        //     setErrors({}); 
-        //     console.log('Signup successful with:', formData);
-        //     // Handle successful login (e.g., API call)
-        // }
-
 
         try {
             const response = await apiService.signup(formData);
-            toast.success('registered successfully');
+            toast.success('Registered successfully');
             router.push("/login");
         } catch (error) {
             toast.error(error.response?.data?.message || "Something went wrong");
-            // setServerError(error.response?.data?.message || "Something went wrong")
         }
     };
 
@@ -77,49 +69,23 @@ export default function Register() {
         formData.email.trim() &&
         formData.mobileNo.trim() &&
         formData.password.trim() &&
-        checked
+        checked;
 
     return (
-        <div
-            className="min-h-screen pt-24 pb-5 w-full bg-cover bg-center"
-            style={{
-                backgroundImage: "url(Images/registration_background.png)"
-            }}
-        >
+        <div className="min-h-screen pt-24 pb-5 w-full bg-cover bg-center" style={{ backgroundImage: "url(Images/registration_background.png)" }}>
             <Navbar />
 
             <h1 className="text-lg md:text-2xl font-bold font-alegreya text-white mb-2 text-center">
                 🏆 Sign Up Today And kickstart your football journey!
             </h1>
 
-            <div className='text-[#3C645F] text-center font-aleo md:hidden'>
-                <p className='text-red-700 text-2xl font-bold mt-5'>Do not Wait</p>
-                <p className='px-5'>Spots are filling fast! Register now and be part of the action.</p>
-                <p className='text-[#1B7C0E] text-lg font-medium my-2'>Your future starts on the field.</p>
-            </div>
-
             {/* Register section */}
             <div className="flex bg-white/10 backdrop-blur-md shadow-lg rounded-xl overflow-hidden max-w-sm sm:max-w-xl md:max-w-4xl w-full mx-auto">
-                {/* Left Section: Image */}
                 <div className="w-1/3 bg-black hidden md:block">
-                    <Image
-                        src="/Images/reg1.png"
-                        alt="Player"
-                        width={300}
-                        height={500}
-                        className="object-cover"
-                    // layout="intrinsic"
-                    />
+                    <Image src="/Images/reg1.png" alt="Player" width={300} height={500} className="object-cover" />
                     <div className='text-white text-center font-aleo'>
                         <h2 className='text-2xl font-semibold font-Aboreto'>FOOTBALL</h2>
-                        <Image
-                            src="/Images/reg2.png"
-                            alt="Registration"
-                            width={250} // Adjust width as needed
-                            height={20} // Adjust height as needed
-                            className="object-cover bg-white mx-auto"
-                        // layout="intrinsic"
-                        />
+                        <Image src="/Images/reg2.png" alt="Registration" width={250} height={20} className="object-cover bg-white mx-auto" />
                         <p className='text-red-700 text-lg font-bold my-5'>Do not Wait</p>
                         <p className='px-5'>spots are filling fast! Register now and be part of the action.</p>
                         <p className='text-green-300 text-lg font-medium mt-3'>Your future starts on the field.</p>
@@ -153,12 +119,12 @@ export default function Register() {
                             />
                             {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
                         </div>
-                        {/* mobileNo Field */}
+                        {/* MobileNo Field */}
                         <div className="mb-5">
                             <input
                                 type='number'
                                 name="mobileNo"
-                                placeholder="mobile Number"
+                                placeholder="Mobile Number"
                                 value={formData.mobileNo}
                                 onChange={(e) => handleChange(e)}
                                 className="w-full border-b bg-transparent font-aleo text-xl placeholder-gray-800 outline-none pl-2"
@@ -177,12 +143,12 @@ export default function Register() {
                             />
                             {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
                         </div>
-                        {/* referralCode Field */}
+                        {/* Referral Code Field */}
                         <div className="mb-6">
                             <input
                                 type="text"
                                 name="referralCode"
-                                placeholder="referral Code"
+                                placeholder="Referral Code"
                                 value={formData.referralCode}
                                 onChange={handleChange}
                                 className="w-full border-b bg-transparent font-aleo text-xl outline-none placeholder-gray-800 pl-2"
@@ -199,8 +165,15 @@ export default function Register() {
                                     onChange={() => setChecked(!checked)}
                                     className="mr-2 border-gray-400 rounded"
                                 />
-                                I agree to the terms and conditions
+                                I agree to the{" "}
+                                <Link
+                                    href="/terms-conditions"
+                                    className="text-blue-500 underline ml-1" // Added margin-left to create space
+                                >
+                                    terms and conditions
+                                </Link>
                             </label>
+                            {errors.terms && <p className="text-red-500 text-sm mt-1">{errors.terms}</p>}
                         </div>
 
                         {/* Register Button */}
@@ -208,8 +181,7 @@ export default function Register() {
                             type="submit"
                             disabled={!isFormValid}
                             className={`w-full py-1 rounded-full text-lg font-bold transition
-                                ${isFormValid ? "text-green-800" : "text-gray-500 cursor-not-allowed"}
-                            `}
+                                ${isFormValid ? "text-green-800" : "text-gray-500 cursor-not-allowed"}`}
                             style={{
                                 background: 'linear-gradient(150deg, #5fff4d, #008000)',
                                 boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.2)',
