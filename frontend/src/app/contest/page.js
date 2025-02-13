@@ -1,8 +1,9 @@
 'use client';
 import { useRouter } from 'next/navigation';  
 import Navbar from '@/components/Navbar';
+import withAuth from "../../hoc/withAuth.js";
 
-export default function Contest() {
+const Contest = () => {
     const router = useRouter(); 
     
     const handleWalletClick = () => {
@@ -56,3 +57,5 @@ export default function Contest() {
         </div>
     );
 }
+
+export default withAuth(Contest);

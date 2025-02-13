@@ -2,8 +2,9 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar';
+import withAuth from "../../hoc/withAuth.js";
 
-export default function Wallet() {
+const Wallet = () => {
     const [totalMoney, setTotalMoney] = useState(0);
     const [addAmount, setAddAmount] = useState('');
     const [withdrawData, setWithdrawData] = useState({ amount: '', paypalID: '', age: '' });
@@ -104,3 +105,5 @@ export default function Wallet() {
         </div>
     );
 }
+
+export default withAuth(Wallet);

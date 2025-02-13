@@ -1,4 +1,5 @@
 import React from "react";
+import withAuth from "../../hoc/withAuth.js";
 
 const MatchOverview = () => {
     return (
@@ -59,5 +60,4 @@ const MatchOverview = () => {
     );
 };
 
-export default MatchOverview;
-
+export default withAuth(MatchOverview);

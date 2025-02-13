@@ -2,9 +2,10 @@
 import Navbar from '@/components/Navbar';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useUser } from "@/context/AuthContext";
+import { useUser } from "@/context/AuthContext.js";
+import withAuth from "../../hoc/withAuth.js";
 
-export default function Profile() {
+const Profile = () => {
   const { user, loading } = useUser();
 
   if (loading) {
@@ -103,3 +104,5 @@ export default function Profile() {
     </div>
   );
 }
+
+export default withAuth(Profile);

@@ -1,7 +1,7 @@
 import { Geist, Geist_Mono, Alex_Brush, Alegreya_SC, Aleo,  Abril_Fatface, Agbalumo, Arizonia  } from "next/font/google";
 import "./globals.css";
 
-import { UserProvider } from "@/context/UserContext";
+import { UserProvider } from "@/context/AuthContext";
 import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({

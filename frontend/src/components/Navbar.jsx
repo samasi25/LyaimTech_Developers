@@ -15,7 +15,7 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="shadow-md p-2 flex justify-between bg-black bg-opacity-45 items-center fixed top-0 left-0 w-full z-50">
+        <nav className="p-2 flex justify-between bg-transparent items-center fixed top-0 left-0 w-full z-50">
             <div className="flex items-center md:ml-12">
                 <Link href={'/'}>   <Image src="/Images/lyaim-logo.png" alt="Logo" width={50} height={30} className="w-14 max-sm:w-10 md:w-full cursor-pointer rounded-full" /> </Link>
             </div>
@@ -28,7 +28,6 @@ const Navbar = () => {
                     <button onClick={handleLogout} className="text-red-400">Logout</button>
                 </div>
                 ) : (<div className="flex gap-4 md:gap-10 text-lg drop-shadow-[2px_2px_2px_red]">
-                    <Link href={'/register'}>REGISTRATION</Link>
                     <Link href={'/login'}>LOGIN</Link>
                 </div>)}
 
@@ -43,12 +42,12 @@ const Navbar = () => {
                             <li className="px-4 py-2 font-bold hover:bg-gray-600 hover:bg-opacity-20 hover:text-orange-500">  <Link href={'/help'}>  Help </Link></li>
                             <li className="px-4 py-2 font-bold hover:bg-gray-600 hover:bg-opacity-20 hover:text-orange-500">   <Link href={'/about'}> About </Link></li>
                             <li className="px-4 py-2 font-bold hover:bg-gray-600 hover:bg-opacity-20 hover:text-orange-500"> <Link href={'/contact'}>  Contact </Link></li>
-                            <li className="px-4 py-2 font-bold hover:bg-gray-600 hover:bg-opacity-20 hover:text-orange-500">   <Link href={'/terms-conditions'}>  Terms&Conditions </Link></li>
                         </ul>
                     )}
                     {isOpen && user && (
                         <ul className="absolute right-0 mt-2 w-40 shadow-lg bg-gray-900  rounded-md overflow-hidden cursor-pointer">
                             <li className="px-4 py-2 font-bold hover:bg-gray-600 hover:bg-opacity-20 hover:text-orange-500"><Link href={'/profile'}>Profile</Link></li>
+                            <li className="px-4 py-2 font-bold hover:bg-gray-600 hover:bg-opacity-20 hover:text-orange-500"><Link href={'/contest'}>Contest</Link></li>
                             <li className="px-4 py-2 font-bold hover:bg-gray-600 hover:bg-opacity-20 hover:text-orange-500"><Link href={'/team-choose'}>Team choose</Link></li>
                             <li className="px-4 py-2 font-bold hover:bg-gray-600 hover:bg-opacity-20 hover:text-orange-500"><Link href={'/wallet'}>Wallet</Link></li>
                             <li className="px-4 py-2 font-bold hover:bg-gray-600 hover:bg-opacity-20 hover:text-orange-500"><Link href={'/match-overview'}>Match Overview</Link></li>

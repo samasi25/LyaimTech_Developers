@@ -6,8 +6,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import toast from "react-hot-toast";
+import redirectIfAuth from "../../hoc/redirectIfAuth.js";
 
-export default function Login() {
+const Login = () => {
     const [loading, setLoading] = useState(false)
     const [formData, setFormData] = useState({
         email: '',
@@ -15,13 +16,12 @@ export default function Login() {
     });
     const [errors, setErrors] = useState({});
     const router = useRouter();
-    // Handle input changes
+    
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
-    // Validation logic
     const validate = () => {
         const errors = {};
         if (!formData.email.trim()) {
@@ -37,12 +37,14 @@ export default function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
+        
         const validationErrors = validate();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
+            return
         }
         try {
+            setLoading(true);
             const response = await apiService.login(formData);
             toast.success("Logged in Successfully");
             localStorage.setItem('token', response.data.data)
@@ -53,9 +55,8 @@ export default function Login() {
             });
 
             router.push("/");
-
         } catch (error) {
-            toast.error(" Login Failed:", error.response?.data?.message || error.message);
+            toast.error(" Login Failed", error.response?.data?.message || error.message);
             setErrors((prevErrors) => ({
                 ...prevErrors,
                 server: error.response?.data?.message || "Something went wrong!",
@@ -67,7 +68,7 @@ export default function Login() {
 
     return (
         <div
-            className="min-h-screen pt-24 pb-5 w-full bg-cover bg-center"
+            className="min-h-screen pt-20 pb-5 w-full bg-cover bg-center"
             style={{
                 backgroundImage: "url(/Images/registration_ground.png)",
             }}
@@ -79,7 +80,7 @@ export default function Login() {
             </h1>
 
             {/* Login Container */}
-            <div className="flex bg-white/10 backdrop-blur-md shadow-lg rounded-xl overflow-hidden max-w-sm sm:max-w-xl md:max-w-3xl w-full md:max-h-96 mx-auto">
+            <div className="flex bg-white/10 backdrop-blur-md shadow-lg rounded-xl overflow-hidden max-w-sm sm:max-w-xl md:max-w-3xl w-full md:max-h-80 mx-auto">
                 {/* Left Section: Image */}
                 <div className="w-1/3 hidden md:block">
                     <Image
@@ -125,7 +126,7 @@ export default function Login() {
                         </div>
 
                         {/* Remember Me and Forgot Password */}
-                        <div className="flex items-center justify-between text-white sm:text-lg md:text-xl mb-6">
+                        {/* <div className="flex items-center justify-between text-white sm:text-lg md:text-xl mb-6">
                             <label className="flex items-center">
                                 <input
                                     type="checkbox"
@@ -139,7 +140,7 @@ export default function Login() {
                             >
                                 Forget Password?
                             </Link>
-                        </div>
+                        </div> */}
 
                         {/* Login Button */}
                         <button
@@ -166,3 +167,5 @@ export default function Login() {
         </div>
     );
 }
+
+export default redirectIfAuth(Login);

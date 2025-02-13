@@ -1,12 +1,13 @@
 'use client';
 import apiService from '@/components/apiService';
 import Navbar from '@/components/Navbar';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/context/AuthContext.js';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import withAuth from "../../hoc/withAuth.js";
 
-export default function Register() {
+const ProfileUpdate = () => {
     const router = useRouter();
     const [formData, setFormData] = useState({
         username: '',
@@ -136,3 +137,5 @@ export default function Register() {
         </div>
     );
 }
+
+export default withAuth(ProfileUpdate);

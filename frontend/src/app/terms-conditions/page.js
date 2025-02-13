@@ -5,12 +5,12 @@ import Navbar from '@/components/Navbar';
 
 const TermsAndConditions = () => {
     return (
-        <div className="flex justify-center py-10 mt-20 px-5 md:px-20 font-aleo">
+        <div className="flex justify-center mt-20 px-5 md:px-20 font-aleo">
             <Navbar />
-            <div className="max-w-4xl w-full bg-white p-8 shadow-lg rounded-lg">
+            <div className="max-w-4xl w-full rounded-lg">
                 <h1 className="md:text-3xl text-2xl max-[400px]:text-xl font-bold text-center md:mb-10 mb-6 drop-shadow-[1px_1px_1px_red]">Terms and Conditions</h1>
 
-                <p className="italic text-lg mb-4">Welcome to <span className="font-semibold drop-shadow-[1px_1px_1px_yellow]">Lyaim</span>. By using our services, you agree to comply with and be bound by the following Terms and Conditions. Please read these terms carefully before participating in any fantasy contests or using the website.</p>
+                <p className="italic text-lg mb-4">Welcome to <span className="font-semibold font-alex drop-shadow-[1px_1px_1px_yellow]">Lyaim</span>. By using our services, you agree to comply with and be bound by the following Terms and Conditions. Please read these terms carefully before participating in any fantasy contests or using the website.</p>
 
                 <section className="mb-6">
                     <h2 className="text-xl max-[400px]:text-lg font-bold mb-2">1. Eligibility</h2>

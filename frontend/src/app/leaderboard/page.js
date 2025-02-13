@@ -2,8 +2,9 @@
 import Button from '@/components/Button';
 import Navbar from '@/components/Navbar';
 import { useState } from 'react';
+import withAuth from "../../hoc/withAuth.js";
 
-export default function Leaderboard() {
+function Leaderboard() {
     const [formData, setFormData] = useState({
         username: 'Username',
     });
@@ -62,3 +63,5 @@ export default function Leaderboard() {
         </div>
     );
 }
+
+export default withAuth(Leaderboard);

@@ -6,8 +6,9 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from "next/navigation";
 import toast from 'react-hot-toast';
+import redirectIfAuth from "../../hoc/withAuth.js";
 
-export default function Register() {
+const Register = () => {
     const [formData, setFormData] = useState({
         username: '',
         email: '',
@@ -72,7 +73,7 @@ export default function Register() {
         checked;
 
     return (
-        <div className="min-h-screen pt-24 pb-5 w-full bg-cover bg-center" style={{ backgroundImage: "url(Images/registration_background.png)" }}>
+        <div className="min-h-screen pt-20 pb-5 w-full bg-cover bg-center" style={{ backgroundImage: "url(Images/registration_background.png)" }}>
             <Navbar />
 
             <h1 className="text-lg md:text-2xl font-bold font-alegreya text-white mb-2 text-center">
@@ -81,6 +82,7 @@ export default function Register() {
 
             {/* Register section */}
             <div className="flex bg-white/10 backdrop-blur-md shadow-lg rounded-xl overflow-hidden max-w-sm sm:max-w-xl md:max-w-4xl w-full mx-auto">
+            {/* Left Section: Image */}
                 <div className="w-1/3 bg-black hidden md:block">
                     <Image src="/Images/reg1.png" alt="Player" width={300} height={500} className="object-cover" />
                     <div className='text-white text-center font-aleo'>
@@ -168,7 +170,8 @@ export default function Register() {
                                 I agree to the{" "}
                                 <Link
                                     href="/terms-conditions"
-                                    className="text-blue-500 underline ml-1" // Added margin-left to create space
+                                    target='_blank'
+                                    className="text-blue-800 hover:underline ml-1"
                                 >
                                     terms and conditions
                                 </Link>
@@ -203,3 +206,5 @@ export default function Register() {
         </div>
     );
 }
+
+export default redirectIfAuth(Register);
