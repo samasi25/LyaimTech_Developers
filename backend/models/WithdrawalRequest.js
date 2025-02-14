@@ -8,7 +8,9 @@ const WithdrawalRequestSchema = new mongoose.Schema({
     },
     requestedAmount: {
         type: Number,
-        required: true
+        required: true,
+        min: 50,
+        max: 10000
     },
     paypalId: {
         type: String,
@@ -24,7 +26,7 @@ const WithdrawalRequestSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['Pending', 'Completed', 'Rejected'],
+        enum: ['Pending', 'Processing', 'Completed', 'Rejected'],
         default: 'Pending'
     },
 });
