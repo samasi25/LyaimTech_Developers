@@ -4,7 +4,7 @@ import Navbar from "@/components/Navbar";
 import apiService from "@/components/apiService";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import withAuth from "../../hoc/withAuth.js";
+import withAuth from "../../../hoc/withAuth.js";
 
 const PreviewPage = () => {
     const router = useRouter();
