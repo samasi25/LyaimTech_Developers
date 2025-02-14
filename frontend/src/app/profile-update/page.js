@@ -1,7 +1,7 @@
 'use client';
 import apiService from '@/components/apiService';
 import Navbar from '@/components/Navbar';
-import { useAuth } from '@/context/AuthContext.js';
+import { useUser } from '@/context/AuthContext.js';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -15,7 +15,7 @@ const ProfileUpdate = () => {
         mobileNo: ''
     });
     const [updating, setUpdating] = useState(false);
-    const { user, loading, logout } = useAuth();
+    const { user, loading, logout } = useUser();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
