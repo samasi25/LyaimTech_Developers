@@ -11,7 +11,8 @@ const MatchOverview = () => {
     const [upcomingMatches, setUpcomingMatches] = useState([])
     const [completedMatches, setCompletedMatches] = useState([])
 
-    const { user, loading } = useUser();
+    const { user, loading, wallet } = useUser();
+
 
     useEffect(() => {
         const fetchMatchOverview = async () => {
@@ -57,7 +58,7 @@ const MatchOverview = () => {
                         Hii, <span>{user.username}</span>
                     </p>
                     <p className="text-2xl md:text-xl sm:text-lg font-aleo bg-gray-700 bg-opacity-[70%] text-[#0A0440] font-bold px-6 py-2 sm:px-4 sm:py-1 rounded-lg">
-                        Wallet $ <span className="font-bold text-[#fff]">{user.wallet?.totalMoney}0.000</span>
+                        Wallet $ <span className="font-bold text-[#fff]">{wallet?.totalMoney}</span>
                     </p>
                     <button className="text-2xl md:text-xl sm:text-lg font-aleo bg-gray-700 bg-opacity-[70%] font-bold text-[#0A0440] px-6 py-2 sm:px-4 sm:py-1 rounded-lg">
                         <Link href={'terms-conditions'} target="_blank" className="hover:underline">

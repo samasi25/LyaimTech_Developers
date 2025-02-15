@@ -5,12 +5,9 @@ const Team = require('../models/Team');
 // dotenv.config();
 
 
-
-
-
 // Fetch all contests 
 const ContestHandle = async (req, res) => {
-    console.log('Contests route hit by user ID:', req.user._id);
+    console.log('Contests route hit by user ID:', req.user.id);
     const userId = req.user._id;
 
     try {
@@ -47,7 +44,7 @@ const ContestHandle = async (req, res) => {
 
 // Post Join a contest 
 const JoinContest = async (req, res) => {
-    const userId = req.user._id;
+    const userId = req.user.id;
     let { contestId, matchId } = req.body;
 
     console.log(`User ID ${userId} attempting to join contest ID: ${contestId} with match ID: ${matchId}`);

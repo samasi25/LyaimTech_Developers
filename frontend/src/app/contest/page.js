@@ -1,21 +1,53 @@
 'use client';
-import { useRouter } from 'next/navigation';  
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
 import withAuth from "../../hoc/withAuth.js";
+import apiService from '@/components/apiService.js';
+import { useUser } from "@/context/AuthContext.js";
 
 const Contest = () => {
-    const router = useRouter(); 
-    
+    const router = useRouter();
+    const [contests, setContests] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    const { user, wallet } = useUser();
+
+    useEffect(() => {
+        const controller = new AbortController();
+        const signal = controller.signal;
+
+        const fetchContests = async () => {
+            try {
+                setLoading(true);
+                const response = await apiService.fetchData('/contest', { signal });
+                setContests(response.data.contests || []);
+            } catch (error) {
+                if (error.name !== 'AbortError') {
+                    console.error('Error fetching contests:', error);
+                    setContests([]);
+                }
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchContests();
+
+        return () => {
+            controller.abort(); // Cleanup API request if component unmounts
+        };
+    }, []);
+
+
     const handleWalletClick = () => {
-        router.push('/wallet'); 
+        router.push('/wallet');
     };
 
     return (
         <div
             className="min-h-screen w-full bg-cover bg-center"
-            style={{
-                backgroundImage: "url(Images/contest_background.jpeg)"
-            }}
+            style={{ backgroundImage: "url(Images/contest_background.jpeg)" }}
         >
             <Navbar />
 
@@ -30,12 +62,12 @@ const Contest = () => {
                     </h3>
 
                     <div className='flex justify-evenly mx-auto my-5 text-sm sm:text-lg md:text-3xl md:mb-10 font-bold'>
-                        <span className='font-alegreya drop-shadow-[1px_1px_1px_white]'>Hii, Username</span>
-                        <span 
+                        <span className='font-alegreya drop-shadow-[1px_1px_1px_white]'>Hii, {user.username}</span>
+                        <span
                             className='bg-[#0A044033] text-white px-2 sm:px-4 md:px-8 py-1 rounded cursor-pointer'
-                            onClick={handleWalletClick}  
+                            onClick={handleWalletClick}
                         >
-                            <span className='text-[#0A0440]'>Wallet $</span> 0.00
+                            <span className='text-[#0A0440]'>Wallet $</span> {wallet?.totalMoney}
                         </span>
                     </div>
 
@@ -49,9 +81,50 @@ const Contest = () => {
                             Search
                         </button>
                     </div>
+                    <div className='w-[70%] sm:w-[70%] md:w-[63%] h-48 overflow-y-auto mt-4 mx-auto bg-[#040B29DB] opacity-50 rounded-md p-4'>
+                        {loading ? (
+                            <p className="text-white text-center">Loading contests...</p>
+                        ) : contests.length > 0 ? (
+                            <ul className="text-white space-y-4">
+                                {contests.map((contest) => (
+                                    <li key={contest.contest_id} className="p-4 bg-gray-700 bg-opacity-50 rounded-lg flex flex-col gap-2">
+                                        <h4 className="text-lg font-bold text-center">{contest.name}</h4>
 
-                    <div className='w-[70%] sm:w-[70%] md:w-[63%] h-24 sm:h-32 md:h-48 mt-4 mx-auto bg-[#040B29DB] opacity-50 rounded-md'></div>
+                                        <div className="flex justify-between items-center text-sm">
+                                            <span className="text-left text-white">{contest.match.home_team}</span>
+                                            <span className="text-center text-gray-300">{contest.match.match_date}</span>
+                                            <span className="text-right text-white">{contest.match.away_team}</span>
+                                        </div>
 
+                                        <div className="flex justify-between text-sm">
+                                            <span className="text-white">Prize Pool: ${contest.prizepool}</span>
+                                            <span className="text-yellow-400 font-bold">Entry Fee: ${contest.entry_fee}</span>
+                                        </div>
+
+                                        <div className="flex justify-between text-sm items-center">
+                                            <span className="text-white">Max Players: {contest.max_players}</span>
+                                            <span className="text-white text-center">Joined: {contest.players_joined}</span>
+                                            <button
+                                                className={`px-4 py-1 rounded-lg transition ${contest.is_full ? "bg-gray-500 cursor-not-allowed" : "bg-green-600 hover:bg-green-700 text-white"}`}
+                                                onClick={() => !contest.is_full && handleJoin(contest.contest_id)}
+                                                disabled={contest.is_full}
+                                            >
+                                                {contest.is_full ? "Contest Full" : "Join Now"}
+                                            </button>
+                                        </div>
+
+                                        <div className="text-left text-sm">
+                                            <span className={contest.is_full ? "text-red-500" : "text-green-500"}>
+                                                {contest.is_full ? "Contest Full" : "Spots Available"}
+                                            </span>
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p className="text-white text-center">No contests available.</p>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>
