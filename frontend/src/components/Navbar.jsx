@@ -21,15 +21,16 @@ const Navbar = () => {
             </div>
 
             <div className="flex items-center space-x-4 md:space-x-8 text-white md:mr-12">
-                {user ? (
+                {loading ? (
+                    <span className='flex gap-4 md:gap-10 text-lg drop-shadow-[2px_2px_2px_red]'>Loading...</span>
+                ) : (user ? (
                     <div className="flex gap-4 md:gap-10 text-lg drop-shadow-[2px_2px_2px_red]">
-                    <Link href="/">Home</Link>
-                    <Link href="/profile">Profile</Link>
-                    <button onClick={handleLogout} className="text-red-400">Logout</button>
-                </div>
+                        <Link href="/">Home</Link>
+                        <button onClick={handleLogout} className="text-red-400">Logout</button>
+                    </div>
                 ) : (<div className="flex gap-4 md:gap-10 text-lg drop-shadow-[2px_2px_2px_red]">
                     <Link href={'/login'}>LOGIN</Link>
-                </div>)}
+                </div>))}
 
                 <div className="relative rounded-full  bg-slate-200 hover:bg-gray-700">
                     <button
