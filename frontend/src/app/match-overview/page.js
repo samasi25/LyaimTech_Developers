@@ -5,6 +5,7 @@ import apiService from "@/components/apiService.js";
 import { useUser } from "@/context/AuthContext.js";
 import Link from "next/link.js";
 import Navbar from "@/components/Navbar.jsx";
+import toast from "react-hot-toast";
 
 const MatchOverview = () => {
     const [liveMatches, setliveMatches] = useState([])
@@ -17,12 +18,12 @@ const MatchOverview = () => {
         const fetchMatchOverview = async () => {
             try {
                 const response = await apiService.matchOverview();
-                console.log('response of match', response);
+                // console.log('response of match', response);
                 setliveMatches(response.data?.live);
                 setUpcomingMatches(response.data?.upcoming);
                 setCompletedMatches(response.data?.completed);
             } catch (error) {
-                toast.error('Error fetching matches:', error);
+                toast.error('Error fetching matches:', error.message);
             }
         }
         fetchMatchOverview();

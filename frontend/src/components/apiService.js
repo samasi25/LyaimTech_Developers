@@ -15,7 +15,6 @@ API.interceptors.response.use(
     }
 );
 
-
 //  Centralized API Methods
 const apiService = {
     signup: (data) => API.post("/signup", data),
@@ -24,10 +23,7 @@ const apiService = {
     profile: () => API.get("profile"),
     profileUpdate: (data) => API.put("profile/update", data),
     contact: (data) => API.post("api/contact", data),
-
-
-
-
+    matchOverview: () => API.get('match/overview'),
 
     //  Generic API Calls 
     fetchData: (endpoint) => API.get(endpoint),

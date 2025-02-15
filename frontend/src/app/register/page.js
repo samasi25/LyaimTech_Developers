@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from "next/navigation";
 import toast from 'react-hot-toast';
-import redirectIfAuth from "../../hoc/withAuth.js";
+import redirectIfAuth from "../../hoc/redirectIfAuth.js";
 
 const Register = () => {
     const [formData, setFormData] = useState({
