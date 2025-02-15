@@ -46,8 +46,6 @@ export default function Wallet() {
             if (response.data && response.data.wallet) {
                 console.log("wallet data", response.data.wallet)
                 setWallet(response.data.wallet);
-
-
             } else {
                 console.error('Invalid wallet data received:', response.data);
             }
@@ -80,14 +78,18 @@ export default function Wallet() {
     };
 
 
-
-
-
     const handleAddMoney = async () => {
-        if (!addAmount || isNaN(addAmount) || Number(addAmount) <= 0) {
-            setErrors((prev) => ({ ...prev, addAmount: true }));
+        // Check if the Add Money field is empty
+        if (!addAmount) {
+            setErrors((prev) => ({ ...prev, addAmount: 'Please fill out this field.' }));
             return;
         }
+        // Check if the value is a valid number greater than 0
+        else if (isNaN(addAmount) || Number(addAmount) <= 0) {
+            setErrors((prev) => ({ ...prev, addAmount: 'Please enter a valid amount greater than 0.' }));
+            return;
+        }
+        
         try {
             const response = await apiService.postData('/wallet/add-funds', { amount: Number(addAmount) });
             window.location.href = response.data.approvalUrl;
@@ -95,23 +97,41 @@ export default function Wallet() {
             toast.error('Failed to initiate payment. Try again!');
         }
     };
-
+    
     const handleWithdraw = async () => {
         let newErrors = {};
         let amount = Number(withdrawData.amount);
         let paypalID = withdrawData.paypalID.trim();
-
-        // console.log("Submitting withdrawal request:", { amount, paypalID, age: withdrawData.age });  
-
-        if (!amount || isNaN(amount) || amount < 50) newErrors.amount = true;
-        if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(paypalID)) newErrors.paypalID = true;
-        if (!withdrawData.age || isNaN(withdrawData.age) || Number(withdrawData.age) < 18) newErrors.age = true;
-
+    
+        // Check if Amount is Empty
+        if (!withdrawData.amount) {
+            newErrors.amount = 'Please fill out this field.';
+        } else if (isNaN(amount)) {
+            newErrors.amount = 'Amount must be numeric.';
+        }
+    
+        // Check if PayPal ID is Empty or Invalid
+        if (!paypalID) {
+            newErrors.paypalID = 'Please fill out this field.';
+        } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(paypalID)) {
+            newErrors.paypalID = 'Please enter a valid PayPal ID.';
+        }
+    
+        // Check if Age is Empty or Invalid
+        if (!withdrawData.age) {
+            newErrors.age = 'Please fill out this field.';
+        } else if (isNaN(withdrawData.age)) {
+            newErrors.age = 'Age must be numeric.';
+        } else if (Number(withdrawData.age) < 18) {
+            newErrors.age = 'Age must be greater than or equal to 18.';
+        }
+    
+        // If there are errors, display them
         if (Object.keys(newErrors).length) {
             setErrors((prev) => ({ ...prev, withdraw: newErrors }));
             return;
         }
-
+    
         try {
             const response = await apiService.postData('/wallet/withdraw', { amount, paypalID, age: Number(withdrawData.age) });
             toast.success('Withdrawal request submitted successfully!');
@@ -121,8 +141,7 @@ export default function Wallet() {
             console.error("Withdrawal Error:", error.response?.data?.message);
             toast.error(error.response?.data?.message || 'Withdrawal failed. Try again!');
         }
-    };
-
+    };        
 
 
     return (
@@ -144,6 +163,7 @@ export default function Wallet() {
                                 className={`w-full p-2 border-b ${errors.addAmount ? 'border-red-500' : 'border-white'} bg-transparent outline-none`}
                                 placeholder="Enter amount to add"
                             />
+                            {errors.addAmount && <p className="text-red-500 text-sm mt-1">{errors.addAmount}</p>}
                             <button onClick={handleAddMoney} className="bg-gradient-to-br from-[#5672B8] via-[rgba(4,11,41,0.86)] to-[#040b29] text-white font-bold px-6 max-sm:px-12 py-2 rounded-full hover:text-gray-500">Add_Money</button>
                         </div>
                     </div>
@@ -173,8 +193,3 @@ export default function Wallet() {
         </div>
     );
 }
-
-
-
-
-
