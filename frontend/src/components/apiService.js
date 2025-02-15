@@ -24,6 +24,7 @@ const apiService = {
     profileUpdate: (data) => API.put("profile/update", data),
     contact: (data) => API.post("api/contact", data),
     matchOverview: () => API.get('match/overview'),
+    leaderboard: () => API.get('leaderboard'),
 
     //  Generic API Calls 
     fetchData: (endpoint) => API.get(endpoint),

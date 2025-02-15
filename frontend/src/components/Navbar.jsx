@@ -52,6 +52,7 @@ const Navbar = () => {
                             <li className="px-4 py-2 font-bold hover:bg-gray-600 hover:bg-opacity-20 hover:text-orange-500"><Link href={'/team-choose'}>Team choose</Link></li>
                             <li className="px-4 py-2 font-bold hover:bg-gray-600 hover:bg-opacity-20 hover:text-orange-500"><Link href={'/wallet'}>Wallet</Link></li>
                             <li className="px-4 py-2 font-bold hover:bg-gray-600 hover:bg-opacity-20 hover:text-orange-500"><Link href={'/match-overview'}>Match Overview</Link></li>
+                            <li className="px-4 py-2 font-bold hover:bg-gray-600 hover:bg-opacity-20 hover:text-orange-500"><Link href={'/leaderboard'}>Leaderboard</Link></li>
                         </ul>
                     )}
                 </div>

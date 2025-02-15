@@ -6,7 +6,8 @@ const Team = require('../models/Team');
 // Fetch contests the user has joined for a specific match
 const LeaderBoard = async (req, res) => {
     const userId = req.userId; // Extract userId from authenticated token
-    const matchId = req.query.matchId; // Extract matchId from query params
+    // const matchId = req.query.matchId; // Extract matchId from query params
+    const matchId = '65a7b2c9876c9e001c4f0e20'; // Extract matchId from query params
 
     // Validate matchId
     if (!matchId) {

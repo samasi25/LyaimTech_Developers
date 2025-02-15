@@ -27,10 +27,10 @@ const ProfileUpdate = () => {
             setUpdating(true);
 
             const response = await apiService.profileUpdate(formData);console.log(response);
-            toast.success(response?.data);
+            toast.success(response?.data?.message);
             router.push('/profile');
-        } catch (error) {
-            toast.error("Error updating profile:", error);
+        } catch (error) {console.log(error);
+            toast.error("Error updating profile");
         } finally {
             setUpdating(false);
         }
