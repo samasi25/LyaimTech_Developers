@@ -37,8 +37,7 @@ const ProfileUpdate = () => {
     };
 
     const handleLogout = async () => {
-        await logout;
-        router.push("/login");
+        await logout();
     };
 
     useEffect(() => {

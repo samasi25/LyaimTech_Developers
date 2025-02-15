@@ -54,7 +54,7 @@ const Login = () => {
                 password: '',
             });
 
-            router.push("/");
+            router.push("/");window.location.reload();
         } catch (error) {
             toast.error(" Login Failed", error.response?.data?.message || error.message);
             setErrors((prevErrors) => ({
