@@ -8,7 +8,7 @@ import { useUser } from "@/context/AuthContext";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const { user, loading, logout } = useUser();console.log(loading, user)
+    const { user, loading, logout } = useUser();
 
     // const router = useRouter();
     const handleLogout = async () => {

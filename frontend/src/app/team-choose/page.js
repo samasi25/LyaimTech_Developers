@@ -173,7 +173,6 @@ import { useRouter } from 'next/navigation';
 import toast from "react-hot-toast";
 
 const TeamChoose = () => {
-
     const router = useRouter();
     const matchId = "65a7b2c9876c9e001c4f0e20"; // Temporarily Hardcoded Match ID (Testing Purpose)
 
@@ -252,8 +251,11 @@ const TeamChoose = () => {
                 toast.error("You must select exactly 2 substitutes.");
                 return;
             }
-            router.push('/preview');
-            toast.success("Team Selected Successfully!");
+            // Store in local storage
+            localStorage.setItem("selectedPlayers", JSON.stringify(selectedPlayers));
+            localStorage.setItem("selectedSubstitutes", JSON.stringify(selectedSubstitutes));
+
+            router.push('/team-choose/preview');
         } catch (error) {
             toast.error("Error submitting team:", error);
         }
