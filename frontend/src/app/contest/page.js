@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import withAuth from "../../hoc/withAuth.js";
 import apiService from '@/components/apiService.js';
 import { useUser } from "@/context/AuthContext.js";
+import toast from "react-hot-toast";
 
 const Contest = () => {
     const router = useRouter();
@@ -39,6 +40,15 @@ const Contest = () => {
         };
     }, []);
 
+    const handleJoinContest = async (contestId, matchId) => {
+        try {
+            const response = await apiService.postData('/contest/join', { contestId, matchId });
+            toast.success(response.data.message);
+        } catch (error) {
+            console.error("Error joining contest:", error);
+            toast.error(error.response?.data?.error || "Failed to join contest");
+        }
+    };
 
     const handleWalletClick = () => {
         router.push('/wallet');
@@ -106,7 +116,7 @@ const Contest = () => {
                                             <span className="text-white text-center">Joined: {contest.players_joined}</span>
                                             <button
                                                 className={`px-4 py-1 rounded-lg transition ${contest.is_full ? "bg-gray-500 cursor-not-allowed" : "bg-green-600 hover:bg-green-700 text-white"}`}
-                                                onClick={() => !contest.is_full && handleJoin(contest.contest_id)}
+                                                onClick={() => !contest.is_full && handleJoinContest(contest.contest_id, contest.match._id)}
                                                 disabled={contest.is_full}
                                             >
                                                 {contest.is_full ? "Contest Full" : "Join Now"}
