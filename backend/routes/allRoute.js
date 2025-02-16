@@ -5,7 +5,6 @@ const { userProfile } = require("../controllers/userProfile")
 const { updateUserProfile } = require("../controllers/updateUserProfile");
 const { logoutUser } = require("../controllers/logoutUser");
 const { TeamChooseGet, TeamChoosePost } = require("../controllers/teamChooseGet")
-// const { TeamChoosePost } = require("../controllers/teamChoosePost");
 const { MatchOverview } = require("../controllers/matchOverview");
 const { WalletPage, AddFunds, AddFundssSuccess, Withdrawal } = require("../controllers/wallet");
 const { ContestHandle, JoinContest } = require("../controllers/contest");

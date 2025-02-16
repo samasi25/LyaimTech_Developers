@@ -1,16 +1,13 @@
-const { User } = require('../models/user');
+const User = require('../models/user');
 const Contest = require('../models/Contest');
 const Team = require('../models/Team');
 // const dotenv = require('dotenv');
 // dotenv.config();
 
 
-
-
-
 // Fetch all contests 
 const ContestHandle = async (req, res) => {
-    console.log('Contests route hit by user ID:', req.user._id);
+    // console.log('Contests route hit by user ID:', req.user.id);
     const userId = req.user._id;
 
     try {
@@ -34,10 +31,10 @@ const ContestHandle = async (req, res) => {
             match: contest.matchId,
         }));
 
-        console.log('Formatted contests data for user ID:', userId, formattedContests);
+        // console.log('Formatted contests data for user ID:', userId, formattedContests);
         res.status(200).json({ contests: formattedContests });
     } catch (error) {
-        console.error('Error fetching contests for user ID:', userId, error);
+        // console.error('Error fetching contests for user ID:', userId, error);
         res.status(500).json({ error: 'Error fetching contests' });
     }
 };
@@ -47,10 +44,10 @@ const ContestHandle = async (req, res) => {
 
 // Post Join a contest 
 const JoinContest = async (req, res) => {
-    const userId = req.user._id;
+    const userId = req.user.id;
     let { contestId, matchId } = req.body;
 
-    console.log(`User ID ${userId} attempting to join contest ID: ${contestId} with match ID: ${matchId}`);
+    // console.log(`User ID ${userId} attempting to join contest ID: ${contestId} with match ID: ${matchId}`);
 
     try {
         // Check if the user has already joined the contest
