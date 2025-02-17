@@ -5,6 +5,8 @@ import apiService from "@/components/apiService.js";
 import { useUser } from "@/context/AuthContext.js";
 import Link from "next/link.js";
 import Navbar from "@/components/Navbar.jsx";
+import { useRouter } from 'next/navigation';
+import toast from "react-hot-toast";
 
 const MatchOverview = () => {
     const [liveMatches, setLiveMatches] = useState([]);
@@ -12,6 +14,7 @@ const MatchOverview = () => {
     const [completedMatches, setCompletedMatches] = useState([]);
 
     const { user, loading, wallet } = useUser();
+    const router = useRouter();
 
     useEffect(() => {
         const fetchMatchOverview = async () => {
@@ -39,6 +42,34 @@ const MatchOverview = () => {
             minute: "2-digit",
             hour12: true,      // AM/PM format
         });
+    };
+
+
+    const handleMatchClick = async (match) => {
+        if (!user) {
+            toast.error("Please log in first.");
+            return;
+        }
+
+        if (match.status === "Upcoming") {
+            router.push(`/team-choose/${match.id}`);
+            return;
+        }
+
+        if (match.status === "Live") {
+            try {
+                const response = await apiService.fetchData(`/contest/check-contest/${user._id}/${match.id}`);
+
+                if (response.data.hasJoined) {
+                    router.push(`/leaderboard/${match.id}`);
+                } else {
+                    toast.error("You haven't joined any contest for this match.");
+                }
+            } catch (error) {
+                console.error("Error checking contest:", error);
+                toast.error("Something went wrong. Please try again.");
+            }
+        }
     };
 
     if (loading) {
@@ -117,6 +148,13 @@ const MatchOverview = () => {
                                     <div key={match.id} className="p-2 bg-gray-800 rounded-lg mb-2 text-white">
                                         <p>{match.home_team} vs {match.away_team}</p>
                                         <p>{formatMatchDate(match.match_date)}</p>
+                                        <button
+                                            onClick={() => handleMatchClick(match)}
+                                            className="text-white px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 disabled:bg-gray-500"
+                                            disabled={!match.hasJoined}
+                                        >
+                                            {match.hasJoined ? "Go to Leaderboard" : "Not Joined"}
+                                        </button>
                                     </div>
                                 ))
                             ) : (
