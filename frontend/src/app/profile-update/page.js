@@ -15,6 +15,11 @@ const ProfileUpdate = () => {
         mobileNo: ''
     });
     const [updating, setUpdating] = useState(false);
+    const [errors, setErrors] = useState({
+        username: '',
+        email: '',
+        mobileNo: ''
+    });
     const { user, loading, logout } = useUser();
 
     const handleChange = (e) => {
@@ -22,28 +27,63 @@ const ProfileUpdate = () => {
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
+    const validateFields = () => {
+        let valid = true;
+        let newErrors = { username: '', email: '', mobileNo: '' };
+
+        // Username validation
+        if (!formData.username.trim()) {
+            newErrors.username = "Username is required.";
+            valid = false;
+        }
+
+        // Email validation
+        if (!formData.email.trim()) {
+            newErrors.email = "Email is required.";
+            valid = false;
+        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+            newErrors.email = "Please enter a valid email address.";
+            valid = false;
+        }
+
+        // Mobile validation
+        if (!formData.mobileNo.trim()) {
+            newErrors.mobileNo = "Mobile number is required.";
+            valid = false;
+        } else if (!/^\d{10}$/.test(formData.mobileNo)) {
+            newErrors.mobileNo = "Please enter a valid 10-digit mobile number.";
+            valid = false;
+        }
+
+        setErrors(newErrors);
+        return valid;
+    };
+
     const handleUpdateProfile = async () => {
+        if (!validateFields()) {
+            return; // Stop if validation fails
+        }
+
         try {
             setUpdating(true);
 
-            const response = await apiService.profileUpdate(formData);console.log(response);
-            toast.success(response?.data);
+            const response = await apiService.profileUpdate(formData);
+            toast.success(response?.data?.message);
             router.push('/profile');
         } catch (error) {
-            toast.error("Error updating profile:", error);
+            toast.error("Error updating profile");
         } finally {
             setUpdating(false);
         }
     };
 
     const handleLogout = async () => {
-        await logout;
-        router.push("/login");
+        await logout();
     };
 
     useEffect(() => {
         setFormData(user);
-    }, [])
+    }, [user]);
 
     if (loading) {
         return <p className="text-center text-white text-2xl">Loading...</p>;
@@ -83,6 +123,7 @@ const ProfileUpdate = () => {
                             onChange={(e) => handleChange(e)}
                             className="w-full border-b bg-transparent font-aleo text-xl placeholder-black outline-none pl-2"
                         />
+                        {errors.email && <div className="text-red-500 text-sm">{errors.email}</div>}
                     </div>
                     {/* Username Field */}
                     <div className="mb-5">
@@ -94,6 +135,7 @@ const ProfileUpdate = () => {
                             onChange={(e) => handleChange(e)}
                             className="w-full border-b bg-transparent font-aleo text-xl outline-none placeholder-black pl-2"
                         />
+                        {errors.username && <div className="text-red-500 text-sm">{errors.username}</div>}
                     </div>
                     {/* Mobile Field */}
                     <div className="mb-5">
@@ -105,6 +147,7 @@ const ProfileUpdate = () => {
                             onChange={(e) => handleChange(e)}
                             className="w-full border-b bg-transparent font-aleo text-xl placeholder-black outline-none pl-2"
                         />
+                        {errors.mobileNo && <div className="text-red-500 text-sm">{errors.mobileNo}</div>}
                     </div>
                 </div>
 
