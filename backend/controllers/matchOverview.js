@@ -5,23 +5,21 @@ const { Match } = require('../models/matches');
 // Utility function to convert UTC to New York time
 function convertToNewYorkTime(dateTime) {
     try {
-        if (typeof dateTime !== 'string') {
-            throw new Error('Invalid date format. Expected a string.');
-        }
-
-        const trimmedDateTime = dateTime.trim();
-        const momentDate = moment.utc(trimmedDateTime);
+        const momentDate = moment.utc(new Date(dateTime).toISOString()); //  Ensure Date format
 
         if (!momentDate.isValid()) {
             throw new Error('Invalid date format. Unable to parse date.');
         }
 
         return momentDate.tz('America/New_York').format('YYYY-MM-DD HH:mm:ss');
+
+
     } catch (error) {
         console.error('Error in convertToNewYorkTime:', error.message);
-        throw error; // Rethrow to handle in the calling function
+        throw error;
     }
 }
+
 
 // Function to get matches by status
 async function getMatchesByStatus(status) {
@@ -34,21 +32,28 @@ async function getMatchesByStatus(status) {
 }
 
 // Function to update match status
-async function updateMatchStatusToLive(matchId) {
+async function updateMatchesToLive() {
     try {
-        const result = await Match.findByIdAndUpdate(matchId, { status: 'Live' });
-        if (!result) {
-            throw new Error(`No match found with ID: ${matchId}`);
-        }
+        const currentTime = moment().tz('America/New_York').toDate(); //  Get current time as Date
+
+        //  Directly update all matches whose time has passed
+        const result = await Match.updateMany(
+            { status: 'Upcoming', match_date: { $lte: currentTime } },
+            { $set: { status: 'Live' } }
+        );
+
+        console.log(` Updated ${result.modifiedCount} matches to Live.`);
     } catch (error) {
-        console.error(`Error updating match with ID "${matchId}" to Live:`, error.message);
-        throw error;
+        console.error(` Error updating matches to Live:`, error.message);
     }
 }
 
+
 // Route to fetch match overview
 const MatchOverview = async (req, res) => {
-    console.log("Match overview route hit!");
+
+
+
     try {
         // Fetch matches by status
         const upcomingMatches = await getMatchesByStatus('Upcoming');
@@ -76,14 +81,16 @@ const MatchOverview = async (req, res) => {
         // Process matches
         const limitedUpcomingMatches = updatedUpcomingMatches.slice(0, 16).map(match => {
             try {
-                const formattedDateTime = convertToNewYorkTime(match.match_date.toISOString());
+                const formattedDateTime = convertToNewYorkTime(new Date(match.match_date).toISOString());
+
+
                 return {
                     id: match._id,
                     home_team: match.home_team,
                     away_team: match.away_team,
                     match_date: formattedDateTime,
                     status: 'Upcoming',
-                    redirect: '/team-choose/' + match._id
+                    redirect: '/team/choose/' + match._id
                 };
             } catch (error) {
                 console.error(`Skipping invalid match in Upcoming: ${match._id}`);
@@ -93,7 +100,12 @@ const MatchOverview = async (req, res) => {
 
         const processedLiveMatches = updatedLiveMatches.map(match => {
             try {
-                const formattedDateTime = convertToNewYorkTime(match.match_date.toISOString());
+                if (!match.match_date) {
+                    throw new Error(`Match ID ${match._id} has an invalid match_date`);
+                }
+
+                const formattedDateTime = convertToNewYorkTime(new Date(match.match_date).toISOString());
+
                 return {
                     id: match._id,
                     home_team: match.home_team,
@@ -103,14 +115,16 @@ const MatchOverview = async (req, res) => {
                     // redirect: '/leaderboard/' + match._id
                 };
             } catch (error) {
-                console.error(`Skipping invalid match in Live: ${match._id}`);
+                console.error(`Skipping invalid match in Upcoming: ${match._id} - ${error.message}`);
                 return null;
             }
         }).filter(Boolean);
 
         const processedCompletedMatches = updatedCompletedMatches.map(match => {
             try {
-                const formattedDateTime = convertToNewYorkTime(match.match_date.toISOString());
+                const formattedDateTime = convertToNewYorkTime(new Date(match.match_date).toISOString());
+
+
                 return {
                     id: match._id,
                     home_team: match.home_team,
