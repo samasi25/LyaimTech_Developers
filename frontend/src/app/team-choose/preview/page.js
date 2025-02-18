@@ -10,15 +10,18 @@ const PreviewPage = () => {
     const router = useRouter();
     const [selectedPlayers, setSelectedPlayers] = useState([]);
     const [selectedSubstitutes, setSelectedSubstitutes] = useState([]);
-    const matchId = "65a7b2c9876c9e001c4f0e20"; // Temporarily Hardcoded Match ID (Testing Purpose)
+    const [matchId, setMatchId] = useState('');
+    // const matchId = "65a7b2c9876c9e001c4f0e20"; // Temporarily Hardcoded Match ID (Testing Purpose)
 
     useEffect(() => {
         // Retrieve data from local storage
         const players = JSON.parse(localStorage.getItem("selectedPlayers")) || [];
         const substitutes = JSON.parse(localStorage.getItem("selectedSubstitutes")) || [];
+        const matchId = JSON.parse(localStorage.getItem("matchId")) || '';
 
         setSelectedPlayers(players);
         setSelectedSubstitutes(substitutes);
+        setMatchId(matchId);
     }, []);
 
     const handleSubmit = async () => {
@@ -29,6 +32,7 @@ const PreviewPage = () => {
             });
     
             toast.success("Team Selected Successfully!");
+            router.push('/contest');
         } catch (error) {
             toast.error(error.message || error);
         }

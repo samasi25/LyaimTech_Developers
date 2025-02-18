@@ -277,6 +277,7 @@ const TeamChoose = () => {
             // Store in local storage
             localStorage.setItem("selectedPlayers", JSON.stringify(selectedPlayers));
             localStorage.setItem("selectedSubstitutes", JSON.stringify(selectedSubstitutes));
+            localStorage.setItem("matchId", JSON.stringify(matchid));
 
             router.push('/team-choose/preview');
         } catch (error) {
