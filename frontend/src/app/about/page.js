@@ -1,6 +1,25 @@
+'use client';
+
+import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
+import LoadingPage from "@/components/LoadingPage";  // Import the custom loading page
 
 export default function AboutUs() {
+    const [loading, setLoading] = useState(true);
+
+    // Simulate a delay to mimic data fetching or page loading
+    useEffect(() => {
+        // Simulate a delay before displaying the content
+        setTimeout(() => {
+            setLoading(false); // Set loading to false after 1 milliseconds
+        }, 1); 
+    }, []);
+
+    // If the page is still loading, show the custom loading page
+    if (loading) {
+        return <LoadingPage />;
+    }
+
     return (
         <div className="min-h-screen bg-[#DFE3F2CC] px-2 sm:px-6 lg:px-10 py-14">
             <Navbar />
