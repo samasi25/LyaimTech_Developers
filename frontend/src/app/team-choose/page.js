@@ -252,7 +252,7 @@ const TeamChoose = () => {
                 toast.error("You must select exactly 2 substitutes.");
                 return;
             }
-            router.push('/preview');
+            router.push('/team-choose/preview');
             toast.success("Team Selected Successfully!");
         } catch (error) {
             toast.error("Error submitting team:", error);

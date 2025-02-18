@@ -1,41 +1,39 @@
-const { User } = require('../models/user'); // User schema includes Wallet
+const { User } = require('../models/user');
 const Contest = require('../models/Contest');
 const Team = require('../models/Team');
+const PlayerStats = require('../models/PlayerStats');
 
-
-// Fetch contests the user has joined for a specific match
+//  Fetch contests the user has joined for a specific match
 const LeaderBoard = async (req, res) => {
-    const userId = req.userId; // Extract userId from authenticated token
-    const matchId = req.query.matchId; // Extract matchId from query params
-
-    // Validate matchId
-    if (!matchId) {
-        return res.status(400).json({ message: "matchId is required." });
-    }
-
     try {
-        // Fetch contests user joined for the specific match
+        const userId = req.user.id;
+        const matchId = req.query.matchId;
+
+        if (!matchId) {
+            return res.status(400).json({ message: "matchId is required." });
+        }
+
+        //  Fix: Fetch contests using `players.userId`
         const contests = await Contest.find({
             matchId: matchId,
-            'teams.userId': userId,
+            'players.userId': userId,
         }).populate({
-            path: 'teams',
-            populate: { path: 'userId', select: 'username' }, // Populate username of users
+            path: 'players.userId',
+            select: 'username'
         });
 
         if (!contests || contests.length === 0) {
-            return res.status(404).json({ message: "No contests found for this match." });
+            return res.status(404).json({ message: "You have not joined any contests for this match." });
         }
 
-        // Prepare contests with players and ranks
+        //  Prepare leaderboard data
         const contestsWithPlayers = contests.map((contest) => {
-            const players = contest.teams.map((team) => ({
-                username: team.userId.username,
-                score: team.totalPoints || 0,
-                winning: 0, // Default winnings
+            const players = contest.players.map(player => ({
+                username: player.userId.username,
+                score: player.totalPoints || 0,
+                winning: 0,
             }));
 
-            // Sort players by score and assign ranks
             players.sort((a, b) => b.score - a.score);
             players.forEach((player, index) => {
                 player.rank = index + 1;
@@ -51,88 +49,85 @@ const LeaderBoard = async (req, res) => {
 
         res.status(200).json({ contests: contestsWithPlayers });
     } catch (error) {
-        console.error('Error fetching contests:', error);
-        res.status(500).json({ message: "Internal Server Error" });
+        console.error("Error fetching contests:", error);
+        return res.status(500).json({ message: error.message });
     }
 };
 
-
-
-// Finalize match and distribute winnings Post route
+// 🛠 Finalize match and distribute winnings
 const Finalize = async (req, res) => {
-    const contestId = req.params.contestId;
-
     try {
-        // Fetch contest details
-        const contest = await Contest.findById(contestId).populate('teams');
+        const contestId = req.params.contestId;
+
+        //  Fetch contest & ensure it exists
+        const contest = await Contest.findById(contestId).populate('players.userId');
         if (!contest) {
             return res.status(404).json({ message: "Contest not found." });
         }
 
-        const { prizePool, teams } = contest;
-        const numPlayers = teams.length;
+        const { prizePool, players } = contest;
+        const numPlayers = players.length;
 
-        // Sort players by total points
-        teams.sort((a, b) => b.totalPoints - a.totalPoints);
+        //  Ensure there are players
+        if (numPlayers === 0) {
+            return res.status(400).json({ message: "No players in this contest." });
+        }
 
-        // Distribute prize pool
+        //  Sort players by score
+        players.sort((a, b) => b.totalPoints - a.totalPoints);
         const distribution = distributePrizePool(prizePool, numPlayers);
-        const updates = teams.map((team, index) => ({
-            userId: team.userId,
-            rank: index + 1,
-            winning: distribution[index] || 0,
-        }));
 
-        // Update wallets and save results
-        await Promise.all(
-            updates.map(async (update) => {
+        //  Wallet update logic
+        await Promise.all(players.map(async (player, index) => {
+            const winningAmount = distribution[index] || 0;
+            if (winningAmount > 0) {
                 await User.updateOne(
-                    { _id: update.userId },
+                    { _id: player.userId._id },
                     {
                         $inc: {
-                            'wallet.totalMoney': update.winning,
-                            'wallet.withdrawableAmount': update.winning,
-                            'wallet.winningAmount': update.winning,
+                            'wallet.totalMoney': winningAmount,
+                            'wallet.withdrawableAmount': winningAmount,
+                            'wallet.winningAmount': winningAmount,
                         },
                     }
                 );
-            })
-        );
+            }
+        }));
 
         res.status(200).json({ message: "Match finalized and results saved." });
     } catch (error) {
         console.error('Error finalizing contest:', error);
-        res.status(500).json({ message: "Internal Server Error" });
+        return res.status(500).json({ message: error.message });
     }
 };
 
-// Calculate scores for all users in a match Post
+// 🛠 Calculate scores for all users in a match
 const CalculateScores = async (req, res) => {
-    const matchId = req.body.matchId;
-
-    if (!matchId) {
-        return res.status(400).json({ message: "matchId is required." });
-    }
-
     try {
-        // Fetch teams for the match
+        const matchId = req.body.matchId;
+
+        if (!matchId) {
+            return res.status(400).json({ message: "matchId is required." });
+        }
+
+        //  Fetch teams
         const teams = await Team.find({ matchId }).populate('userId', 'username');
         if (!teams || teams.length === 0) {
             return res.status(404).json({ message: "No teams found for this match." });
         }
 
-        // Fetch player stats for the selected players
+        //  Fetch player stats
         const playerIds = teams.flatMap((team) =>
-            team.selectedPlayers.map((player) => player.id)
+            team.selectedPlayers.map(player => player.playerId)
         );
+
         const playerStats = await PlayerStats.find({ matchId, playerId: { $in: playerIds } });
 
-        // Calculate total points for each team
+        //  Calculate total points
         const updates = teams.map((team) => {
             let totalPoints = 0;
-
             team.selectedPlayers.forEach((player) => {
-                const stats = playerStats.find((stat) => stat.playerId === player.id);
+                const stats = playerStats.find(stat => String(stat.playerId) === String(player.playerId));
                 if (stats) {
                     let points = 0;
                     points += stats.goals * 6;
@@ -146,13 +141,12 @@ const CalculateScores = async (req, res) => {
                     totalPoints += points;
                 }
             });
-
             return { teamId: team._id, totalPoints };
         });
 
-        // Update total points in teams
+        //  Update teams with calculated points
         await Promise.all(
-            updates.map((update) =>
+            updates.map(update =>
                 Team.findByIdAndUpdate(update.teamId, { totalPoints: update.totalPoints })
             )
         );
@@ -160,29 +154,36 @@ const CalculateScores = async (req, res) => {
         res.status(200).json({ message: "Scores calculated and updated successfully." });
     } catch (error) {
         console.error('Error calculating scores:', error);
-        res.status(500).json({ message: "Internal Server Error" });
+        return res.status(500).json({ message: error.message });
     }
 };
 
-// Prize pool distribution logic (Helper Function Moved to Bottom)
+// 🛠 Prize pool distribution logic (Helper Function)
 function distributePrizePool(prizePool, numPlayers) {
-    const distribution = [];
-    if (numPlayers === 2) {
-        distribution.push(prizePool * 0.44, prizePool * 0.06);
-    } else if (numPlayers === 3) {
-        distribution.push(prizePool * 0.44, prizePool * 0.04, prizePool * 0.02);
-    } else if (numPlayers === 4) {
-        distribution.push(prizePool * 0.44, prizePool * 0.03, prizePool * 0.04, prizePool * 0.02);
-    } else if (numPlayers === 5) {
-        distribution.push(
-            prizePool * 0.44,
-            prizePool * 0.03,
-            prizePool * 0.015,
-            prizePool * 0.01,
-            prizePool * 0.005
-        );
+    try {
+        if (numPlayers <= 0) return [];
+
+        const distribution = [];
+        if (numPlayers === 2) {
+            distribution.push(prizePool * 0.44, prizePool * 0.06);
+        } else if (numPlayers === 3) {
+            distribution.push(prizePool * 0.44, prizePool * 0.04, prizePool * 0.02);
+        } else if (numPlayers === 4) {
+            distribution.push(prizePool * 0.44, prizePool * 0.03, prizePool * 0.04, prizePool * 0.02);
+        } else if (numPlayers === 5) {
+            distribution.push(
+                prizePool * 0.44,
+                prizePool * 0.03,
+                prizePool * 0.015,
+                prizePool * 0.01,
+                prizePool * 0.005
+            );
+        }
+        return distribution;
+    } catch (error) {
+        console.error('Error distributing prize pool:', error);
+        return [];
     }
-    return distribution;
 }
 
 module.exports = { LeaderBoard, Finalize, CalculateScores };

@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from "next/navigation";
 import toast from 'react-hot-toast';
-import redirectIfAuth from "../../hoc/withAuth.js";
+import redirectIfAuth from "../../hoc/redirectIfAuth.js";
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -82,7 +82,7 @@ const Register = () => {
 
             {/* Register section */}
             <div className="flex bg-white/10 backdrop-blur-md shadow-lg rounded-xl overflow-hidden max-w-sm sm:max-w-xl md:max-w-4xl w-full mx-auto">
-            {/* Left Section: Image */}
+                {/* Left Section: Image */}
                 <div className="w-1/3 bg-black hidden md:block">
                     <Image src="/Images/reg1.png" alt="Player" width={300} height={500} className="object-cover" />
                     <div className='text-white text-center font-aleo'>
