@@ -16,12 +16,14 @@ const Contest = () => {
 
     useEffect(() => {
         const controller = new AbortController();
-        const signal = controller.signal;
+        // const signal = controller.signal;
+        const matchId = JSON.parse(localStorage.getItem("matchId")) || '';
 
         const fetchContests = async () => {
             try {
                 setLoading(true);
-                const response = await apiService.fetchData('/contest', { signal });
+                const response = await apiService.fetchData(`/contest/${matchId}`);
+                // const response = await apiService.fetchData('/contest', { signal });
                 setContests(response.data.contests || []);
             } catch (error) {
                 if (error.name !== 'AbortError') {

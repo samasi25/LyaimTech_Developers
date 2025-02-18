@@ -9,12 +9,15 @@ const Team = require('../models/Team');
 const ContestHandle = async (req, res) => {
     // console.log('Contests route hit by user ID:', req.user.id);
     const userId = req.user._id;
+    const { matchId } = req.params;
 
-    try {const contestwa = await Contest.find();console.log('contestwa=>', contestwa);
-        const contests = await Contest.find()
-            .populate('matchId', 'home_team away_team match_date status')
-            .lean();
+    if (!matchId) {
+        return res.status(400).json({ success: false, message: "Match ID is required." });
+    }
 
+    try {
+        const contests = await Contest.find({ matchId });
+        
         if (!contests || contests.length === 0) {
             console.log('No contests found for user ID:', userId);
             return res.json({ contests: [] });
