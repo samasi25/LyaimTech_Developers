@@ -1,6 +1,6 @@
-'use client';
+'use client'; // This ensures this component runs only on the client side.
 
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import withAuth from "../../hoc/withAuth.js";
 import apiService from "@/components/apiService.js";
 import { useUser } from "@/context/AuthContext.js";
@@ -9,12 +9,21 @@ import Navbar from "@/components/Navbar.jsx";
 import { useRouter } from 'next/navigation';
 import toast from "react-hot-toast";
 
+// Custom Loading Page
+const LoadingPage = () => (
+    <div className="flex flex-col items-center justify-center w-full h-screen bg-gradient-to-br from-purple-600 to-blue-600 text-white">
+        <div className="animate-spin rounded-full border-4 border-t-4 border-t-blue-400 w-16 h-16 mb-8"></div>
+        <h1 className="text-3xl font-bold">Loading, please wait...</h1>
+    </div>
+);
+
 const MatchOverview = () => {
     const [liveMatches, setLiveMatches] = useState([]);
     const [upcomingMatches, setUpcomingMatches] = useState([]);
     const [completedMatches, setCompletedMatches] = useState([]);
+    const [isLoaded, setIsLoaded] = useState(false); // Track data loading
 
-    const { user, loading, wallet } = useUser();
+    const { user, wallet } = useUser();
     const router = useRouter();
 
     useEffect(() => {
@@ -25,26 +34,16 @@ const MatchOverview = () => {
                 setUpcomingMatches(response.data?.upcoming || []);
                 setCompletedMatches(response.data?.completed || []);
             } catch (error) {
-                console.error('Error fetching matches:', error);
+                console.error('Error fetching match data:', error);
+            } finally {
+                setIsLoaded(true); // Data loaded
             }
         };
+
         fetchMatchOverview();
     }, []);
 
-    // Function to format date
-    const formatMatchDate = (dateString) => {
-        return new Date(dateString).toLocaleString("en-US", {
-            timeZone: "America/New_York",
-            weekday: "short",  // Mon, Tue, etc.
-            year: "numeric",
-            month: "short",    // Jan, Feb, etc.
-            day: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: true,      // AM/PM format
-        });
-    };
-
+    // Handle click for match
     const handleMatchClick = async (match) => {
         if (!user) {
             toast.error("Please log in first.");
@@ -72,8 +71,23 @@ const MatchOverview = () => {
         }
     };
 
-    if (loading) {
-        return <p className="text-center text-white text-2xl">Loading...</p>;
+    // Format match date
+    const formatMatchDate = (dateString) => {
+        return new Date(dateString).toLocaleString("en-US", {
+            timeZone: "America/New_York",
+            weekday: "short",  // Mon, Tue, etc.
+            year: "numeric",
+            month: "short",    // Jan, Feb, etc.
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,      // AM/PM format
+        });
+    };
+
+    // Show custom loading page while data is loading
+    if (!isLoaded) {
+        return <LoadingPage />;
     }
 
     if (!user) {
@@ -88,7 +102,7 @@ const MatchOverview = () => {
             <Navbar />
             <div className="absolute inset-0 bg-gray-900 bg-opacity-10"></div>
 
-            <div className="relative z-10 max-w-6xl w-full text-center mt-10 p-6 text-white bg-gray-300 bg-opacity-[15%] rounded-lg flex flex-col items-center justify-center">
+            <div className="relative z-10 max-w-6xl w-full text-center p-6 text-white bg-gray-300 bg-opacity-[15%] rounded-lg flex flex-col items-center justify-center">
                 <h1 className="text-4xl font-abril text-black font-bold mt-5 uppercase drop-shadow-[1px_1px_1px_white]">
                     Every Match Leaves Its Mark –
                 </h1>
