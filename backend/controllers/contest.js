@@ -129,4 +129,23 @@ const JoinContest = async (req, res) => {
     }
 };
 
-module.exports = { ContestHandle, JoinContest };
+
+//  Check if User has Joined a Contest for a Match
+const checkUserContest = async (req, res) => {
+    try {
+        const { userId, matchId } = req.params;
+
+        //  Check if user has joined any contest for this match
+        const contestJoined = await Contest.findOne({ matchId, teams: { $in: [userId] } });
+
+        res.json({ hasJoined: !!contestJoined }); // true if joined, false if not
+    } catch (error) {
+        console.error("Error checking contest:", error);
+        res.status(500).json({ error: "Error checking contest" });
+    }
+};
+
+
+
+
+module.exports = { ContestHandle, JoinContest, checkUserContest };

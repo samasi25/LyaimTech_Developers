@@ -7,7 +7,7 @@ const { logoutUser } = require("../controllers/logoutUser");
 const { TeamChooseGet, TeamChoosePost } = require("../controllers/teamChooseGet")
 const { MatchOverview } = require("../controllers/matchOverview");
 const { WalletPage, AddFunds, AddFundssSuccess, Withdrawal } = require("../controllers/wallet");
-const { ContestHandle, JoinContest } = require("../controllers/contest");
+const { ContestHandle, JoinContest, checkUserContest } = require("../controllers/contest");
 const { LeaderBoard, Finalize, CalculateScores } = require("../controllers/leaderboard");
 const { contact } = require("../controllers/contact.controller.js");
 
@@ -30,6 +30,8 @@ router.post("/team/choose/save/:matchId", authenticate, TeamChoosePost)
 
 // Match Overview Route
 router.get("/match/overview", authenticate, MatchOverview)
+
+router.get('/contest/check-contest/:userId/:matchId', checkUserContest)
 
 // Wallet Route
 router.get("/wallet", authenticate, WalletPage);
