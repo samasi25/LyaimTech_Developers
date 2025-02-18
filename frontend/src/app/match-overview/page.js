@@ -1,4 +1,5 @@
-'use client'
+'use client';
+
 import React, { useEffect, useState } from "react";
 import withAuth from "../../hoc/withAuth.js";
 import apiService from "@/components/apiService.js";
@@ -30,7 +31,7 @@ const MatchOverview = () => {
         fetchMatchOverview();
     }, []);
 
-    //  Function to Format Date
+    // Function to format date
     const formatMatchDate = (dateString) => {
         return new Date(dateString).toLocaleString("en-US", {
             timeZone: "America/New_York",
@@ -43,7 +44,6 @@ const MatchOverview = () => {
             hour12: true,      // AM/PM format
         });
     };
-
 
     const handleMatchClick = async (match) => {
         if (!user) {
@@ -88,7 +88,7 @@ const MatchOverview = () => {
             <Navbar />
             <div className="absolute inset-0 bg-gray-900 bg-opacity-10"></div>
 
-            <div className="relative z-10 max-w-6xl w-full text-center p-6 text-white bg-gray-300 bg-opacity-[15%] rounded-lg flex flex-col items-center justify-center">
+            <div className="relative z-10 max-w-6xl w-full text-center mt-10 p-6 text-white bg-gray-300 bg-opacity-[15%] rounded-lg flex flex-col items-center justify-center">
                 <h1 className="text-4xl font-abril text-black font-bold mt-5 uppercase drop-shadow-[1px_1px_1px_white]">
                     Every Match Leaves Its Mark –
                 </h1>
@@ -116,7 +116,7 @@ const MatchOverview = () => {
 
                 <div className="flex flex-col md:flex-row justify-center gap-10 mt-12 w-full">
                     {/* Upcoming Matches */}
-                    <div className="flex flex-col items-center w-96">
+                    <div className="flex flex-col items-center w-full sm:w-96">
                         <button className="bg-[linear-gradient(125.26deg,#5672B8_22.66%,rgba(4,11,41,0.86)_59.18%)] text-[#ffffff] text-2xl md:text-xl sm:text-lg font-aleo px-6 py-3 sm:px-4 sm:py-2 rounded-lg w-full">
                             Upcoming Matches
                         </button>
@@ -138,7 +138,7 @@ const MatchOverview = () => {
                     </div>
 
                     {/* Live Matches */}
-                    <div className="flex flex-col items-center w-96">
+                    <div className="flex flex-col items-center w-full sm:w-96">
                         <button className="bg-[linear-gradient(125.26deg,#5672B8_22.66%,rgba(4,11,41,0.86)_59.18%)] text-[#ffffff] text-2xl md:text-xl sm:text-lg font-aleo px-6 py-3 sm:px-4 sm:py-2 rounded-lg w-full">
                             Live Matches
                         </button>
@@ -164,7 +164,7 @@ const MatchOverview = () => {
                     </div>
 
                     {/* Completed Matches */}
-                    <div className="flex flex-col items-center w-96">
+                    <div className="flex flex-col items-center w-full sm:w-96">
                         <button className="bg-[linear-gradient(125.26deg,#5672B8_22.66%,rgba(4,11,41,0.86)_59.18%)] text-[#ffffff] text-2xl md:text-xl sm:text-lg font-aleo px-6 py-3 sm:px-4 sm:py-2 rounded-lg w-full">
                             Completed Matches
                         </button>
