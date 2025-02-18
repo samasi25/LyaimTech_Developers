@@ -1,4 +1,4 @@
-const axios = require("axios");
+// const axios = require("axios");
 const Lineup = require("../models/Lineup.js");
 const Team = require("../models/Team.js");
 const { Match } = require("../models/matches.js");
@@ -8,45 +8,40 @@ const mongoose = require("mongoose");
 // const SPORTMONKS_API_KEY = process.env.API_KEY;
 
 
-// const fetchAndStorePlayers = async (matchId, homeTeam, awayTeam) => {
-const fetchAndStorePlayers = async (matchId) => {
+const createLineUp = async (req, res) => {
     try {
-        const existingPlayers = await Lineup.find({ matchId });
-        if (existingPlayers.length > 0) {
-            console.log("Players Already Exist in Database!");
-            return existingPlayers;
-        }
+        const { matchId, homeTeamPlayers, awayTeamPlayers, homeTeam, awayTeam } = req.body;
+        // console.log('payload', matchId, homeTeamPlayers, awayTeamPlayers, homeTeam, awayTeam);
 
-        // **Manually Set Team Names for Testing**
-        // const homeTeam = "85";  // Example: India 
-        // const awayTeam = "95";  // Example: Australia
-
-        const homePlayers = homeResponse.data.data.map(player => ({
+        const homePlayers = homeTeamPlayers.map((player, index) => ({
             matchId,
-            // teamName: homeTeam
-            teamName: "India",
-            playerId: player.id,
-            playerName: player.display_name,
+            teamName: homeTeam,
+            // teamName: "India",
+            playerId: index,
+            playerName: player,
             position: player.position?.name || "Unknown"
         }));
 
-        const awayPlayers = awayResponse.data.data.map(player => ({
+        const awayPlayers = awayTeamPlayers.map((player, index) => ({
             matchId,
-            // teamName: awayTeam,
-            teamName: "Australia",
-            playerId: player.id,
-            playerName: player.display_name,
+            teamName: awayTeam,
+            // teamName: "Australia",
+            playerId: index,
+            playerName: player,
             position: player.position?.name || "Unknown"
         }));
 
         await Lineup.insertMany([...homePlayers, ...awayPlayers]);
-        // console.log("Players Fetched & Stored in Database!");
-        return [...homePlayers, ...awayPlayers];
+        // console.log([...homePlayers, ...awayPlayers]);
+        // return [...homePlayers, ...awayPlayers];
+        res.status(201).json({ success: true, message: "Teams created successfully" });
+
     } catch (error) {
-        console.error(" Error Fetching Players:", error);
-        return [];
+        console.error("Error creating team:", error);
+        res.status(500).json({ success: false, message: "Internal server error" });
     }
 };
+
 // const fetchAndStorePlayers = async (matchId) => {
 //     try {
 //         const existingPlayers = await Lineup.find({ matchId });
@@ -62,7 +57,7 @@ const fetchAndStorePlayers = async (matchId) => {
 
 
 //         const homeResponse = await axios.get(`https://api.sportmonks.com/v3/football/players?api_token=${SPORTMONKS_API_KEY}&team=${homeTeam}`);
-
+// console.log('homeResponse', homeResponse);
 //         const awayResponse = await axios.get(`https://api.sportmonks.com/v3/football/players?api_token=${SPORTMONKS_API_KEY}&team=${awayTeam}`);
 
 
@@ -98,8 +93,6 @@ const fetchAndStorePlayers = async (matchId) => {
 // };
 
 
-
-//  Team Choose GET Route
 const TeamChooseGet = async (req, res) => {
 
 
@@ -119,7 +112,7 @@ const TeamChooseGet = async (req, res) => {
 
 
 
-        console.log("Match Data from Database:", match);
+        // console.log("Match Data from Database:", match);
 
         if (!match) {
             console.log("Match not found in database!");
@@ -210,4 +203,4 @@ const TeamChoosePost = async (req, res) => {
     }
 };
 
-module.exports = { TeamChooseGet, TeamChoosePost };
+module.exports = { TeamChooseGet, TeamChoosePost, createLineUp };

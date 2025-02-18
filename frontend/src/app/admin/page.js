@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import apiService from '@/components/apiService';
 import toast from 'react-hot-toast';
 import withAdminAuth from '@/hoc/withAdminAuth.js';
-import LoadingPage from '@/components/LoadingPage';  // for custom loading page
+// import LoadingPage from '@/components/LoadingPage';  // for custom loading page
 
 const AdminPage = () => {
   const [matches, setMatches] = useState([]);
@@ -19,10 +19,11 @@ const AdminPage = () => {
   });
   
   const [newTeam, setNewTeam] = useState({
-    userId: '',
     matchId: '',
-    selectedPlayers: [],  //  array to store multiple players
-    substitutes: [],       // array to store multiple substitutes
+    homeTeam: '',
+    awayTeam: '',
+    homeTeamPlayers: '',
+    awayTeamPlayers: '',
   });
   
   const [newContest, setNewContest] = useState({
@@ -33,29 +34,29 @@ const AdminPage = () => {
     matchId: '',
   });
 
-  const [loading, setLoading] = useState(true);  // Manage loading state
+  // const [loading, setLoading] = useState(true);  // Manage loading state
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
-  const fetchData = async () => {
-    try {
-      const matchesData = await apiService.fetchData('/admin/matches'); // fetch from API
-      const teamsData = await apiService.fetchData('/admin/teams'); // fetch from API
-      const contestsData = await apiService.fetchData('/admin/contests'); // fetch from API
+  // const fetchData = async () => {
+  //   try {
+  //     const matchesData = await apiService.fetchData('/admin/matches'); // fetch from API
+  //     const teamsData = await apiService.fetchData('/admin/teams'); // fetch from API
+  //     const contestsData = await apiService.fetchData('/admin/contests'); // fetch from API
 
-      setMatches(matchesData || []);
-      setTeams(teamsData || []);
-      setContests(contestsData || []);
+  //     setMatches(matchesData || []);
+  //     setTeams(teamsData || []);
+  //     setContests(contestsData || []);
       
-      setLoading(false);  // Data fetched, hide loading page
-    } catch (error) {
-      toast.error('Error fetching data');
-      console.error('API Call Failed:', error);
-      setLoading(false);  // Hide loading page in case of an error
-    }
-  };
+  //     setLoading(false);  // Data fetched, hide loading page
+  //   } catch (error) {
+  //     toast.error('Error fetching data');
+  //     console.error('API Call Failed:', error);
+  //     setLoading(false);  // Hide loading page in case of an error
+  //   }
+  // };
 
   const handleCreateMatch = async () => {
     try {
@@ -71,10 +72,17 @@ const AdminPage = () => {
 
   const handleCreateTeam = async () => {
     try {
-      const response = await apiService.postData('/admin/teams', newTeam); // API POST request
+      const payload = {
+        matchId: newTeam.matchId,
+        homeTeam: newTeam.homeTeam,
+        awayTeam: newTeam.awayTeam,
+        homeTeamPlayers: newTeam.homeTeamPlayers.split(' '),
+        awayTeamPlayers: newTeam.awayTeamPlayers.split(' ')
+      }
+      console.log('newTeam', payload);
+      const response = await apiService.postData('/admin/team', payload); // API POST request
       setTeams([...teams, response.data]);
       toast.success('Team added successfully!');
-      setNewTeam({ userId: '', matchId: '', selectedPlayers: [], substitutes: [] });
     } catch (error) {
       toast.error('Error adding team');
       console.error('Error:', error);
@@ -94,18 +102,18 @@ const AdminPage = () => {
   };
 
   // Function to handle adding new players to the selected players or substitutes array
-  const handleAddPlayer = (playerType, value) => {
-    const updatedPlayers = value.trim().split(',').map(player => player.trim()); // Split by comma and remove extra spaces
-    setNewTeam(prevState => ({
-      ...prevState,
-      [playerType]: updatedPlayers,
-    }));
-  };
+  // const handleAddPlayer = (playerType, value) => {
+  //   const updatedPlayers = value.trim().split(',').map(player => player.trim()); // Split by comma and remove extra spaces
+  //   setNewTeam(prevState => ({
+  //     ...prevState,
+  //     [playerType]: updatedPlayers,
+  //   }));
+  // };
 
   // If data is still loading, show the custom loading page
-  if (loading) {
-    return <LoadingPage />;
-  }
+  // if (loading) {
+  //   return <LoadingPage />;
+  // }
 
   return (
     <div className="container mx-auto p-4">
@@ -164,13 +172,13 @@ const AdminPage = () => {
         renderForm={
           <div>
             <h3 className="text-xl font-semibold mb-2">Add New Team</h3>
-            <input
+            {/* <input
               type="text"
               className="border p-2 mb-2 w-full"
               placeholder="User ID"
               value={newTeam.userId}
               onChange={(e) => setNewTeam({ ...newTeam, userId: e.target.value })}
-            />
+            /> */}
             <input
               type="text"
               className="border p-2 mb-2 w-full"
@@ -178,17 +186,32 @@ const AdminPage = () => {
               value={newTeam.matchId}
               onChange={(e) => setNewTeam({ ...newTeam, matchId: e.target.value })}
             />
-            <textarea
+            <input
+              type="text"
               className="border p-2 mb-2 w-full"
-              placeholder="Enter Selected Players (comma separated)"
-              value={newTeam.selectedPlayers.join(', ')}  // Join players with commas for display
-              onChange={(e) => handleAddPlayer('selectedPlayers', e.target.value)}  // Handle add players
+              placeholder="Home Team"
+              value={newTeam.homeTeam}
+              onChange={(e) => setNewTeam({ ...newTeam, homeTeam: e.target.value })}
             />
             <textarea
               className="border p-2 mb-2 w-full"
-              placeholder="Enter Substitutes (comma separated)"
-              value={newTeam.substitutes.join(', ')}  // Join substitutes with commas for display
-              onChange={(e) => handleAddPlayer('substitutes', e.target.value)}  // Handle add substitutes
+              placeholder="Enter Home Team Players (space separated)"
+              value={newTeam.homeTeamPlayers}  // Join players with commas for display
+              onChange={(e) => setNewTeam({ ...newTeam, homeTeamPlayers: e.target.value })}  // Handle add players
+              // onChange={(e) => handleAddPlayer('homeTeamPlayers', e.target.value)}  // Handle add players
+            />
+            <input
+              type="text"
+              className="border p-2 mb-2 w-full"
+              placeholder="Away Team"
+              value={newTeam.awayTeam}
+              onChange={(e) => setNewTeam({ ...newTeam, awayTeam: e.target.value })}
+            />
+            <textarea
+              className="border p-2 mb-2 w-full"
+              placeholder="Enter Away Team Players (space separated)"
+              value={newTeam.awayTeamPlayers}  // Join substitutes with commas for display
+              onChange={(e) => setNewTeam({ ...newTeam, awayTeamPlayers: e.target.value })}  // Handle add substitutes
             />
             <button
               onClick={handleCreateTeam}

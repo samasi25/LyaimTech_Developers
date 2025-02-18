@@ -4,7 +4,7 @@ const { login, signup } = require("../controllers/userControl")
 const { userProfile } = require("../controllers/userProfile")
 const { updateUserProfile } = require("../controllers/updateUserProfile");
 const { logoutUser } = require("../controllers/logoutUser");
-const { TeamChooseGet, TeamChoosePost } = require("../controllers/teamChooseGet")
+const { TeamChooseGet, TeamChoosePost, createLineUp } = require("../controllers/teamChooseGet")
 const { MatchOverview, createMatch } = require("../controllers/matchOverview");
 const { WalletPage, AddFunds, AddFundssSuccess, Withdrawal } = require("../controllers/wallet");
 const { ContestHandle, JoinContest, checkUserContest, createContest } = require("../controllers/contest");
@@ -54,5 +54,6 @@ router.post("/logout", authenticate, logoutUser)
 // admin routes
 router.post("/admin/match", authenticate, createMatch)
 router.post("/admin/contest", authenticate, createContest)
+router.post("/admin/team", authenticate, createLineUp)
 
 module.exports = router;
