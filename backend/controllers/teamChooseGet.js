@@ -101,4 +101,38 @@ const TeamChoosePost = async (req, res) => {
     }
 };
 
+const createLineUp = async (req, res) => {
+    try {
+        const { matchId, homeTeamPlayers, awayTeamPlayers, homeTeam, awayTeam } = req.body;
+        // console.log('payload', matchId, homeTeamPlayers, awayTeamPlayers, homeTeam, awayTeam);
+
+        const homePlayers = homeTeamPlayers.map((player, index) => ({
+            matchId,
+            teamName: homeTeam,
+            // teamName: "India",
+            playerId: index,
+            playerName: player,
+            position: player.position?.name || "Unknown"
+        }));
+
+        const awayPlayers = awayTeamPlayers.map((player, index) => ({
+            matchId,
+            teamName: awayTeam,
+            // teamName: "Australia",
+            playerId: index,
+            playerName: player,
+            position: player.position?.name || "Unknown"
+        }));
+
+        await Lineup.insertMany([...homePlayers, ...awayPlayers]);
+        // console.log([...homePlayers, ...awayPlayers]);
+        // return [...homePlayers, ...awayPlayers];
+        res.status(201).json({ success: true, message: "Teams created successfully" });
+
+    } catch (error) {
+        console.error("Error creating team:", error);
+        res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+
 module.exports = { TeamChooseGet, TeamChoosePost, createLineUp };
