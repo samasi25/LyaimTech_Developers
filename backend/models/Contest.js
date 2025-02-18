@@ -16,7 +16,3 @@ const ContestSchema = new mongoose.Schema({
 
 const Contest = mongoose.model('Contest', ContestSchema);
 module.exports = Contest;
-
-
-
-

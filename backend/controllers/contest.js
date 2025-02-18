@@ -10,7 +10,7 @@ const ContestHandle = async (req, res) => {
     // console.log('Contests route hit by user ID:', req.user.id);
     const userId = req.user._id;
 
-    try {
+    try {const contestwa = await Contest.find();console.log('contestwa=>', contestwa);
         const contests = await Contest.find()
             .populate('matchId', 'home_team away_team match_date status')
             .lean();
@@ -145,7 +145,36 @@ const checkUserContest = async (req, res) => {
     }
 };
 
+// Route to store data comong from admin panel
+const createContest = async (req, res) => {
+    try {
+        const { name, entryFee, maxPlayers, prizePool, matchId } = req.body;
 
+        // Validate required fields
+        if (!name || !entryFee || !maxPlayers || !prizePool || !matchId) {
+            return res.status(400).json({ success: false, message: "All fields are required." });
+        }
 
+        // Create a new contest object
+        const newContest = new Contest({
+            name,
+            entryFee,
+            maxPlayers,
+            prizePool,
+            matchId,
+            teams: [], // Ensure teams array is set
+            players: [] // Initially, no players joined
+        });
 
-module.exports = { ContestHandle, JoinContest, checkUserContest };
+        // Save contest to the database
+        await newContest.save();
+
+        res.status(201).json({ success: true, message: "Contest created successfully", contest: newContest });
+
+    } catch (error) {
+        console.error("Error creating contest:", error);
+        res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+
+module.exports = { ContestHandle, JoinContest, checkUserContest, createContest };

@@ -27,9 +27,9 @@ const AdminPage = () => {
   
   const [newContest, setNewContest] = useState({
     name: '',
-    entryFee: 0,
-    maxPlayers: 0,
-    prizePool: 0,
+    entryFee: '',
+    maxPlayers: '',
+    prizePool: '',
     matchId: '',
   });
 
@@ -58,7 +58,7 @@ const AdminPage = () => {
   };
 
   const handleCreateMatch = async () => {
-    try {console.log(newMatch);
+    try {
       const response = await apiService.postData('/admin/match', newMatch); // API POST request
       setMatches([...matches, response.data]);
       toast.success('Match added successfully!');
@@ -82,8 +82,8 @@ const AdminPage = () => {
   };
 
   const handleCreateContest = async () => {
-    try {
-      const response = await apiService.postData('/admin/contests', newContest); // API POST request
+    try {console.log(newContest);
+      const response = await apiService.postData('/admin/contest', newContest); // API POST request
       setContests([...contests, response.data]);
       toast.success('Contest added successfully!');
       setNewContest({ name: '', entryFee: 0, maxPlayers: 0, prizePool: 0, matchId: '' });
@@ -216,6 +216,7 @@ const AdminPage = () => {
             />
             <input
               type="number"
+              min={0}
               className="border p-2 mb-2 w-full"
               placeholder="Entry Fee"
               value={newContest.entryFee}
@@ -223,6 +224,7 @@ const AdminPage = () => {
             />
             <input
               type="number"
+              min={0}
               className="border p-2 mb-2 w-full"
               placeholder="Max Players"
               value={newContest.maxPlayers}
@@ -230,6 +232,7 @@ const AdminPage = () => {
             />
             <input
               type="number"
+              min={0}
               className="border p-2 mb-2 w-full"
               placeholder="Prize Pool"
               value={newContest.prizePool}
