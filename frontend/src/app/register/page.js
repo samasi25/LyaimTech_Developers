@@ -82,7 +82,7 @@ const Register = () => {
 
             {/* Register section */}
             <div className="flex bg-white/10 backdrop-blur-md shadow-lg rounded-xl overflow-hidden max-w-sm sm:max-w-xl md:max-w-4xl w-full mx-auto">
-            {/* Left Section: Image */}
+                {/* Left Section: Image */}
                 <div className="w-1/3 bg-black hidden md:block">
                     <Image src="/Images/reg1.png" alt="Player" width={300} height={500} className="object-cover" />
                     <div className='text-white text-center font-aleo'>

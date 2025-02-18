@@ -6,7 +6,8 @@ const WithdrawalRequest = require('../models/WithdrawalRequest.js');
 dotenv.config();
 
 // PayPal SDK Environment Configuration
-const environment = new paypal.core.SandboxEnvironment(
+
+const environment = new paypal.core.LiveEnvironment(
     process.env.PAYPAL_CLIENT_ID,
     process.env.PAYPAL_CLIENT_SECRET
 );

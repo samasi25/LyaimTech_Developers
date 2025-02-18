@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import apiService from '@/components/apiService';
 import toast from 'react-hot-toast';
 import withAdminAuth from '@/hoc/withAdminAuth.js';
+import LoadingPage from '@/components/LoadingPage';  // for custom loading page
 
 const AdminPage = () => {
   const [matches, setMatches] = useState([]);
@@ -20,8 +21,8 @@ const AdminPage = () => {
   const [newTeam, setNewTeam] = useState({
     userId: '',
     matchId: '',
-    selectedPlayers: '',
-    substitutes: '',
+    selectedPlayers: [],  //  array to store multiple players
+    substitutes: [],       // array to store multiple substitutes
   });
   
   const [newContest, setNewContest] = useState({
@@ -31,6 +32,8 @@ const AdminPage = () => {
     prizePool: 0,
     matchId: '',
   });
+
+  const [loading, setLoading] = useState(true);  // Manage loading state
 
   useEffect(() => {
     fetchData();
@@ -45,9 +48,12 @@ const AdminPage = () => {
       setMatches(matchesData || []);
       setTeams(teamsData || []);
       setContests(contestsData || []);
+      
+      setLoading(false);  // Data fetched, hide loading page
     } catch (error) {
       toast.error('Error fetching data');
       console.error('API Call Failed:', error);
+      setLoading(false);  // Hide loading page in case of an error
     }
   };
 
@@ -68,7 +74,7 @@ const AdminPage = () => {
       const response = await apiService.postData('/admin/teams', newTeam); // API POST request
       setTeams([...teams, response.data]);
       toast.success('Team added successfully!');
-      setNewTeam({ userId: '', matchId: '', selectedPlayers: '', substitutes: '' });
+      setNewTeam({ userId: '', matchId: '', selectedPlayers: [], substitutes: [] });
     } catch (error) {
       toast.error('Error adding team');
       console.error('Error:', error);
@@ -86,6 +92,20 @@ const AdminPage = () => {
       console.error('Error:', error);
     }
   };
+
+  // Function to handle adding new players to the selected players or substitutes array
+  const handleAddPlayer = (playerType, value) => {
+    const updatedPlayers = value.trim().split(',').map(player => player.trim()); // Split by comma and remove extra spaces
+    setNewTeam(prevState => ({
+      ...prevState,
+      [playerType]: updatedPlayers,
+    }));
+  };
+
+  // If data is still loading, show the custom loading page
+  if (loading) {
+    return <LoadingPage />;
+  }
 
   return (
     <div className="container mx-auto p-4">
@@ -158,19 +178,17 @@ const AdminPage = () => {
               value={newTeam.matchId}
               onChange={(e) => setNewTeam({ ...newTeam, matchId: e.target.value })}
             />
-            <input
-              type="text"
+            <textarea
               className="border p-2 mb-2 w-full"
-              placeholder="Selected Players"
-              value={newTeam.selectedPlayers}
-              onChange={(e) => setNewTeam({ ...newTeam, selectedPlayers: e.target.value })}
+              placeholder="Enter Selected Players (comma separated)"
+              value={newTeam.selectedPlayers.join(', ')}  // Join players with commas for display
+              onChange={(e) => handleAddPlayer('selectedPlayers', e.target.value)}  // Handle add players
             />
-            <input
-              type="text"
+            <textarea
               className="border p-2 mb-2 w-full"
-              placeholder="Substitutes"
-              value={newTeam.substitutes}
-              onChange={(e) => setNewTeam({ ...newTeam, substitutes: e.target.value })}
+              placeholder="Enter Substitutes (comma separated)"
+              value={newTeam.substitutes.join(', ')}  // Join substitutes with commas for display
+              onChange={(e) => handleAddPlayer('substitutes', e.target.value)}  // Handle add substitutes
             />
             <button
               onClick={handleCreateTeam}
@@ -240,34 +258,15 @@ const AdminPage = () => {
 function Section({ title, data, renderForm }) {
   return (
     <div className="mb-6">
-      <h2 className="text-2xl font-semibold mb-2">{title}</h2>
-      {renderForm}
-      <div className="bg-white shadow-md rounded-lg p-4 overflow-x-auto mt-4">
-        <table className="w-full border-collapse border border-gray-200">
-          <thead>
-            <tr className="bg-gray-100">
-              {data.length > 0 && Object.keys(data[0]).map((key) => (
-                <th key={key} className="border p-2">{key}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {data.length > 0 ? (
-              data.map((item, index) => (
-                <tr key={index} className="border">
-                  {Object.values(item).map((value, i) => (
-                    <td key={i} className="border p-2">{String(value)}</td>
-                  ))}
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="100%" className="text-center p-4">No data available</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+      <h2 className="text-2xl font-semibold mb-4">{title}</h2>
+      <div className="space-y-4">
+        {data.map((item, index) => (
+          <div key={index} className="border p-4 rounded-lg">
+            <pre>{JSON.stringify(item, null, 2)}</pre>
+          </div>
+        ))}
       </div>
+      <div className="mt-4">{renderForm}</div>
     </div>
   );
 }

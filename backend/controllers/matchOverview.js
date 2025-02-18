@@ -67,7 +67,7 @@ const MatchOverview = async (req, res) => {
         for (const match of upcomingMatches) {
             const matchDateTime = moment(match.match_date);
             if (matchDateTime.isBefore(currentTime)) {
-                await updateMatchStatusToLive(match._id);
+                await updateMatchesToLive(match._id);
             }
         }
 
