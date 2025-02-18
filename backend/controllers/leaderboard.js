@@ -13,7 +13,7 @@ const LeaderBoard = async (req, res) => {
             return res.status(400).json({ message: "matchId is required." });
         }
 
-        //  Fix: Fetch contests using `players.userId`
+        //  Fix: Fetch contests using `players.userId` 
         const contests = await Contest.find({
             matchId: matchId,
             'players.userId': userId,

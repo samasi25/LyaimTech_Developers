@@ -188,11 +188,7 @@ const TeamChoose = () => {
     useEffect(() => {
         const fetchTeams = async () => {
             try {
-<<<<<<< HEAD
-                const response = await apiService.fetchData(`/team/choose/${matchId}`); console.log(response)
-=======
                 const response = await apiService.fetchData(`/team/choose/${matchId}`);console.log(response)
->>>>>>> ac28f5381c7f56e4b6b9e88c27c9c44886447ee0
                 if (!response?.data?.success) {
                     setError(response?.data?.message)
                     return
@@ -206,14 +202,8 @@ const TeamChoose = () => {
         fetchTeams();
     }, []);
 
-<<<<<<< HEAD
-    if (error) {
-        console.log(error);
-        return (
-=======
     if (error) {console.log(error);
         return(
->>>>>>> ac28f5381c7f56e4b6b9e88c27c9c44886447ee0
             <p>{error}</p>
         )
     }

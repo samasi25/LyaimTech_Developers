@@ -58,8 +58,8 @@ const AdminPage = () => {
   };
 
   const handleCreateMatch = async () => {
-    try {
-      const response = await apiService.postData('/admin/matches', newMatch); // API POST request
+    try {console.log(newMatch);
+      const response = await apiService.postData('/admin/match', newMatch); // API POST request
       setMatches([...matches, response.data]);
       toast.success('Match added successfully!');
       setNewMatch({ home_team: '', away_team: '', match_date: '', status: 'Upcoming' });
@@ -133,7 +133,7 @@ const AdminPage = () => {
               onChange={(e) => setNewMatch({ ...newMatch, away_team: e.target.value })}
             />
             <input
-              type="datetime-local"
+              type="date"
               className="border p-2 mb-2 w-full"
               value={newMatch.match_date}
               onChange={(e) => setNewMatch({ ...newMatch, match_date: e.target.value })}
