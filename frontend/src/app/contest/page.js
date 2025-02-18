@@ -24,7 +24,7 @@ const Contest = () => {
                 setLoading(true);
                 const response = await apiService.fetchData(`/contest/${matchId}`);
                 // const response = await apiService.fetchData('/contest', { signal });
-                setContests(response.data.contests || []);
+                setContests(response.data.contests || []);console.log(response.data);
             } catch (error) {
                 if (error.name !== 'AbortError') {
                     console.error('Error fetching contests:', error);
@@ -43,9 +43,10 @@ const Contest = () => {
     }, []);
 
     const handleJoinContest = async (contestId, matchId) => {
-        try {
+        try {console.log(contestId, matchId);
             const response = await apiService.postData('/contest/join', { contestId, matchId });
             toast.success(response.data.message);
+            router.push('/leaderboard');
         } catch (error) {
             console.error("Error joining contest:", error);
             toast.error(error.response?.data?.error || "Failed to join contest");
@@ -118,7 +119,7 @@ const Contest = () => {
                                             <span className="text-white text-center">Joined: {contest.players_joined}</span>
                                             <button
                                                 className={`px-4 py-1 rounded-lg transition ${contest.is_full ? "bg-gray-500 cursor-not-allowed" : "bg-green-600 hover:bg-green-700 text-white"}`}
-                                                onClick={() => !contest.is_full && handleJoinContest(contest.contest_id, contest.match._id)}
+                                                onClick={() => !contest.is_full && handleJoinContest(contest.contest_id, contest.match)}
                                                 disabled={contest.is_full}
                                             >
                                                 {contest.is_full ? "Contest Full" : "Join Now"}
