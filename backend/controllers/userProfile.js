@@ -9,12 +9,14 @@ const userProfile = async (req, res) => {
     try {
         const user = await User.findById(userId).select('email username mobileNo referralCode');
 
-        if (!user) return res.status(404).json({ message: 'User not found' });
+        if (!user) return res.status(404).json({ message: 'User not found' });//console.log(user);
+
+        const adminUsers = ["67b42373ec0b5dc8a639ef91", "67b41ccb88e950464ab6bd83", "k"]; // List of admin user IDs
 
         // Manually add the role before sending the response
         const userWithRole = {
             ...user.toObject(), // Convert Mongoose document to plain object
-            role: userId === "67b42373ec0b5dc8a639ef91" ? "admin" : "user" // Assign role dynamically
+            role: adminUsers.includes(userId) ? "admin" : "user" // Assign role dynamically
         };
 
         res.json(userWithRole);
