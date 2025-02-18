@@ -10,6 +10,7 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [wallet, setWallet] = useState(null);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   // Function to fetch user details
   const fetchUser = async () => {
@@ -30,6 +31,7 @@ export const UserProvider = ({ children }) => {
 
   // Function to fetch wallet details
   const fetchWallet = async () => {
+    if( !localStorage.getItem("token") ) return
     try {
       const res = await apiService.fetchData("/wallet");
       if (res.status === 200) {
@@ -50,7 +52,8 @@ export const UserProvider = ({ children }) => {
       localStorage.removeItem("token");
       setUser(null);
       setWallet(null);
-      toast.success("Logged out successfully");
+      // toast.success("Logged out successfully");
+      router.push("/login");
     } catch (error) {
       toast.error("Logout failed: " + error.message);
     }
