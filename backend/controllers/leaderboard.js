@@ -5,15 +5,6 @@ const PlayerStats = require('../models/PlayerStats');
 
 //  Fetch contests the user has joined for a specific match
 const LeaderBoard = async (req, res) => {
-    const userId = req.userId; // Extract userId from authenticated token
-    // const matchId = req.query.matchId; // Extract matchId from query params
-    const matchId = '65a7b2c9876c9e001c4f0e20'; // Extract matchId from query params
-
-    // Validate matchId
-    if (!matchId) {
-        return res.status(400).json({ message: "matchId is required." });
-    }
-
     try {
         const userId = req.user.id;
         const matchId = req.query.matchId;
@@ -22,7 +13,7 @@ const LeaderBoard = async (req, res) => {
             return res.status(400).json({ message: "matchId is required." });
         }
 
-        //  Fix: Fetch contests using `players.userId`
+        //  Fix: Fetch contests using `players.userId` 
         const contests = await Contest.find({
             matchId: matchId,
             'players.userId': userId,
