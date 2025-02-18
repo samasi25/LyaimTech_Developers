@@ -183,18 +183,30 @@ const TeamChoose = () => {
     const [selectedHomeSubstitutes, setSelectedHomeSubstitutes] = useState([]);
     const [selectedAwaySubstitutes, setSelectedAwaySubstitutes] = useState([]);
 
+    const [error, setError] = useState();
+
     useEffect(() => {
         const fetchTeams = async () => {
             try {
-                const response = await apiService.fetchData(`/team/choose/${matchId}`);
-                setHomeTeam(response.data.homeTeam);
-                setAwayTeam(response.data.awayTeam);
+                const response = await apiService.fetchData(`/team/choose/${matchId}`);console.log(response)
+                if (!response?.data?.success) {
+                    setError(response?.data?.message)
+                    return
+                }
+                setHomeTeam(response?.data?.homeTeam);
+                setAwayTeam(response?.data?.awayTeam);
             } catch (error) {
-                toast.error('Error fetching teams:', error);
+                toast.error('Internal Server error!');
             }
         };
         fetchTeams();
     }, []);
+
+    if (error) {console.log(error);
+        return(
+            <p>{error}</p>
+        )
+    }
 
     const handleSelectPlayer = (player, teamType, type) => {
         // logic to select player or substitute
