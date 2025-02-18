@@ -165,17 +165,26 @@
 // };
 
 // export default withAuth(TeamChoose);
-'use client';
+
+
+"use client";
 import { useEffect, useState } from 'react';
 import apiService from '@/components/apiService';
 import Navbar from '@/components/Navbar';
 import { useRouter } from 'next/navigation';
 import toast from "react-hot-toast";
+import { useParams } from "next/navigation";
 
 const TeamChoose = () => {
     const router = useRouter();
-    // const matchId = "65a7b2c9876c9e001c4f0e20"; // Temporarily Hardcoded Match ID (Testing Purpose)
-    const matchId = "65d1b3c8e7a1f8a3b4c2c300"; // Temporarily Hardcoded Match ID (Testing Purpose)
+
+    const { matchid } = useParams();
+    const matchId = matchid;
+
+    console.log(matchId)
+
+
+
 
     const [homeTeam, setHomeTeam] = useState({ teamName: '', players: [] });
     const [awayTeam, setAwayTeam] = useState({ teamName: '', players: [] });
@@ -189,7 +198,7 @@ const TeamChoose = () => {
     useEffect(() => {
         const fetchTeams = async () => {
             try {
-                const response = await apiService.fetchData(`/team/choose/${matchId}`);console.log(response)
+                const response = await apiService.fetchData(`/team/choose/${matchId}`); console.log(response)
                 if (!response?.data?.success) {
                     setError(response?.data?.message)
                     return
@@ -203,8 +212,9 @@ const TeamChoose = () => {
         fetchTeams();
     }, []);
 
-    if (error) {console.log(error);
-        return(
+    if (error) {
+        console.log(error);
+        return (
             <p>{error}</p>
         )
     }

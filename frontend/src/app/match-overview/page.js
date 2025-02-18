@@ -1,5 +1,4 @@
-'use client'; // This ensures this component runs only on the client side.
-
+"use client";
 import React, { useState, useEffect } from "react";
 import withAuth from "../../hoc/withAuth.js";
 import apiService from "@/components/apiService.js";
@@ -51,6 +50,7 @@ const MatchOverview = () => {
         }
 
         if (match.status === "Upcoming") {
+
             router.push(`/team-choose/${match.id}`);
             return;
         }
