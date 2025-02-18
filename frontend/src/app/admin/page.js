@@ -59,7 +59,7 @@ const AdminPage = () => {
 
   const handleCreateMatch = async () => {
     try {console.log(newMatch);
-      const response = await apiService.postData('/admin/matches', newMatch); // API POST request
+      const response = await apiService.postData('/admin/match', newMatch); // API POST request
       setMatches([...matches, response.data]);
       toast.success('Match added successfully!');
       setNewMatch({ home_team: '', away_team: '', match_date: '', status: 'Upcoming' });

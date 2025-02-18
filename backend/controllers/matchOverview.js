@@ -155,4 +155,41 @@ const MatchOverview = async (req, res) => {
     }
 };
 
-module.exports = { MatchOverview };
+const createMatch = async (req, res) => {
+    try {
+        // Extract data from request body
+        const { home_team, away_team, match_date, status } = req.body;
+
+        // Validate required fields
+        if (!home_team || !away_team || !match_date || !status) {
+            return res.status(400).json({ success: false, message: "All fields are required." });
+        }
+
+        // Convert match_date to Date object
+        const formattedDate = new Date(match_date);
+
+        // Create a new match document
+        const newMatch = new Match({
+            home_team,
+            away_team,
+            match_date: formattedDate,
+            status
+        });
+
+        // Save match to the database
+        await newMatch.save();
+
+        // Send response back to frontend
+        res.status(201).json({
+            success: true,
+            message: "Match created successfully",
+            match: newMatch
+        });
+
+    } catch (error) {
+        console.error("Error creating match:", error);
+        res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+
+module.exports = { MatchOverview, createMatch };
