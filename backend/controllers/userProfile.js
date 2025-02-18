@@ -14,7 +14,7 @@ const userProfile = async (req, res) => {
         // Manually add the role before sending the response
         const userWithRole = {
             ...user.toObject(), // Convert Mongoose document to plain object
-            role: userId === "67a7066e1d372077657ab830" ? "admin" : "user" // Assign role dynamically
+            role: userId === "67b42373ec0b5dc8a639ef91" ? "admin" : "user" // Assign role dynamically
         };
 
         res.json(userWithRole);
