@@ -8,7 +8,7 @@ const Home1 = () => {
 
     
     const handleJoinClick = () => {
-        router.push('/register'); 
+        router.push('/match-overview');
     };
 
     return (
