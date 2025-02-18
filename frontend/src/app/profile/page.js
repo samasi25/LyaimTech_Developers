@@ -29,7 +29,7 @@ const Profile = () => {
         <div className="bg-gray-300 bg-opacity-5 max-w-4xl w-full rounded-xl overflow-hidden">
           <div className="flex flex-col md:flex-row justify-center items-center w-full mx-auto">
 
-
+            {/* Image */}
             <div className="hidden md:block w-1/3">
               <Image
                 src="/Images/userProfile.png"
@@ -41,7 +41,7 @@ const Profile = () => {
               />
             </div>
 
-
+            {/* user details */}
             <div className="flex-1 p-6 md:p-12 w-full">
               <div className="flex justify-between text-2xl font-bold">
                 <span>Hii, {user.username}</span>
@@ -55,7 +55,7 @@ const Profile = () => {
                 <input
                   type="email"
                   name="email"
-                  value={user.email}
+                  value={user?.email}
                   readOnly
                   className="w-full border-b bg-transparent font-aleo text-xl placeholder-black outline-none pl-2 py-2"
                 />
@@ -64,7 +64,7 @@ const Profile = () => {
                 <input
                   type="text"
                   name="username"
-                  value={user.username}
+                  value={user?.username}
                   readOnly
                   className="w-full border-b bg-transparent font-aleo text-xl outline-none placeholder-black pl-2 py-2"
                 />
@@ -72,7 +72,7 @@ const Profile = () => {
                 <input
                   type="number"
                   name="mobileNo"
-                  value={user.mobileNo}
+                  value={user?.mobileNo}
                   readOnly
                   className="w-full border-b bg-transparent font-aleo text-xl placeholder-black outline-none pl-2 py-2"
                 />
@@ -82,7 +82,7 @@ const Profile = () => {
                   type="text"
                   name="referralCode"
                   placeholder="Referral Code"
-                  value={user.referralCode}
+                  value={user?.referralCode || ''}
                   readOnly
                   className="w-full border-b bg-transparent font-aleo text-xl outline-none placeholder-black pl-2 py-2"
                 />

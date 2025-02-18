@@ -16,7 +16,7 @@ const login = async (req, res) => {
 
         if (!user) {
             console.error("User not found.");
-            return res.status(400).json({ success: false, message: "Invalid email." });
+            return res.status(400).json({ success: false, message: "User not found" });
         }
 
         const isPasswordValid = await bcrypt.compare(password, user.password);

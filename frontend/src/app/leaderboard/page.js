@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import Button from '@/components/Button';
 import Navbar from '@/components/Navbar';
+<<<<<<< HEAD
 import withAuth from "../../hoc/withAuth.js";
 import apiService from '@/components/apiService.js';
 
@@ -68,10 +69,36 @@ function Leaderboard() {
         });
         setLeaderboardData(sortedData);
     };
+=======
+import { useEffect, useState } from 'react';
+import withAuth from "../../hoc/withAuth.js";
+import { useUser } from "@/context/AuthContext.js";
+import apiService from '@/components/apiService.js';
+
+function Leaderboard() {
+    const { user, loading } = useUser();
+    const matchId = "65a7b2c9876c9e001c4f0e20"; // Temporarily Hardcoded Match ID (Testing Purpose)
+
+    useEffect(() => {
+        const fetchLeaderboard = async () => {
+            const res = await apiService.leaderboard();
+            console.log('response', res)
+        }
+        fetchLeaderboard();
+    });
+>>>>>>> ac28f5381c7f56e4b6b9e88c27c9c44886447ee0
+
+    if (loading) {
+        return <p className="text-center text-white text-2xl">Loading...</p>;
+    }
+
+    if (!user) {
+        return <p className="text-center text-white text-2xl">User not found</p>;
+    }
 
     return (
         <div
-            className="min-h-screen w-full bg-cover bg-center flex items-center justify-center"
+            className="min-h-screen pt-20 w-full bg-cover bg-center flex items-center justify-center"
             style={{
                 backgroundImage: "url(/Images/leaderboardBackground.jpeg)",
                 backgroundSize: "cover",
@@ -95,7 +122,11 @@ function Leaderboard() {
                 {/* Leaderboard Data Section */}
                 <div className="my-5">
                     <div className="text-2xl font-aleo font-bold">
+<<<<<<< HEAD
                         <div>Hii, {leaderboardData.length > 0 ? leaderboardData[0].username : "User"}</div>
+=======
+                        <div>Hii, {user.username}</div>
+>>>>>>> ac28f5381c7f56e4b6b9e88c27c9c44886447ee0
                     </div>
                 </div>
 

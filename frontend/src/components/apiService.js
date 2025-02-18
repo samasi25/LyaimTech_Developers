@@ -1,5 +1,4 @@
 import axios from "axios";
-import toast from "react-hot-toast";
 
 const API = axios.create({
     baseURL: "http://localhost:9000",
@@ -10,11 +9,10 @@ const API = axios.create({
 API.interceptors.response.use(
     (response) => response,
     (error) => {
-        toast.error("Server API Error:", error.response?.data?.message || error.message);
+        console.log("Server API Error:", error.response?.data?.message || error.message);
         return Promise.reject(error);
     }
 );
-
 
 //  Centralized API Methods
 const apiService = {
@@ -24,10 +22,8 @@ const apiService = {
     profile: () => API.get("profile"),
     profileUpdate: (data) => API.put("profile/update", data),
     contact: (data) => API.post("api/contact", data),
-
-
-
-
+    matchOverview: () => API.get('match/overview'),
+    leaderboard: () => API.get('leaderboard'),
 
     //  Generic API Calls 
     fetchData: (endpoint) => API.get(endpoint),

@@ -1,5 +1,6 @@
-'use client'
-import React, { useEffect, useState } from "react";
+'use client'; // This ensures this component runs only on the client side.
+
+import React, { useState, useEffect } from "react";
 import withAuth from "../../hoc/withAuth.js";
 import apiService from "@/components/apiService.js";
 import { useUser } from "@/context/AuthContext.js";
@@ -8,12 +9,21 @@ import Navbar from "@/components/Navbar.jsx";
 import { useRouter } from 'next/navigation';
 import toast from "react-hot-toast";
 
+// Custom Loading Page
+const LoadingPage = () => (
+    <div className="flex flex-col items-center justify-center w-full h-screen bg-gradient-to-br from-purple-600 to-blue-600 text-white">
+        <div className="animate-spin rounded-full border-4 border-t-4 border-t-blue-400 w-16 h-16 mb-8"></div>
+        <h1 className="text-3xl font-bold">Loading, please wait...</h1>
+    </div>
+);
+
 const MatchOverview = () => {
     const [liveMatches, setLiveMatches] = useState([]);
     const [upcomingMatches, setUpcomingMatches] = useState([]);
     const [completedMatches, setCompletedMatches] = useState([]);
+    const [isLoaded, setIsLoaded] = useState(false); // Track data loading
 
-    const { user, loading, wallet } = useUser();
+    const { user, wallet } = useUser();
     const router = useRouter();
 
     useEffect(() => {
@@ -24,27 +34,16 @@ const MatchOverview = () => {
                 setUpcomingMatches(response.data?.upcoming || []);
                 setCompletedMatches(response.data?.completed || []);
             } catch (error) {
-                console.error('Error fetching matches:', error);
+                console.error('Error fetching match data:', error);
+            } finally {
+                setIsLoaded(true); // Data loaded
             }
         };
+
         fetchMatchOverview();
     }, []);
 
-    //  Function to Format Date
-    const formatMatchDate = (dateString) => {
-        return new Date(dateString).toLocaleString("en-US", {
-            timeZone: "America/New_York",
-            weekday: "short",  // Mon, Tue, etc.
-            year: "numeric",
-            month: "short",    // Jan, Feb, etc.
-            day: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: true,      // AM/PM format
-        });
-    };
-
-
+    // Handle click for match
     const handleMatchClick = async (match) => {
         if (!user) {
             toast.error("Please log in first.");
@@ -72,8 +71,23 @@ const MatchOverview = () => {
         }
     };
 
-    if (loading) {
-        return <p className="text-center text-white text-2xl">Loading...</p>;
+    // Format match date
+    const formatMatchDate = (dateString) => {
+        return new Date(dateString).toLocaleString("en-US", {
+            timeZone: "America/New_York",
+            weekday: "short",  // Mon, Tue, etc.
+            year: "numeric",
+            month: "short",    // Jan, Feb, etc.
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,      // AM/PM format
+        });
+    };
+
+    // Show custom loading page while data is loading
+    if (!isLoaded) {
+        return <LoadingPage />;
     }
 
     if (!user) {
@@ -116,7 +130,7 @@ const MatchOverview = () => {
 
                 <div className="flex flex-col md:flex-row justify-center gap-10 mt-12 w-full">
                     {/* Upcoming Matches */}
-                    <div className="flex flex-col items-center w-96">
+                    <div className="flex flex-col items-center w-full sm:w-96">
                         <button className="bg-[linear-gradient(125.26deg,#5672B8_22.66%,rgba(4,11,41,0.86)_59.18%)] text-[#ffffff] text-2xl md:text-xl sm:text-lg font-aleo px-6 py-3 sm:px-4 sm:py-2 rounded-lg w-full">
                             Upcoming Matches
                         </button>
@@ -138,7 +152,7 @@ const MatchOverview = () => {
                     </div>
 
                     {/* Live Matches */}
-                    <div className="flex flex-col items-center w-96">
+                    <div className="flex flex-col items-center w-full sm:w-96">
                         <button className="bg-[linear-gradient(125.26deg,#5672B8_22.66%,rgba(4,11,41,0.86)_59.18%)] text-[#ffffff] text-2xl md:text-xl sm:text-lg font-aleo px-6 py-3 sm:px-4 sm:py-2 rounded-lg w-full">
                             Live Matches
                         </button>
@@ -164,7 +178,7 @@ const MatchOverview = () => {
                     </div>
 
                     {/* Completed Matches */}
-                    <div className="flex flex-col items-center w-96">
+                    <div className="flex flex-col items-center w-full sm:w-96">
                         <button className="bg-[linear-gradient(125.26deg,#5672B8_22.66%,rgba(4,11,41,0.86)_59.18%)] text-[#ffffff] text-2xl md:text-xl sm:text-lg font-aleo px-6 py-3 sm:px-4 sm:py-2 rounded-lg w-full">
                             Completed Matches
                         </button>
