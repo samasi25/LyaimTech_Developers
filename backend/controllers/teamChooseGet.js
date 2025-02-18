@@ -5,7 +5,7 @@ const { Match } = require("../models/matches.js");
 require("dotenv").config();
 const mongoose = require("mongoose");
 
-const SPORTMONKS_API_KEY = process.env.API_KEY;
+// const SPORTMONKS_API_KEY = process.env.API_KEY;
 
 
 // const fetchAndStorePlayers = async (matchId, homeTeam, awayTeam) => {
@@ -18,19 +18,8 @@ const fetchAndStorePlayers = async (matchId) => {
         }
 
         // **Manually Set Team Names for Testing**
-        const homeTeam = "85";  // Example: India 
-        const awayTeam = "95";  // Example: Australia
-
-
-
-        const homeResponse = await axios.get(`https://api.sportmonks.com/v3/football/players?api_token=${SPORTMONKS_API_KEY}&team=${homeTeam}`);
-
-        const awayResponse = await axios.get(`https://api.sportmonks.com/v3/football/players?api_token=${SPORTMONKS_API_KEY}&team=${awayTeam}`);
-
-
-
-        // console.log(" Home Team Players Data:", homeResponse.data);
-        // console.log(" Home Team Players Data:", awayResponse.data);
+        // const homeTeam = "85";  // Example: India 
+        // const awayTeam = "95";  // Example: Australia
 
         const homePlayers = homeResponse.data.data.map(player => ({
             matchId,
@@ -58,6 +47,55 @@ const fetchAndStorePlayers = async (matchId) => {
         return [];
     }
 };
+// const fetchAndStorePlayers = async (matchId) => {
+//     try {
+//         const existingPlayers = await Lineup.find({ matchId });
+//         if (existingPlayers.length > 0) {
+//             console.log("Players Already Exist in Database!");
+//             return existingPlayers;
+//         }
+
+//         // **Manually Set Team Names for Testing**
+//         const homeTeam = "85";  // Example: India 
+//         const awayTeam = "95";  // Example: Australia
+
+
+
+//         const homeResponse = await axios.get(`https://api.sportmonks.com/v3/football/players?api_token=${SPORTMONKS_API_KEY}&team=${homeTeam}`);
+
+//         const awayResponse = await axios.get(`https://api.sportmonks.com/v3/football/players?api_token=${SPORTMONKS_API_KEY}&team=${awayTeam}`);
+
+
+
+//         // console.log(" Home Team Players Data:", homeResponse.data);
+//         // console.log(" Home Team Players Data:", awayResponse.data);
+
+//         const homePlayers = homeResponse.data.data.map(player => ({
+//             matchId,
+//             // teamName: homeTeam
+//             teamName: "India",
+//             playerId: player.id,
+//             playerName: player.display_name,
+//             position: player.position?.name || "Unknown"
+//         }));
+
+//         const awayPlayers = awayResponse.data.data.map(player => ({
+//             matchId,
+//             // teamName: awayTeam,
+//             teamName: "Australia",
+//             playerId: player.id,
+//             playerName: player.display_name,
+//             position: player.position?.name || "Unknown"
+//         }));
+
+//         await Lineup.insertMany([...homePlayers, ...awayPlayers]);
+//         // console.log("Players Fetched & Stored in Database!");
+//         return [...homePlayers, ...awayPlayers];
+//     } catch (error) {
+//         console.error(" Error Fetching Players:", error);
+//         return [];
+//     }
+// };
 
 
 
@@ -72,8 +110,7 @@ const TeamChooseGet = async (req, res) => {
     try {
 
         if (!matchId) {
-            return res.status(400).json({ success: false, message: "Match ID is required." });
-            console.log("Match ID is missing!");
+            return res.json({ success: false, message: "Match ID is required." });
         }
 
         const match = await Match.findById(matchId);  // objectID fetch kerne ke liye 
@@ -86,7 +123,7 @@ const TeamChooseGet = async (req, res) => {
 
         if (!match) {
             console.log("Match not found in database!");
-            return res.status(404).json({ success: false, message: "Match not found." });
+            return res.json({ success: false, message: "Match not found." });
         }
 
         console.log("Match Found:", match);
