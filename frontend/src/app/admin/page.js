@@ -3,8 +3,10 @@
 import { useEffect, useState } from 'react';
 import apiService from '@/components/apiService';
 import toast from 'react-hot-toast';
+import withAdminAuth from '@/hoc/withAdminAuth.js';
 
-export default function AdminPage() {
+
+const AdminPage = () => {
   const [matches, setMatches] = useState([]);
   const [teams, setTeams] = useState([]);
   const [contests, setContests] = useState([]);
@@ -98,3 +100,5 @@ function Section({ title, data }) {
     </div>
  );
 }
+
+export default withAdminAuth(AdminPage);
