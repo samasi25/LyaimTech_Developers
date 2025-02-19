@@ -30,7 +30,7 @@ const PreviewPage = () => {
                 selectedPlayers,
                 selectedSubstitutes
             });
-    
+
             toast.success("Team Selected Successfully!");
             router.push('/contest');
         } catch (error) {
@@ -80,7 +80,7 @@ const PreviewPage = () => {
                     <p className="md:text-2xl text-2xl font-bold font-aleo text-[#000000]">Want to change?</p>
                     <button
                         className="p-3 px-8 bg-[linear-gradient(125.26deg,#5672B8_22.66%,rgba(4,11,41,0.86)_59.18%)] font-aleo transform hover:scale-105 transition-transform duration-300 text-white font-bold md:text-xl rounded-md shadow-md"
-                        onClick={() => router.back()} 
+                        onClick={() => router.back()}
                     >
                         Go back to previous page
                     </button>
