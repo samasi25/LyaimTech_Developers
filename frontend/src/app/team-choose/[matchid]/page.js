@@ -220,46 +220,57 @@ const TeamChoose = () => {
     }
 
     const handleSelectPlayer = (player, teamType, type) => {
-        // logic to select player or substitute
         if (teamType === 'Home') {
             if (type === 'P') {
                 if (selectedHomePlayers.some(p => p.playerId === player.playerId)) {
-                    setSelectedHomePlayers(selectedHomePlayers.filter(p => p.playerId !== player.playerId));
+                    // ✅ Deselect player from main players list
+                    setSelectedHomePlayers(prev => prev.filter(p => p.playerId !== player.playerId));
                 } else {
                     if (selectedHomePlayers.length < 6) {
-                        setSelectedHomePlayers([...selectedHomePlayers, player]);
+                        setSelectedHomePlayers(prev => [...prev, player]);
+                        // ✅ Remove from substitutes if selected as main player
+                        setSelectedHomeSubstitutes(prev => prev.filter(p => p.playerId !== player.playerId));
                     }
                 }
-            } else {
+            } else if (type === 'SP') {
                 if (selectedHomeSubstitutes.some(p => p.playerId === player.playerId)) {
-                    setSelectedHomeSubstitutes(selectedHomeSubstitutes.filter(p => p.playerId !== player.playerId));
+                    // ✅ Deselect player from substitutes list
+                    setSelectedHomeSubstitutes(prev => prev.filter(p => p.playerId !== player.playerId));
                 } else {
                     if (selectedHomeSubstitutes.length < 1) {
-                        setSelectedHomeSubstitutes([...selectedHomeSubstitutes, player]);
+                        setSelectedHomeSubstitutes(prev => [...prev, player]);
+                        // ✅ Remove from main players if selected as a substitute
+                        setSelectedHomePlayers(prev => prev.filter(p => p.playerId !== player.playerId));
                     }
                 }
             }
-        } else {
+        } else if (teamType === 'Away') {
             if (type === 'P') {
                 if (selectedAwayPlayers.some(p => p.playerId === player.playerId)) {
-                    setSelectedAwayPlayers(selectedAwayPlayers.filter(p => p.playerId !== player.playerId));
+                    // ✅ Deselect player from main players list
+                    setSelectedAwayPlayers(prev => prev.filter(p => p.playerId !== player.playerId));
                 } else {
                     if (selectedAwayPlayers.length < 6) {
-                        setSelectedAwayPlayers([...selectedAwayPlayers, player]);
+                        setSelectedAwayPlayers(prev => [...prev, player]);
+                        // ✅ Remove from substitutes if selected as main player
+                        setSelectedAwaySubstitutes(prev => prev.filter(p => p.playerId !== player.playerId));
                     }
                 }
-            } else {
+            } else if (type === 'SP') {
                 if (selectedAwaySubstitutes.some(p => p.playerId === player.playerId)) {
-                    setSelectedAwaySubstitutes(selectedAwaySubstitutes.filter(p => p.playerId !== player.playerId));
+                    // ✅ Deselect player from substitutes list
+                    setSelectedAwaySubstitutes(prev => prev.filter(p => p.playerId !== player.playerId));
                 } else {
                     if (selectedAwaySubstitutes.length < 1) {
-                        setSelectedAwaySubstitutes([...selectedAwaySubstitutes, player]);
+                        setSelectedAwaySubstitutes(prev => [...prev, player]);
+                        // ✅ Remove from main players if selected as a substitute
+                        setSelectedAwayPlayers(prev => prev.filter(p => p.playerId !== player.playerId));
                     }
                 }
             }
         }
     };
-
+    
     const handleSubmit = async () => {
         try {
             const selectedPlayers = [...selectedHomePlayers, ...selectedAwayPlayers];
