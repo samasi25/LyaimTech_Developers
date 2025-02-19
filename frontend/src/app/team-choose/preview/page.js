@@ -10,15 +10,18 @@ const PreviewPage = () => {
     const router = useRouter();
     const [selectedPlayers, setSelectedPlayers] = useState([]);
     const [selectedSubstitutes, setSelectedSubstitutes] = useState([]);
-    const matchId = "65a7b2c9876c9e001c4f0e20"; // Temporarily Hardcoded Match ID (Testing Purpose)
+    const [matchId, setMatchId] = useState('');
+    // const matchId = "65a7b2c9876c9e001c4f0e20"; // Temporarily Hardcoded Match ID (Testing Purpose)
 
     useEffect(() => {
         // Retrieve data from local storage
         const players = JSON.parse(localStorage.getItem("selectedPlayers")) || [];
         const substitutes = JSON.parse(localStorage.getItem("selectedSubstitutes")) || [];
+        const matchId = JSON.parse(localStorage.getItem("matchId")) || '';
 
         setSelectedPlayers(players);
         setSelectedSubstitutes(substitutes);
+        setMatchId(matchId);
     }, []);
 
     const handleSubmit = async () => {
@@ -27,8 +30,9 @@ const PreviewPage = () => {
                 selectedPlayers,
                 selectedSubstitutes
             });
-    
+
             toast.success("Team Selected Successfully!");
+            router.push('/contest');
         } catch (error) {
             toast.error(error.message || error);
         }
@@ -76,7 +80,7 @@ const PreviewPage = () => {
                     <p className="md:text-2xl text-2xl font-bold font-aleo text-[#000000]">Want to change?</p>
                     <button
                         className="p-3 px-8 bg-[linear-gradient(125.26deg,#5672B8_22.66%,rgba(4,11,41,0.86)_59.18%)] font-aleo transform hover:scale-105 transition-transform duration-300 text-white font-bold md:text-xl rounded-md shadow-md"
-                        onClick={() => router.back()} 
+                        onClick={() => router.back()}
                     >
                         Go back to previous page
                     </button>

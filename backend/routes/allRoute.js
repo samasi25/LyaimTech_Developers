@@ -40,7 +40,8 @@ router.get("/wallet/add-funds/success", authenticate, AddFundssSuccess);
 router.post("/wallet/withdraw", authenticate, Withdrawal);
 
 //Contest Route
-router.get("/contest", authenticate, ContestHandle);
+// router.get("/contest", authenticate, ContestHandle);
+router.get("/contest/:matchId", authenticate, ContestHandle);
 router.post("/contest/join", authenticate, JoinContest)
 
 //LeaderBoard Route
