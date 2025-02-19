@@ -49,7 +49,7 @@ const ContestHandle = async (req, res) => {
             // console.error('Error fetching contests for user ID:', userId, error);
             res.status(500).json({ error: 'Error fetching contests' });
         }
-    };
+    }catch(error){console.log(error)}}
 
 
 
@@ -187,6 +187,6 @@ const ContestHandle = async (req, res) => {
             console.error("Error creating contest:", error);
             res.status(500).json({ success: false, message: "Internal server error" });
         }
-    };
+    }
 
     module.exports = { ContestHandle, JoinContest, checkUserContest, createContest };
