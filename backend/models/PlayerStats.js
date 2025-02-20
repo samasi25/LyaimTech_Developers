@@ -8,7 +8,7 @@ const playerStatsSchema = new mongoose.Schema({
     },
     playerId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Lineup',
+        ref: 'lineup',
         required: true
     },
     goals: { type: Number, default: 0 },
