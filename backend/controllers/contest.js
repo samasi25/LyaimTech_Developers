@@ -60,6 +60,10 @@ const JoinContest = async (req, res) => {
             console.warn(`User ID ${userId} has already joined contest ID: ${contestId}`);
             return res.status(400).json({ error: 'You have already joined this contest' });
         }
+<<<<<<< HEAD
+=======
+    }catch(error){console.log(error)}}
+>>>>>>> 29f26a94433cb298eb44ef12f37708d9d13e834f
 
         // Fetch contest details
         const contest = await Contest.findById(contestId);
@@ -103,6 +107,10 @@ const JoinContest = async (req, res) => {
                 return res.status(400).json({ error: 'Insufficient balance, please add more funds' });
             }
         }
+<<<<<<< HEAD
+=======
+    }
+>>>>>>> 29f26a94433cb298eb44ef12f37708d9d13e834f
 
         // Deduct fees and update wallet
         wallet.cashBonus -= cashBonusUsed;

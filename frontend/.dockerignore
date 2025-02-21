@@ -1,9 +1,12 @@
 # Ignore node_modules (install inside Docker container)
 node_modules
+<<<<<<< HEAD
 npm-debug.log
 yarn-error.log
 bun.lockb
 pnpm-lock.yaml
+=======
+>>>>>>> 29f26a94433cb298eb44ef12f37708d9d13e834f
 
 # Ignore Next.js build outputs
 .next
@@ -56,4 +59,8 @@ coverage
 *.iml
 *.sublime-workspace
 *.sublime-project
+<<<<<<< HEAD
 Thumbs.db
+=======
+Thumbs.db
+>>>>>>> 29f26a94433cb298eb44ef12f37708d9d13e834f
