@@ -4,6 +4,8 @@ import Button from '@/components/Button';
 import Navbar from '@/components/Navbar';
 import withAuth from "../../hoc/withAuth.js";
 import apiService from "@/components/apiService.js";
+import { useUser } from '@/context/AuthContext.js';
+import React from 'react';
 
 function Leaderboard() {
     const [leaderboardData, setLeaderboardData] = useState([]);
@@ -11,6 +13,8 @@ function Leaderboard() {
     const [sortType, setSortType] = useState(null);
     const [contestId, setContestId] = useState(null);
     const [matchId, setMatchId] = useState(null);
+
+    const { user } = useUser();
 
     useEffect(() => {
         const storedMatchId = localStorage.getItem("matchId");
@@ -106,7 +110,8 @@ function Leaderboard() {
                 </div>
 
                 <div className="my-5 text-2xl font-aleo font-bold">
-                    <div>Hii, {leaderboardData.length > 0 ? leaderboardData[0].username : "User"}</div>
+                    {/* <div>Hii, {leaderboardData.length > 0 ? leaderboardData[0].username : "User"}</div> */}
+                    <div>Hii, {user.username}</div>
                 </div>
 
                 <div className="bg-[#5672B8]/30 shadow-lg rounded-xl p-3 pb-5">
