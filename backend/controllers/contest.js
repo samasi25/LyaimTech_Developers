@@ -314,6 +314,10 @@ const JoinContest = async (req, res) => {
         // Add user/team to contest
         contest.playersJoined += 1;
         contest.teams.push(team._id);
+        contest.players.push({
+                userId: userId,
+                totalPoints: 0
+            });
         await contest.save();
 
         console.log(`User ID ${userId} successfully joined contest ID: ${contestId}`);

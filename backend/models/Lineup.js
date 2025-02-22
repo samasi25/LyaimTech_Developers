@@ -3,16 +3,19 @@ const mongoose = require("mongoose");
 
 const lineupSchema = new mongoose.Schema({
     matchId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Match',
+        type: String,
         required: true
     },
     teamName: {
         type: String,
         required: true
     },
+    // playerId: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     required: true
+    // },
     playerId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         required: true
     },
     playerName: {
