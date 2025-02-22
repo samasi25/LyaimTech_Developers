@@ -74,7 +74,7 @@ const Contest = () => {
                             className='bg-[#0A044033] text-white px-2 sm:px-4 md:px-8 py-1 rounded cursor-pointer'
                             onClick={handleWalletClick}
                         >
-                            <span className='text-[#0A0440]'>Wallet $</span> {wallet?.totalMoney}
+                            <span className='text-[#0A0440]'>Wallet $</span> {wallet?.totalMoney.toFixed(2)}
                         </span>
                     </div>
                     <p className='text-[#400404] text-sm sm:text-lg md:mb-10 md:text-3xl font-semibold mb-6 drop-shadow-[1px_1px_1px_white]'>

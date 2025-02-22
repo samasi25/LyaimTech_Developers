@@ -115,7 +115,7 @@ const MatchOverview = () => {
                         Hii, <span>{user.username}</span>
                     </p>
                     <p className="text-2xl font-aleo bg-gray-700 bg-opacity-[70%] text-[#0A0440] font-bold px-6 py-2 rounded-lg">
-                        Wallet $ <span className="font-bold text-[#fff]">{wallet?.totalMoney}</span>
+                        Wallet $ <span className="font-bold text-[#fff]">{wallet?.totalMoney.toFixed(2)}</span>
                     </p>
                     <button className="text-2xl font-aleo bg-gray-700 bg-opacity-[70%] font-bold text-[#0A0440] px-6 py-2 rounded-lg">
                         <Link href={'terms-conditions'} target="_blank" className="hover:underline">
