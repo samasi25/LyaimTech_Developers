@@ -11,7 +11,7 @@ const userProfile = async (req, res) => {
 
         if (!user) return res.status(404).json({ message: 'User not found' });//console.log(user);
 
-        const adminUsers = ["67b42373ec0b5dc8a639ef91", "67b41ccb88e950464ab6bd83", "k"]; // List of admin user IDs
+        const adminUsers = ["67b42373ec0b5dc8a639ef91", "67b41ccb88e950464ab6bd83", "67b431dad976d17271d87935"]; // List of admin user IDs
 
         // Manually add the role before sending the response
         const userWithRole = {
