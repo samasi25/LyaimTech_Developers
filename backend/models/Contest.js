@@ -9,7 +9,7 @@ const ContestSchema = new mongoose.Schema({
     matchId: { type: mongoose.Schema.Types.ObjectId, ref: 'Match', required: true },
     teams: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Team' }], //  Teams participating
     players: [{
-        userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        userId: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
         totalPoints: { type: Number, default: 0 }
     }]
 }, { timestamps: true });

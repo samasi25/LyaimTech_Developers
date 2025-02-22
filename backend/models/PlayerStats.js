@@ -6,11 +6,16 @@ const playerStatsSchema = new mongoose.Schema({
         ref: 'Match',  // Referring to the Match collection
         required: true
     },
+    // playerId: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'lineup',
+    //     required: true
+    // },
     playerId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'lineup',
+        type: String,
         required: true
     },
+
     goals: { type: Number, default: 0 },
     assists: { type: Number, default: 0 },
     shots: { type: Number, default: 0 },

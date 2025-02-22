@@ -29,13 +29,13 @@ const LeaderBoard = async (req, res) => {
         let { matchId } = req.query;
 
         if (!matchId) {
-            console.error(" matchId is missing!");
+
             return res.status(400).json({ message: " matchId is required." });
         }
         matchId = new mongoose.Types.ObjectId(matchId);
 
         if (!mongoose.Types.ObjectId.isValid(matchId)) {
-            console.error(" Invalid matchId format:", matchId);
+
             return res.status(400).json({ message: "Invalid matchId format." });
         }
 
@@ -84,6 +84,7 @@ const LeaderBoard = async (req, res) => {
                     username: player.userId.username,
                     score: player.totalPoints || 0,
                     winning: player.winning || 0,
+
                 }));
 
             players.sort((a, b) => b.score - a.score);
@@ -100,7 +101,7 @@ const LeaderBoard = async (req, res) => {
 
         res.status(200).json({ contests: contestsWithPlayers });
     } catch (error) {
-        console.error("Error fetching contests:", error);
+
         return res.status(500).json({ message: "Internal Server Error" });
     }
 };
@@ -110,7 +111,6 @@ const Finalize = async (req, res) => {
         const contestId = req.params.contestId;
         console.log("hey its contest id", contestId);
 
-        // const contest = await Contest.findById(contestId).populate('players.userId');
         const contest = await Contest.findById(contestId).populate({
             path: 'players.userId',
             model: 'user',
@@ -121,12 +121,17 @@ const Finalize = async (req, res) => {
         const numPlayers = players.length;
         if (numPlayers === 0) return res.status(400).json({ message: "No players in this contest." });
 
+        // Sort players based on totalPoints (highest first)
         players.sort((a, b) => (b.totalPoints || 0) - (a.totalPoints || 0));
+
+        // Prize distribution logic
         const distribution = distributePrizePool(prizePool, numPlayers);
 
+        let winners = new Set(); // Store winner user IDs
         await Promise.all(players.map(async (player, index) => {
             const winningAmount = distribution[index] || 0;
             if (winningAmount > 0) {
+                winners.add(String(player.userId._id)); // Mark as winner
                 await User.updateOne(
                     { _id: player.userId._id },
                     {
@@ -140,25 +145,32 @@ const Finalize = async (req, res) => {
             }
         }));
 
+
         if (numPlayers < maxPlayers && entryFee) {
             const refundAmount = entryFee * 0.9;
             await Promise.all(players.map(async (player) => {
-                await User.updateOne(
-                    { _id: player.userId._id },
-                    {
-                        $inc: {
-                            'wallet.totalMoney': refundAmount,
-                            'wallet.depositAmount': refundAmount,
-                        },
-                    }
-                );
+
+                if (!winners.has(String(player.userId._id))) {
+                    await User.updateOne(
+                        { _id: player.userId._id },
+                        {
+                            $inc: {
+                                'wallet.totalMoney': refundAmount,
+                                'wallet.depositAmount': refundAmount,
+                            },
+                        }
+                    );
+                }
             }));
         }
 
+        // Rank calculation
         players.forEach((player, index) => {
-            player.rank = index + 1; // Rank calculation
+            player.rank = index + 1;
         });
-        await Contest.updateOne({ _id: contestId }, { $set: { players } }); // Save ranks in DB
+
+        // Save ranks in DB
+        await Contest.updateOne({ _id: contestId }, { $set: { players } });
 
         res.status(200).json({ message: "Match finalized and results saved." });
     } catch (error) {
@@ -166,6 +178,7 @@ const Finalize = async (req, res) => {
         return res.status(500).json({ message: error.message });
     }
 };
+
 
 const CalculateScores = async (req, res) => {
     try {
@@ -234,4 +247,10 @@ const CalculateScores = async (req, res) => {
 };
 
 module.exports = { LeaderBoard, Finalize, CalculateScores };
+
+
+
+
+
+
 

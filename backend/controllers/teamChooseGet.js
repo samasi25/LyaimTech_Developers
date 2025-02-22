@@ -1,18 +1,17 @@
-// const axios = require("axios");
 const Lineup = require("../models/Lineup.js");
 const Team = require("../models/Team.js");
 const { Match } = require("../models/matches.js");
 const mongoose = require("mongoose");
 
 const TeamChooseGet = async (req, res) => {
+
+
+
     try {
         const { matchId } = req.params;
-        console.log(matchId)
 
-        // const homePlayers = await Lineup.find({ matchId: "65d1b3c8e7a1f8a3b4c2c310", teamName: "India" });
-        // const awayPlayers = await Lineup.find({ matchId: "65d1b3c8e7a1f8a3b4c2c310", teamName: "Australia" });
 
-        // console.log(homePlayers, awayPlayers);
+
 
 
         //  Validate Match ID Format
@@ -28,9 +27,13 @@ const TeamChooseGet = async (req, res) => {
 
         const { home_team, away_team } = match; //  Dynamic Team Names
 
+
+
         //  Fetch Players from Lineup Collection (Only from Database)
         const homePlayers = await Lineup.find({ matchId, teamName: home_team });
         const awayPlayers = await Lineup.find({ matchId, teamName: away_team });
+
+
 
         //  If No Players Found, Return Empty Data
         if (homePlayers.length === 0 && awayPlayers.length === 0) {
