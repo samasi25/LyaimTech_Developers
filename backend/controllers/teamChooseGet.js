@@ -31,7 +31,7 @@ const TeamChooseGet = async (req, res) => {
         //  Fetch Players from Lineup Collection (Only from Database)
         const homePlayers = await Lineup.find({ matchId, teamName: home_team });
         const awayPlayers = await Lineup.find({ matchId, teamName: away_team });
-
+console.log(homePlayers, awayPlayers);
         //  If No Players Found, Return Empty Data
         if (homePlayers.length === 0 && awayPlayers.length === 0) {
             return res.status(404).json({ success: false, message: "No lineup data found for this match." });
