@@ -6,7 +6,7 @@ import { useUser } from "@/context/AuthContext.js";
 import withAuth from "../../hoc/withAuth.js";
 
 const Profile = () => {
-  const { user, loading } = useUser();
+  const { user, loading, wallet } = useUser();
 
   if (loading) {
     return <p className="text-center text-white text-2xl">Loading...</p>;
@@ -46,7 +46,7 @@ const Profile = () => {
               <div className="flex justify-between text-2xl font-bold">
                 <span>Hii, {user.username}</span>
                 <p className="px-3 py-1 rounded-md bg-[#0A044033]">
-                  Wallet <span className='text-white'> $ 0.00</span>
+                  Wallet <span className='text-white'>$ {wallet?.totalMoney.toFixed(2)}</span>
                 </p>
               </div>
 
