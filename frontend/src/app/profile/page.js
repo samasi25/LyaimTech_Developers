@@ -4,12 +4,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useUser } from "@/context/AuthContext.js";
 import withAuth from "../../hoc/withAuth.js";
+import LoadingPage from '@/components/LoadingPage.js';
 
 const Profile = () => {
   const { user, loading, wallet } = useUser();
 
   if (loading) {
-    return <p className="text-center text-white text-2xl">Loading...</p>;
+    // return <p className="text-center text-white text-2xl">Loading...</p>;
+    return <LoadingPage />
   }
 
   if (!user) {
