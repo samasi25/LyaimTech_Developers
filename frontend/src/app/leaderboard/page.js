@@ -18,25 +18,24 @@ function Leaderboard() {
 
     useEffect(() => {
         const storedMatchId = localStorage.getItem("matchId");
-        console.log("hghhd", storedMatchId)
         if (storedMatchId) {
             setMatchId(storedMatchId);
             fetchLeaderboard(storedMatchId);
         } else {
-            console.error("Match ID not found in LocalStorage");
+            console.log("Match ID not found in LocalStorage");
             setLoading(false);
         }
     }, []);
 
     const fetchLeaderboard = async (matchId) => {
         if (!matchId) {
-            console.error("Match ID not found!");
+            console.log("Match ID not found!");
             return;
         }
         matchId = matchId.replace(/^"|"$/g, '')
         try {
 
-            console.log("Sending matchId to backend:", matchId);
+            // console.log("Sending matchId to backend:", matchId);
             const response = await apiService.fetchData(`/leaderboard?matchId=${matchId}`);
             if (response.data?.contests.length > 0) {
                 setLeaderboardData(response.data.contests[0].players);
@@ -46,7 +45,7 @@ function Leaderboard() {
                 setContestId(null);
             }
         } catch (error) {
-            console.error("Error fetching leaderboard:", error);
+            console.log("Error fetching leaderboard:", error);
         } finally {
             setLoading(false);
         }
@@ -54,27 +53,27 @@ function Leaderboard() {
 
     const handleCalculateScores = async () => {
         if (!matchId) {
-            console.error("Match ID not found!");
+            console.log("Match ID not found!");
             return;
         }
         try {
             await apiService.postData("/leaderboard/calculate/scores", { matchId: matchId.trim() });
             fetchLeaderboard(matchId);
         } catch (error) {
-            console.error("Error calculating scores:", error);
+            console.log("Error calculating scores:", error);
         }
     };
 
     const handleFinalizeMatch = async () => {
         if (!contestId) {
-            console.error("Contest ID not found!");
+            console.log("Contest ID not found!");
             return;
         }
         try {
             await apiService.postData(`/leaderboard/finalize/${contestId}`);
             fetchLeaderboard(matchId);
         } catch (error) {
-            console.error("Error finalizing match:", error);
+            console.log("Error finalizing match:", error);
         }
     };
 
