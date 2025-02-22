@@ -65,18 +65,18 @@ function Leaderboard() {
         }
     };
 
-    const handleFinalizeMatch = async () => {
-        if (!contestId) {
-            console.error("Contest ID not found!");
-            return;
-        }
-        try {
-            await apiService.postData(`/leaderboard/finalize/${contestId}`);
-            fetchLeaderboard(matchId);
-        } catch (error) {
-            console.error("Error finalizing match:", error);
-        }
-    };
+    // const handleFinalizeMatch = async () => {
+    //     if (!contestId) {
+    //         console.error("Contest ID not found!");
+    //         return;
+    //     }
+    //     try {
+    //         await apiService.postData(`/leaderboard/finalize/${contestId}`);
+    //         fetchLeaderboard(matchId);
+    //     } catch (error) {
+    //         console.error("Error finalizing match:", error);
+    //     }
+    // };
 
     const handleSort = (type) => {
         setSortType(type);
@@ -160,11 +160,11 @@ function Leaderboard() {
                             className="bg-blue-600 text-white px-4 py-2 rounded-md sm:px-6">
                             Calculate Scores
                         </button>
-                        <button
+                        {/* <button
                             onClick={handleFinalizeMatch}
                             className="bg-red-600 text-white px-4 py-2 rounded-md sm:px-6">
                             Finalize Match
-                        </button>
+                        </button> */}
                     </div>
                 </div>
             </div>
