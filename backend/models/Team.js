@@ -5,7 +5,7 @@ const { Match } = require('./matches');
 const teamSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',  // Reference to User schema
+        ref: 'user',  // Reference to User schema
         required: true
     },
     matchId: {

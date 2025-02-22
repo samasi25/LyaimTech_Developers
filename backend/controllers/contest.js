@@ -209,7 +209,7 @@ const ContestHandle = async (req, res) => {
 
     try {
         const contests = await Contest.find({ matchId });
-        
+
         if (!contests || contests.length === 0) {
             console.log('No contests found for user ID:', userId);
             return res.json({ contests: [] });
@@ -242,21 +242,21 @@ const JoinContest = async (req, res) => {
     const userId = req.user.id;
     let { contestId, matchId } = req.body;
 
-    // console.log(User ID ${userId} attempting to join contest ID: ${contestId} with match ID: ${matchId});
+    // console.log(`User ID ${userId} attempting to join contest ID: ${contestId} with match ID: ${matchId}`);
 
     try {
         // Check if the user has already joined the contest
         const existingEntry = await Contest.findOne({ _id: contestId, teams: { $in: [userId] } });
 
         if (existingEntry) {
-            // console.warn(User ID ${userId} has already joined contest ID: ${contestId});
+            console.warn(`User ID ${userId} has already joined contest ID: ${contestId}`);
             return res.status(400).json({ error: 'You have already joined this contest' });
         }
 
         // Fetch contest details
         const contest = await Contest.findById(contestId);
         if (!contest) {
-            // console.warn(Contest ID ${contestId} not found for user ID: ${userId});
+            console.warn(`Contest ID ${contestId} not found for user ID: ${userId}`);
             return res.status(404).json({ error: 'Contest not found' });
         }
 
@@ -264,14 +264,14 @@ const JoinContest = async (req, res) => {
 
         // Check if the contest is full
         if (playersJoined >= maxPlayers) {
-            // console.warn(Contest ID ${contestId} is full);
+            console.warn(`Contest ID ${contestId} is full`);
             return res.status(400).json({ error: 'Contest is full' });
         }
 
         // Fetch user wallet details
         const user = await User.findById(userId);
         if (!user || !user.wallet) {
-            // console.warn(Wallet not found for user ID: ${userId});
+            console.warn(`Wallet not found for user ID: ${userId}`);
             return res.status(404).json({ error: 'User wallet not found' });
         }
 
@@ -291,7 +291,7 @@ const JoinContest = async (req, res) => {
                 depositUsed = remainingFee;
                 remainingFee = 0;
             } else {
-                // console.warn(Insufficient deposit amount. Remaining fee: $${remainingFee}, Available deposit: ${wallet.depositAmount});
+                console.warn(`Insufficient deposit amount. Remaining fee: $${remainingFee}, Available deposit: ${wallet.depositAmount}`);
                 return res.status(400).json({ error: 'Insufficient balance, please add more funds' });
             }
         }
