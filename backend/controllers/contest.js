@@ -292,7 +292,7 @@ const JoinContest = async (req, res) => {
                 remainingFee = 0;
             } else {
                 console.warn(`Insufficient deposit amount. Remaining fee: $${remainingFee}, Available deposit: ${wallet.depositAmount}`);
-                return res.status(400).json({ error: 'Insufficient balance, please add more funds' });
+                return res.status(400).json({ error: 'Insufficient deposit balance, please add more funds!' });
             }
         }
 

@@ -46,7 +46,9 @@ const Profile = () => {
               <div className="flex justify-between text-2xl font-bold">
                 <span>Hii, {user.username}</span>
                 <p className="px-3 py-1 rounded-md bg-[#0A044033]">
-                  Wallet <span className='text-white'>$ {wallet?.totalMoney.toFixed(2)}</span>
+                  <Link href="/wallet">
+                    Wallet <span className='text-white'>$ {wallet?.totalMoney.toFixed(2)}</span>
+                  </Link>
                 </p>
               </div>
 
