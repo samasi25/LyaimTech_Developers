@@ -76,13 +76,20 @@ const AdminPage = () => {
         matchId: newTeam.matchId,
         homeTeam: newTeam.homeTeam,
         awayTeam: newTeam.awayTeam,
-        homeTeamPlayers: newTeam.homeTeamPlayers.split(' '),
-        awayTeamPlayers: newTeam.awayTeamPlayers.split(' ')
+        homeTeamPlayers: newTeam.homeTeamPlayers.split(', '),
+        awayTeamPlayers: newTeam.awayTeamPlayers.split(', ')
       }
-      console.log('newTeam', payload);
+      // console.log('newTeam', payload);
       const response = await apiService.postData('/admin/team', payload); // API POST request
       setTeams([...teams, response.data]);
       toast.success('Team added successfully!');
+      setNewTeam({
+        matchId: '',
+        homeTeam: '',
+        awayTeam: '',
+        homeTeamPlayers: '',
+        awayTeamPlayers: '',
+      });
     } catch (error) {
       toast.error('Error adding team');
       console.error('Error:', error);
