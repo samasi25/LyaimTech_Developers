@@ -116,7 +116,7 @@ const AddFundssSuccess = async (req, res) => {
         // Extract Payment Amount
         const amount = parseFloat(captureResponse.result.purchase_units[0].payments.captures[0].amount.value);
 
-        // Update User Wallet
+        // Update User Wallet 
         const updatedUser = await User.findByIdAndUpdate(
             userId,
             { $inc: { 'wallet.depositAmount': amount, 'wallet.totalMoney': amount } },

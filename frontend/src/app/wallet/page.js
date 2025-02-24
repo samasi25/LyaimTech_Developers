@@ -5,7 +5,7 @@ import Navbar from '@/components/Navbar';
 import apiService from '@/components/apiService';
 import { toast } from 'react-toastify';
 import { useSearchParams } from 'next/navigation';
-import { useUser } from "@/context/AuthContext.js";  
+import { useUser } from "@/context/AuthContext.js";
 
 export default function Wallet() {
     const searchParams = useSearchParams();
@@ -18,6 +18,7 @@ export default function Wallet() {
         depositAmount: 0,
         winningAmount: 0,
         withdrawableAmount: 0,
+        cashBonus: 0,
     });
     const [addAmount, setAddAmount] = useState('');
     const [withdrawData, setWithdrawData] = useState({ amount: '', paypalID: '', age: '' });
@@ -140,15 +141,16 @@ export default function Wallet() {
                 <div className="flex w-full md:gap-12 gap-7 items-center">
                     <Image src="/Images/w 1.png" alt="Wallet" width={200} height={200} className='max-md:w-40 max-sm:hidden' />
                     <div className="flex flex-col space-y-4 w-full">
-                    <h1 className="md:text-2xl text-xl font-semibold max-[400px]:text-sm">
-                        Hii, <span className="font-bold">{user?.username || 'Username'}</span>
-                        <span className="bg-[#0a0440] md:text-xl text-sm bg-opacity-25 text-[#0a0440] px-4 py-2 max-[400px]:px-1 rounded-lg ml-4">
-                            Total Money: <span className='text-white text-lg md:text-xl'>{wallet?.totalMoney?.toFixed(2) || '0.00'}</span>
-                        </span>
-                    </h1>
+                        <h1 className="md:text-2xl text-xl font-semibold max-[400px]:text-sm">
+                            Hii, <span className="font-bold">{user?.username || 'Username'}</span>
+                            <span className="bg-[#0a0440] md:text-xl text-sm bg-opacity-25 text-[#0a0440] px-4 py-2 max-[400px]:px-1 rounded-lg ml-4">
+                                Total Money: <span className='text-white text-lg md:text-xl'>{wallet?.totalMoney?.toFixed(2) || '0.00'}</span>
+                            </span>
+                        </h1>
                         <p className="border-b border-white pb-1">Deposited Amount: <span className="font-bold ml-4 text-[#bebdbd]">$ {wallet?.depositAmount?.toFixed(2) || '0.00'}</span></p>
                         <p className="border-b border-white pb-1">Winning Amount: <span className="font-bold ml-4 text-[#bebdbd]">$ {wallet?.winningAmount?.toFixed(2) || '0.00'}</span></p>
                         <p className="border-b border-white pb-1">Withdrawable Amount: <span className="font-bold ml-4 text-[#bebdbd]">$ {wallet?.withdrawableAmount?.toFixed(2) || '0.00'}</span></p>
+                        <p className="border-b border-white pb-1">Cash Bonus: <span className="font-bold ml-4 text-[#bebdbd]">$ {wallet?.cashBonus?.toFixed(2) || '0.00'}</span></p>
                         <div className="flex gap-4 items-center mt-2 flex-col sm:flex-row">
                             <input
                                 type="text"
@@ -158,7 +160,7 @@ export default function Wallet() {
                                 placeholder="Enter amount to add"
                             />
                             {errors.addAmount && <p className="text-red-500 text-sm mt-1">{errors.addAmount}</p>}
-                            <button onClick={handleAddMoney} className="bg-gradient-to-br from-[#5672B8] via-[rgba(4,11,41,0.86)] to-[#040b29] text-white font-bold px-6 max-sm:px-12 py-2 rounded-full hover:text-gray-500">Add Money</button>
+                            <button onClick={handleAddMoney} className="bg-gradient-to-br from-[#5672B8] via-[rgba(4,11,41,0.86)] to-[#040b29] text-white font-bold px-6 max-sm:px-12 py-2 rounded-full hover:text-gray-500">Add_Money</button>
                         </div>
                     </div>
                 </div>

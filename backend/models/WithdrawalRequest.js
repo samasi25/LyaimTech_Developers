@@ -4,7 +4,7 @@ const { User } = require("./user")
 const WithdrawalRequestSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User', required: true
+        ref: 'user', required: true
     },
     requestedAmount: {
         type: Number,
