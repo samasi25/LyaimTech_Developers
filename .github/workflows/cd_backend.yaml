@@ -1,4 +1,3 @@
-
 name: LyaimTech backend
 
 on: 
@@ -37,8 +36,12 @@ jobs:
                 port: 22
                 script: |
                   sudo docker pull rohitsamasi555/lyaim-tech-backend:latest
-                  sudo docker stop lyaim-backend || true
-                  sudo docker rm lyaim-backend || true
+                  if 
+                    sudo docker ps -a --format '{{.Names}}' | grep -q "^lyaim-backend$"; 
+                  then
+                      sudo docker stop lyaim-backend
+                      sudo docker rm lyaim-backend
+                  fi
                   sudo docker run -d \
                     --name lyaim-backend \
                     -e PORT=9000 \
@@ -50,8 +53,8 @@ jobs:
                     -e MONGO_URL="${MONGO_URL}" \
                     -p 9000:9000 \
                     --restart always \
-                    rohitsamsi555/lyaim-tech-backend:latest
-                  sudo docker image prune -f || true
+                    rohitsamasi555/lyaim-tech-backend:latest
+                  sudo docker image prune -f
               env:
                 JWT_SECRET: ${{ secrets.JWT_SECRET }}
                 PAYPAL_MODE: ${{ secrets.PAYPAL_MODE }}
