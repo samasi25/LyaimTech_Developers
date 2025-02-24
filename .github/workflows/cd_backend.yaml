@@ -51,7 +51,7 @@ jobs:
                     -p 9000:9000 \
                     --restart always \
                     rohitsamsi555/lyaim-tech-backend:latest
-                  sudo docker rmi $(docker images -aq)
+                  sudo docker rmi $(docker images -aq) || true
               env:
                 JWT_SECRET: ${{ secrets.JWT_SECRET }}
                 PAYPAL_MODE: ${{ secrets.PAYPAL_MODE }}
