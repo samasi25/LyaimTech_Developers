@@ -36,28 +36,24 @@ jobs:
                 port: 22
                 script: |
                   sudo docker pull rohitsamasi555/lyaim-tech-backend:latest
-                  if 
-                    sudo docker ps -a --format '{{.Names}}' | grep -q "^lyaim-backend$"; 
+
+                  if sudo docker ps -a --format '{{.Names}}' | grep -q "^lyaim-backend$"; 
                   then
-                      sudo docker stop lyaim-backend
-                      sudo docker rm lyaim-backend
+                   sudo docker stop lyaim-backend
+                   sudo docker rm lyaim-backend
                   fi
+
                   sudo docker run -d \
                     --name lyaim-backend \
                     -e PORT=9000 \
-                    -e JWT_SECRET="${JWT_SECRET}" \
+                    -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
                     -e NODE_ENV=development \
-                    -e PAYPAL_MODE="${PAYPAL_MODE}" \
-                    -e PAYPAL_CLIENT_ID="${PAYPAL_CLIENT_ID}" \
-                    -e PAYPAL_CLIENT_SECRET="${PAYPAL_CLIENT_SECRET}" \
-                    -e MONGO_URL="${MONGO_URL}" \
+                    -e PAYPAL_MODE="${{ secrets.PAYPAL_MODE }}" \
+                    -e PAYPAL_CLIENT_ID="${{ secrets.PAYPAL_CLIENT_ID }}" \
+                    -e PAYPAL_CLIENT_SECRET="${{ secrets.PAYPAL_CLIENT_SECRET }}" \
+                    -e MONGO_URL="${{ secrets.MONGO_URL }}" \
                     -p 9000:9000 \
                     --restart always \
                     rohitsamasi555/lyaim-tech-backend:latest
-                  sudo docker image prune -f
-              env:
-                JWT_SECRET: ${{ secrets.JWT_SECRET }}
-                PAYPAL_MODE: ${{ secrets.PAYPAL_MODE }}
-                PAYPAL_CLIENT_ID: ${{ secrets.PAYPAL_CLIENT_ID }}
-                PAYPAL_CLIENT_SECRET: ${{ secrets.PAYPAL_CLIENT_SECRET }}
-                MONGO_URL: ${{ secrets.MONGO_URL }}
+
+                   sudo docker image prune -f
