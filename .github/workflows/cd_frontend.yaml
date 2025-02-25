@@ -56,12 +56,10 @@ jobs:
             
             sudo docker run -d \
               --name lyaim-frontend \
-              -e BASE_URL="${BASE_URL}" \
+              -e BASE_URL="${{ secrets.BASE_URL }}" \
               -p 3000:3000 \
               --restart always \
               rohitsamasi555/lyaim-tech-frontend:latest
-            echo "${BASE_URL}"
             
             sudo docker image prune -f
-        env:
-          BASE_URL: ${{ secrets.BASE_URL }}
+        
