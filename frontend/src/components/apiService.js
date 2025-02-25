@@ -4,7 +4,7 @@ import axios from "axios";
 // baseURL: https://api.lyaim.com
 
 const API = axios.create({
-  baseURL: process.env.BASE_URL || "http://localhost:9000",
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:9000",
   withCredentials: true,
 });
 
