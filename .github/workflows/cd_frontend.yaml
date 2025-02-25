@@ -60,7 +60,7 @@ jobs:
               -p 3000:3000 \
               --restart always \
               rohitsamasi555/lyaim-tech-frontend:latest
-            
+            echo "${BASE_URL}"
             
             sudo docker image prune -f
         env:
