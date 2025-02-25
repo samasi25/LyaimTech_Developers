@@ -42,5 +42,5 @@ jobs:
                       sudo docker stop lyaim-frontend
                       sudo docker rm lyaim-frontend
                   fi
-                  sudo docker run -d --name lyaim-frontend -e NEXT_PUBLIC_BASE_URL="${{ secrets.BASE_URL }}" -p 3000:3000 --restart always rohitsamasi555/lyaim-tech-frontend:latest
+                  sudo docker run -d --name lyaim-frontend -e BASE_URL="${{ secrets.BASE_URL }}" -p 3000:3000 --restart always rohitsamasi555/lyaim-tech-frontend:latest
                   sudo docker image prune -f
